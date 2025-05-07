@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoveNote | Will You Go Out With Me?</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#ff6b9d',
+                        'primary-dark': '#ff4785',
+                        'secondary': '#6bceff',
+                        'secondary-dark': '#47b5ff',
+                        'background': '#ffeaf2',
+                    },
+                    animation: {
+                        bounce: 'bounce 2s infinite',
+                        shake: 'shake 0.5s',
+                        float: 'float 3s ease-in-out infinite',
+                        floatReverse: 'floatReverse 2.5s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background min-h-screen flex items-center justify-center p-4">
+    <div id="decorations" class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="decoration text-primary opacity-20 text-8xl top-10 left-10 animate-float">
+            <i class="fas fa-heart"></i>
+        </div>
+        <div class="decoration text-secondary opacity-20 text-6xl top-20 right-20 animate-floatReverse">
+            <i class="fas fa-cloud"></i>
+        </div>
+        <div class="decoration text-primary opacity-20 text-7xl bottom-10 left-1/4 animate-float">
+            <i class="fas fa-kiss-wink-heart"></i>
+        </div>
+        <div class="decoration text-secondary opacity-20 text-6xl bottom-20 right-1/3 animate-floatReverse">
+            <i class="fas fa-star"></i>
+        </div>
+    </div>
+
+    <div class="container max-w-md mx-auto z-10">
+        <div id="main-card" class="bg-white rounded-3xl card-shadow p-8 text-center transition-all duration-500 transform hover:scale-105">
+            <div class="relative mb-6">
+                <h1 class="text-3xl font-bold text-primary mb-2">Will you go out with me?</h1>
+                <div class="absolute -top-12 -right-6 transform rotate-12 text-primary opacity-50">
+                    <i class="fas fa-heart text-4xl"></i>
+                </div>
+            </div>
+            
+            <div class="text-8xl mb-6 animate-bounce">😊</div>
+            
+            <p class="text-xl text-gray-600 mb-4">Please lets go!!!</p>
+            
+            <p class="text-2xl font-bold text-primary mb-8">I really want to spend time with you!</p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4 mt-6">
+                <button id="yes-btn" class="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-8 rounded-full transform transition-all duration-300 hover:scale-105 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-pink-200">
+                    <i class="fas fa-heart mr-2"></i>Yes!
+                </button>
+                
+                <button id="maybe-btn" class="bg-secondary hover:bg-secondary-dark text-white font-bold py-3 px-8 rounded-full transform transition-all duration-300 hover:scale-105 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-blue-200 mt-3 sm:mt-0">
+                    <i class="fas fa-clock mr-2"></i>Maybe later
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
