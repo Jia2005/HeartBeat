@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LoveNote | Are You Sure?</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#ff6b9d',
+                        'primary-dark': '#ff4785',
+                        'secondary': '#6bceff',
+                        'secondary-dark': '#47b5ff',
+                        'background': '#ffeaf2',
+                    },
+                    animation: {
+                        bounce: 'bounce 2s infinite',
+                        shake: 'shake 0.5s',
+                        float: 'float 3s ease-in-out infinite',
+                        floatReverse: 'floatReverse 2.5s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background min-h-screen flex items-center justify-center p-4">
+    <div id="decorations" class="fixed inset-0 overflow-hidden pointer-events-none"></div>    
+    <div class="container max-w-md mx-auto z-10">
+        <div id="maybe-response" class="bg-white rounded-3xl card-shadow p-8 text-center opacity-0">
+            <div class="mb-6 relative w-24 h-24 mx-auto">
+                <div class="crying-face">
+                    <div class="eyes">
+                        <div class="eye">
+                            <div class="tear tear-left"></div>
+                        </div>
+                        <div class="eye">
+                            <div class="tear tear-right"></div>
+                        </div>
+                    </div>
+                    <div class="mouth"></div>
+                </div>
+            </div>
+            
+            <h2 class="text-2xl font-bold text-blue-500 mb-4">Are you sure??</h2>
+            <p class="text-xl italic text-primary mb-2">Don't you love me? <span class="text-2xl">💔</span></p>
+            <p class="text-gray-600 mb-6">I was really looking forward to spending time with you...</p>
+            
+            <div id="try-to-leave" class="mb-6 relative h-20">
+                <button id="try-to-leave-btn" class="absolute bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-3 px-6 rounded-full transform transition-all duration-300">
+                    I'm really busy
+                </button>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <button id="yes-anyway" class="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-4 rounded-full transform transition-all duration-300 hover:scale-105">
+                    <i class="fas fa-heart mr-2"></i>Yes
+                </button>
+                <button id="of-course-yes" class="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-4 rounded-full transform transition-all duration-300 hover:scale-105">
+                    <i class="fas fa-heart-circle-check mr-2"></i>Of course yes
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                document.getElementById('maybe-response').classList.add('fade-in');
+            }, 100);
+            
+            const tryToLeaveBtn = document.getElementById('try-to-leave-btn');
+            const container = document.getElementById('try-to-leave');
+            
+            tryToLeaveBtn.addEventListener('mouseover', function(e) {
+                const btnRect = this.getBoundingClientRect();
+                const containerRect = container.getBoundingClientRect();
+                const maxX = containerRect.width - btnRect.width - 20;
+                const maxY = containerRect.height - btnRect.height;
+                let newX = Math.random() * maxX;
+                let newY = Math.random() * maxY;
+                this.style.transform = `translate(${newX}px, ${newY}px)`;
+                this.dataset.tries = (parseInt(this.dataset.tries || 0) + 1).toString();
+                if (parseInt(this.dataset.tries) > 3) {
+                    window.location.href = 'happy.html';
+                }
+            });
+            
+            document.getElementById('yes-anyway').addEventListener('click', function() {
+                window.location.href = 'happy.html';
+            });
+            
+            document.getElementById('of-course-yes').addEventListener('click', function() {
+                window.location.href = 'happy.html';
+            });
+        });
+    </script>
+</body>
+</html>
