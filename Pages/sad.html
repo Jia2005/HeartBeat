@@ -8,7 +8,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-background min-h-screen flex items-center justify-center p-4">
+<body class="bg-background min-h-screen flex items-center justify-center p-4 overflow-hidden">
     <div id="decorations" class="fixed inset-0 overflow-hidden pointer-events-none"></div>    
     <div class="container max-w-md mx-auto z-10">
         <div id="maybe-response" class="bg-white rounded-3xl card-shadow p-8 text-center opacity-0">
@@ -30,8 +30,8 @@
             <p class="text-xl italic text-primary mb-2">Don't you love me? <span class="text-2xl">💔</span></p>
             <p class="text-gray-600 mb-6">I was really looking forward to spending time with you...</p>
             
-            <div id="try-to-leave" class="mb-6 relative h-20">
-                <button id="try-to-leave-btn" class="absolute bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-3 px-6 rounded-full transform transition-all duration-300">
+            <div class="mb-6 relative h-20">
+                <button id="runaway-btn" class="running-button bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-3 px-6 rounded-full">
                     I'm really busy
                 </button>
             </div>
@@ -47,27 +47,49 @@
         </div>
     </div>
     
-    <script src="script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 document.getElementById('maybe-response').classList.add('fade-in');
             }, 100);
             
-            const tryToLeaveBtn = document.getElementById('try-to-leave-btn');
-            const container = document.getElementById('try-to-leave');
+            const runawayBtn = document.getElementById('runaway-btn');
+            let slideAwayTriggered = false;
             
-            tryToLeaveBtn.addEventListener('mouseover', function(e) {
+            runawayBtn.addEventListener('mouseover', function(e) {
+                if (slideAwayTriggered) return;
+                
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;                
                 const btnRect = this.getBoundingClientRect();
-                const containerRect = container.getBoundingClientRect();
-                const maxX = containerRect.width - btnRect.width - 20;
-                const maxY = containerRect.height - btnRect.height;
-                let newX = Math.random() * maxX;
-                let newY = Math.random() * maxY;
-                this.style.transform = `translate(${newX}px, ${newY}px)`;
-                this.dataset.tries = (parseInt(this.dataset.tries || 0) + 1).toString();
-                if (parseInt(this.dataset.tries) > 20) {
-                    window.location.href = 'happy.html';
+                const padding = 20; 
+                const maxX = viewportWidth - btnRect.width - padding;
+                const minX = padding;
+                const maxY = viewportHeight - btnRect.height - padding;
+                const minY = padding;
+            
+                let newX = Math.floor(Math.random() * (maxX - minX)) + minX;
+                let newY = Math.floor(Math.random() * (maxY - minY)) + minY;
+                
+                const parentRect = this.parentElement.getBoundingClientRect();
+                const relativeX = newX - parentRect.left;
+                const relativeY = newY - parentRect.top;
+                
+                this.style.left = relativeX + 'px';
+                this.style.top = relativeY + 'px';
+                this.style.transform = 'translateX(0)'; 
+                
+                if (Math.random() < 0.1) {
+                    slideAwayTriggered = true;
+                    this.classList.add('slide-away');
+                    
+                    setTimeout(() => {
+                        this.classList.remove('slide-away');
+                        this.style.left = '50%';
+                        this.style.top = '0';
+                        this.style.transform = 'translateX(-50%)';
+                        slideAwayTriggered = false;
+                    }, 1000);
                 }
             });
             

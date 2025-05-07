@@ -136,3 +136,20 @@ body {
     margin: 15px auto;
     transform: rotate(180deg);
 }
+
+.running-button {
+    transition: all 0.3s ease-out;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 0;
+}
+
+.slide-away {
+    animation: slideAway 0.5s ease-out;
+}
+
+@keyframes slideAway {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(-200%); }
+}
