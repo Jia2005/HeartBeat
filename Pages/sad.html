@@ -4,17 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Are You Sure?</title>
-    <link rel="stylesheet" href="output.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="sad.css">
+    <link href="sad.css" rel="stylesheet">
+    <link href="styles.css" rel="stylesheet">
+
 </head>
-<body class="bg-background min-h-screen flex items-center justify-center p-4 overflow-hidden">
+<body>
     <div id="cute-character" class="cute-character">
         <div class="body">
+            <div class="ears left"></div>
+            <div class="ears right"></div>
             <div class="face">
                 <div class="eye left"></div>
                 <div class="eye right"></div>
+                <div class="blush left"></div>
+                <div class="blush right"></div>
                 <div class="mouth"></div>
             </div>
             <div class="hammer">
@@ -25,9 +29,9 @@
     </div>
 
     <div id="decorations" class="fixed inset-0 overflow-hidden pointer-events-none"></div>    
-    <div class="container max-w-md mx-auto z-10">
-        <div id="maybe-response" class="bg-white rounded-3xl card-shadow p-8 text-center opacity-0">
-            <div class="mb-6 relative w-24 h-24 mx-auto">
+    <div class="container">
+        <div id="maybe-response" class="card-shadow">
+            <div style="margin-bottom: 1.5rem; position: relative; width: 6rem; height: 6rem; margin-left: auto; margin-right: auto;">
                 <div class="crying-face">
                     <div class="eyes">
                         <div class="eye">
@@ -41,23 +45,26 @@
                 </div>
             </div>
             
-            <h2 class="text-2xl font-bold text-blue-500 mb-4">Are you sure??</h2>
-            <p class="text-xl italic text-primary mb-2">Don't you love me? <span class="text-2xl">💔</span></p>
-            <p class="text-gray-600 mb-6">I was really looking forward to spending time with you...</p>
+            <h2>Are you sure??</h2>
+            <p class="italic text-primary" style="font-size: 1.25rem; margin-bottom: 0.5rem;">Don't you love me? <span style="font-size: 1.5rem;">💔</span></p>
+            <p class="text-gray-600" style="margin-bottom: 1.5rem;">I was really looking forward to spending time with you...</p>
             
-            <div class="mb-6 relative h-20">
-                <button id="runaway-btn" class="running-button bg-gray-200 hover:bg-gray-300 text-gray-600 font-bold py-3 px-6 rounded-full">
+            <div class="button-container">
+                <button id="runaway-btn" class="running-button">
                     I'm really busy
                 </button>
+                <div id="break-left" class="break-left">I'm re</div>
+                <div id="break-right" class="break-right">ally busy</div>
+                <a id="fixed-btn" href="happy.html" class="fixed-button" style="display: none;">I'll make time for you</a>
             </div>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <button id="yes-anyway" class="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-4 rounded-full transform transition-all duration-300 hover:scale-105">
-                    <i class="fas fa-heart mr-2"></i>Yes
-                </button>
-                <button id="of-course-yes" class="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-4 rounded-full transform transition-all duration-300 hover:scale-105">
-                    <i class="fas fa-heart-circle-check mr-2"></i>Of course yes
-                </button>
+            <div class="grid">
+                <a href="happy.html" class="yes-button">
+                    <i class="fas fa-heart" style="margin-right: 0.5rem;"></i>Yes
+                </a>
+                <a href="happy.html" class="yes-button">
+                    <i class="fas fa-heart-circle" style="margin-right: 0.5rem;"></i>Of course yes
+                </a>
             </div>
         </div>
     </div>
@@ -69,7 +76,11 @@
             }, 100);
             
             const runawayBtn = document.getElementById('runaway-btn');
+            const breakLeftPiece = document.getElementById('break-left');
+            const breakRightPiece = document.getElementById('break-right');
+            const fixedBtn = document.getElementById('fixed-btn');
             const cuteCharacter = document.getElementById('cute-character');
+            
             let slideAwayTriggered = false;
             let attempts = 0;
             let hammerTime = false;
@@ -79,7 +90,7 @@
                 
                 attempts++;
                 
-                if (attempts >= 10 && !hammerTime) {
+                if (attempts >= 5 && !hammerTime) {
                     hammerTime = true;
                     summonHammerCharacter();
                     return;
@@ -143,17 +154,23 @@
                         runawayBtn.classList.add('cracked');
                         
                         setTimeout(() => {
-                            runawayBtn.classList.add('falling');
+                            // Hide original button and show broken pieces
+                            runawayBtn.style.opacity = '0';
+                            breakLeftPiece.style.display = 'flex';
+                            breakRightPiece.style.display = 'flex';
+                            
+                            // Start falling animation for pieces
+                            breakLeftPiece.style.animationPlayState = 'running';
+                            breakRightPiece.style.animationPlayState = 'running';
                             
                             setTimeout(() => {
-                                runawayBtn.textContent = "I'll make time for you";
-                                runawayBtn.style.pointerEvents = "none";
-                                runawayBtn.classList.remove('running-button', 'cracked', 'falling');
-                                runawayBtn.classList.add('bg-primary', 'text-white');
-                                runawayBtn.style.left = '50%';
-                                runawayBtn.style.top = '0';
-                                runawayBtn.style.transform = 'translateX(-50%)';
+                                // Hide broken pieces and show fixed button
+                                breakLeftPiece.style.display = 'none';
+                                breakRightPiece.style.display = 'none';
+                                runawayBtn.style.display = 'none';
+                                fixedBtn.style.display = 'block';
                                 
+                                // Move cute character away
                                 cuteCharacter.style.right = '-100px';
                                 setTimeout(() => {
                                     cuteCharacter.classList.remove('visible');
@@ -163,14 +180,6 @@
                     }, 200);
                 }, 2000);
             }
-            
-            document.getElementById('yes-anyway').addEventListener('click', function() {
-                window.location.href = 'happy.html';
-            });
-            
-            document.getElementById('of-course-yes').addEventListener('click', function() {
-                window.location.href = 'happy.html';
-            });
         });
     </script>
 </body>

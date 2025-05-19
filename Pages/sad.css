@@ -1,6 +1,77 @@
+:root {
+    --primary: #FF6B6B;
+    --primary-dark: #FF5252;
+    --background: #f5f7fa;
+}
+
+body {
+    background-color: var(--background);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    margin: 0;
+}
+
+.container {
+    max-width: 28rem;
+    margin: 0 auto;
+    z-index: 10;
+}
+
+.card-shadow {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+#maybe-response {
+    background-color: white;
+    border-radius: 1.5rem;
+    padding: 2rem;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.fade-in {
+    opacity: 1 !important;
+}
+
+h2 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4299e1;
+    margin-bottom: 1rem;
+}
+
+.italic {
+    font-style: italic;
+}
+
+p {
+    margin-bottom: 1.5rem;
+}
+
+.text-primary {
+    color: var(--primary);
+}
+
+.text-gray-600 {
+    color: #718096;
+}
+
+.button-container {
+    position: relative;
+    height: 5rem;
+    margin-bottom: 1.5rem;
+}
+
 .running-button {
     position: absolute;
     left: 50%;
+    top: 0;
     transform: translateX(-50%);
     width: 160px;
     height: 48px;
@@ -8,6 +79,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: #edf2f7;
+    color: #4a5568;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+}
+
+.running-button:hover {
+    background-color: #e2e8f0;
 }
 
 .slide-away {
@@ -20,9 +102,27 @@
     }
 }
 
-.fade-in {
-    opacity: 1 !important;
-    transition: opacity 0.5s ease-in-out;
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.yes-button {
+    background-color: var(--primary);
+    color: white;
+    font-weight: bold;
+    padding: 0.75rem 1rem;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    transform: translateY(0);
+    transition: all 0.3s ease;
+}
+
+.yes-button:hover {
+    background-color: var(--primary-dark);
+    transform: scale(1.05);
 }
 
 .cute-character {
@@ -48,6 +148,7 @@
     border-radius: 50%;
     position: relative;
     overflow: visible;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .cute-character .face {
@@ -60,18 +161,47 @@
 
 .cute-character .eye {
     position: absolute;
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 12px;
     background-color: #333;
     border-radius: 50%;
 }
 
 .cute-character .eye.left {
-    left: 8px;
+    left: 6px;
 }
 
 .cute-character .eye.right {
-    right: 8px;
+    right: 6px;
+}
+
+.cute-character .eye::after {
+    content: "";
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background-color: white;
+    border-radius: 50%;
+    top: 2px;
+    left: 2px;
+}
+
+.cute-character .blush {
+    position: absolute;
+    width: 10px;
+    height: 6px;
+    background-color: rgba(255, 150, 150, 0.7);
+    border-radius: 50%;
+}
+
+.cute-character .blush.left {
+    left: 3px;
+    top: 18px;
+}
+
+.cute-character .blush.right {
+    right: 3px;
+    top: 18px;
 }
 
 .cute-character .mouth {
@@ -83,6 +213,26 @@
     height: 8px;
     border-bottom: 2px solid #333;
     border-radius: 50%;
+}
+
+.cute-character .ears {
+    position: absolute;
+    width: 15px;
+    height: 20px;
+    background-color: #FFA0B0;
+    border-radius: 50%;
+}
+
+.cute-character .ears.left {
+    top: -8px;
+    left: 8px;
+    transform: rotate(-30deg);
+}
+
+.cute-character .ears.right {
+    top: -8px;
+    right: 8px;
+    transform: rotate(30deg);
 }
 
 .cute-character .hammer {
@@ -102,6 +252,7 @@
     height: 40px;
     background-color: #8B4513;
     border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .cute-character .hammer .head {
@@ -112,6 +263,7 @@
     height: 20px;
     background-color: #808080;
     border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .smash {
@@ -126,6 +278,7 @@
 
 .cracked {
     position: relative;
+    overflow: visible;
 }
 
 .cracked::before {
@@ -135,22 +288,75 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: 
-        linear-gradient(45deg, transparent 45%, #333 45%, #333 55%, transparent 55%),
-        linear-gradient(135deg, transparent 45%, #333 45%, #333 55%, transparent 55%);
-    background-size: 10px 10px;
+    background: linear-gradient(45deg, transparent 49%, #333 49%, #333 51%, transparent 51%);
+    background-size: 100% 100%;
     opacity: 0.7;
     pointer-events: none;
     z-index: 1;
 }
 
-.falling {
-    animation: fall 1s ease-in forwards;
+.break-left, .break-right {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    background-color: #edf2f7;
+    color: #4a5568;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    border-radius: 9999px;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
 }
 
-@keyframes fall {
+.break-left {
+    left: 0;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    text-align: right;
+    padding-right: 5px;
+    animation-name: fallLeft;
+    display: none;
+}
+
+.break-right {
+    right: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    text-align: left;
+    padding-left: 5px;
+    animation-name: fallRight;
+    display: none;
+}
+
+@keyframes fallLeft {
     to {
-        transform: translateY(1000px) rotate(45deg);
+        transform: translateY(500px) translateX(-100px) rotate(-45deg);
         opacity: 0;
     }
+}
+
+@keyframes fallRight {
+    to {
+        transform: translateY(500px) translateX(100px) rotate(45deg);
+        opacity: 0;
+    }
+}
+
+.fixed-button {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    width: 160px;
+    background-color: var(--primary);
+    color: white;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
 }
