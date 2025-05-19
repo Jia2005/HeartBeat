@@ -359,7 +359,7 @@
                 
                 attempts++;
                 
-                if (attempts >= 1 && !hammerTime) {
+                if (attempts >= 5 && !hammerTime) {
                     hammerTime = true;
                     summonBabyWithHammer();
                     return;
@@ -436,11 +436,7 @@
                             
                             setTimeout(() => {
                                 const btnRect = runawayBtn.getBoundingClientRect();
-                                
-                                // Create the broken button pieces
                                 createButtonPieces(btnRect);
-                                
-                                // Hide the original button
                                 runawayBtn.style.opacity = "0";
                                 runawayBtn.style.pointerEvents = "none";
                                 
