@@ -266,42 +266,55 @@
             margin: 20px auto 0;
             transform: rotate(180deg);
         }
+
+        .lucide-kitty {
+            position: fixed;
+            top: 50%;
+            right: -120px;
+            transform: translateY(-50%);
+            width: 120px;
+            height: 120px;
+            z-index: 1000;
+            transition: right 1s ease-in-out, top 1s ease-in-out;
+            display: none;
+        }
+
+        .lucide-kitty.visible {
+            display: block;
+        }
+
+        .hammer {
+            position: absolute;
+            top: 10px;
+            right: -5px;
+            transform-origin: 90% 90%;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .hammer-swing {
+            animation: hammerSwing 1s ease-in-out;
+        }
+
+        @keyframes hammerSwing {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(-90deg); }
+            100% { transform: rotate(0deg); }
+        }
     </style>
 </head>
 <body class="bg-background min-h-screen flex items-center justify-center p-4 overflow-hidden">
-    <div id="kitten-character" class="kitten-character">
-        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                        <ellipse cx="100" cy="120" rx="60" ry="50" fill="#FFA07A" />
-            <circle cx="100" cy="80" r="40" fill="#FFA07A" />
-            <polygon points="70,60 60,30 85,50" fill="#FFA07A" />
-            <polygon points="130,60 140,30 115,50" fill="#FFA07A" />
-            <polygon points="72,58 64,35 85,50" fill="#FFCBA4" />
-            <polygon points="128,58 136,35 115,50" fill="#FFCBA4" />
-            
-            <ellipse cx="85" cy="75" rx="7" ry="10" fill="white" />
-            <ellipse cx="115" cy="75" rx="7" ry="10" fill="white" />
-            <path d="M78,75 L92,75" stroke="red" stroke-width="2" />
-            <path d="M108,75 L122,75" stroke="red" stroke-width="2" />
-            <circle cx="85" cy="77" r="3" fill="black" />
-            <circle cx="115" cy="77" r="3" fill="black" />
-            
-            <path d="M100,85 L95,90 Q100,95 105,90 Z" fill="#FF9494" />
-            
-            <path d="M90,95 Q100,105 110,95" stroke="black" stroke-width="2" fill="transparent" />
-            
-            <line x1="90" y1="90" x2="60" y2="85" stroke="black" stroke-width="1" />
-            <line x1="90" y1="93" x2="60" y2="93" stroke="black" stroke-width="1" />
-            <line x1="90" y1="96" x2="60" y2="101" stroke="black" stroke-width="1" />
-            <line x1="110" y1="90" x2="140" y2="85" stroke="black" stroke-width="1" />
-            <line x1="110" y1="93" x2="140" y2="93" stroke="black" stroke-width="1" />
-            <line x1="110" y1="96" x2="140" y2="101" stroke="black" stroke-width="1" />
-            
-            <path d="M90,85 L95,90" stroke="black" stroke-width="2" />
-            <path d="M110,85 L105,90" stroke="black" stroke-width="2" />
-            
-            <rect x="140" y="90" width="12" height="50" fill="#8B4513" transform="rotate(-45, 140, 90)" />
-            <rect x="135" y="60" width="30" height="18" fill="#A0522D" transform="rotate(-45, 135, 60)" />
-            <rect x="135" y="60" width="25" height="6" fill="#708090" transform="rotate(-45, 135, 60)" />
+    <div id="lucide-kitty" class="lucide-kitty">
+        <svg viewBox="0 0 24 24" width="120" height="120" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10" fill="#FFA07A"/>
+            <circle cx="8" cy="9" r="1" fill="#000" stroke="none"/>
+            <circle cx="16" cy="9" r="1" fill="#000" stroke="none"/>
+            <path d="M8 5L4 3" stroke="#000"/>
+            <path d="M16 5L20 3" stroke="#000"/>
+            <path d="M9 14c0 0.5 1.5 2 3 2s3-1.5 3-2" stroke="#000"/>
+            <path d="M7 3v4" stroke="#000"/>
+            <path d="M17 3v4" stroke="#000"/>
+            <path class="hammer" d="M 16 0 L 20 4 L 18 6 L 14 2 Z" fill="#8B4513" stroke="#000"/>
+            <rect class="hammer" x="12" y="6" width="2" height="10" rx="1" transform="rotate(-45 12 6)" fill="#8B4513" stroke="#000"/>
         </svg>
     </div>
 
@@ -348,14 +361,15 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            initDecorations();
+            
             setTimeout(() => {
                 document.getElementById('maybe-response').classList.add('fade-in');
-                initDecorations();
             }, 100);
             
             const runawayBtn = document.getElementById('runaway-btn');
             const replacementBtn = document.getElementById('replacement-btn');
-            const kittenCharacter = document.getElementById('kitten-character');
+            const lucideKitty = document.getElementById('lucide-kitty');
             let slideAwayTriggered = false;
             let attempts = 0;
             let hammerTime = false;
@@ -367,7 +381,7 @@
                 
                 if (attempts >= 5 && !hammerTime) {
                     hammerTime = true;
-                    summonKitten();
+                    summonLucideKitty();
                     return;
                 }
                 
@@ -405,22 +419,21 @@
                 }
             });
             
-            function summonKitten() {
+            function summonLucideKitty() {
                 const btnRect = runawayBtn.getBoundingClientRect();
                 const btnCenterX = btnRect.left + btnRect.width / 2;
                 const btnCenterY = btnRect.top + btnRect.height / 2;
                 
-                kittenCharacter.classList.add('visible');
-                kittenCharacter.classList.add('walking');
+                lucideKitty.classList.add('visible');
                 
                 setTimeout(() => {
-                    kittenCharacter.style.right = (window.innerWidth - btnCenterX - 60) + 'px';
-                    kittenCharacter.style.top = (btnCenterY - 20) + 'px';
+                    lucideKitty.style.right = (window.innerWidth - btnCenterX - 60) + 'px';
+                    lucideKitty.style.top = (btnCenterY - 20) + 'px';
                 }, 100);
                 
                 setTimeout(() => {
-                    kittenCharacter.classList.remove('walking');
-                    kittenCharacter.classList.add('smash');
+                    const hammer = lucideKitty.querySelector('.hammer');
+                    hammer.classList.add('hammer-swing');
                     
                     setTimeout(() => {
                         const btnRect = runawayBtn.getBoundingClientRect();
@@ -435,9 +448,9 @@
                             
                             createSparklesAroundButton(replacementBtn);
                             
-                            kittenCharacter.style.right = '-120px';
+                            lucideKitty.style.right = '-120px';
                             setTimeout(() => {
-                                kittenCharacter.classList.remove('visible');
+                                lucideKitty.classList.remove('visible');
                             }, 1000);
                         }, 2500);
                     }, 1000);
@@ -512,6 +525,7 @@
                     heart.style.top = Math.random() * 100 + 'vh';
                     heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
                     heart.style.opacity = Math.random() * 0.7 + 0.3;
+                    heart.style.animationDelay = '-' + (Math.random() * 20) + 's';
                     decorations.appendChild(heart);
                 }
                 
@@ -520,6 +534,7 @@
                     sparkle.className = 'sparkle';
                     sparkle.style.left = Math.random() * 100 + 'vw';
                     sparkle.style.top = Math.random() * 100 + 'vh';
+                    sparkle.style.animationDelay = '-' + (Math.random() * 2) + 's';
                     decorations.appendChild(sparkle);
                 }
                 
@@ -530,6 +545,7 @@
                     butterfly.style.left = Math.random() * 100 + 'vw';
                     butterfly.style.top = Math.random() * 100 + 'vh';
                     butterfly.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                    butterfly.style.animationDelay = '-' + (Math.random() * 30) + 's';
                     decorations.appendChild(butterfly);
                 }
             }
