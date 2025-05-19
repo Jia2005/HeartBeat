@@ -4,16 +4,211 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Are You Sure?</title>
+    <link rel="stylesheet" href="output.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
-    <link href="sad.css" rel="stylesheet">
-    <link href="styles.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Inline sad.css with modifications */
+        .running-button {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 48px;
+            transition: left 0.3s ease, top 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
+        .slide-away {
+            animation: slideAway 1s ease-in-out;
+        }
+
+        @keyframes slideAway {
+            to {
+                left: 200%;
+            }
+        }
+
+        .fade-in {
+            opacity: 1 !important;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .cute-character {
+            position: fixed;
+            top: 50%;
+            right: -100px;
+            width: 100px;
+            height: 100px;
+            transform: translateY(-50%);
+            z-index: 1000;
+            transition: right 1s ease-in-out, top 1s ease-in-out, left 1s ease-in-out;
+            display: none;
+        }
+
+        .cute-character.visible {
+            display: block;
+        }
+
+        /* Human-like character styling */
+        .cute-character .body {
+            width: 80px;
+            height: 80px;
+            background-color: #FFD1DC; /* Light pink skin tone */
+            border-radius: 50%;
+            position: relative;
+            overflow: visible;
+        }
+
+        .cute-character .hair {
+            position: absolute;
+            top: -15px;
+            left: 5px;
+            width: 70px;
+            height: 40px;
+            background-color: #8B4513; /* Brown hair */
+            border-radius: 50% 50% 0 0;
+        }
+
+        .cute-character .face {
+            position: absolute;
+            top: 20px;
+            left: 15px;
+            width: 50px;
+            height: 40px;
+        }
+
+        .cute-character .eye {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            background-color: #4B0082; /* Indigo eyes */
+            border-radius: 50%;
+        }
+
+        .cute-character .eye.left {
+            left: 8px;
+        }
+
+        .cute-character .eye.right {
+            right: 8px;
+        }
+
+        .cute-character .blush {
+            position: absolute;
+            width: 15px;
+            height: 8px;
+            background-color: #FF6B9D; /* Pink blush */
+            border-radius: 50%;
+            opacity: 0.5;
+        }
+
+        .cute-character .blush.left {
+            left: 5px;
+            top: 25px;
+        }
+
+        .cute-character .blush.right {
+            right: 5px;
+            top: 25px;
+        }
+
+        .cute-character .mouth {
+            position: absolute;
+            bottom: 8px;
+            left: 20px;
+            width: 16px;
+            height: 8px;
+            border-bottom: 2px solid #333;
+            border-radius: 50%;
+        }
+
+        .cute-character .hammer {
+            position: absolute;
+            top: -30px;
+            right: -20px;
+            width: 40px;
+            height: 60px;
+            transform-origin: bottom right;
+        }
+
+        .cute-character .hammer .handle {
+            position: absolute;
+            bottom: 0;
+            right: 10px;
+            width: 8px;
+            height: 40px;
+            background-color: #8B4513;
+            border-radius: 4px;
+        }
+
+        .cute-character .hammer .head {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 25px;
+            height: 20px;
+            background-color: #808080;
+            border-radius: 4px;
+        }
+
+        .smash {
+            animation: smash 2s ease-in-out; /* Extended to 2 seconds */
+        }
+
+        @keyframes smash {
+            0% { transform: rotate(0deg); }
+            25% { transform: rotate(-30deg); }
+            50% { transform: rotate(-45deg); }
+            75% { transform: rotate(-30deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        .cracked {
+            position: relative;
+            animation: crackedStay 2s ease-in-out forwards; /* Holds the cracked state for 2 seconds */
+        }
+
+        @keyframes crackedStay {
+            0%, 100% { opacity: 1; }
+        }
+
+        .cracked::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(45deg, transparent 45%, #333 45%, #333 55%, transparent 55%),
+                linear-gradient(135deg, transparent 45%, #333 45%, #333 55%, transparent 55%);
+            background-size: 10px 10px;
+            opacity: 0.7;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .falling {
+            animation: fall 5s ease-in forwards; /* Extended to 5 seconds */
+        }
+
+        @keyframes fall {
+            0% { transform: translateY(0) rotate(0deg); }
+            20% { transform: translateY(100px) rotate(15deg); }
+            40% { transform: translateY(300px) rotate(30deg); }
+            60% { transform: translateY(500px) rotate(45deg); }
+            80% { transform: translateY(700px) rotate(60deg); }
+            100% { transform: translateY(1000px) rotate(75deg); opacity: 0; }
+        }
+    </style>
 </head>
-<body>
+<body class="bg-background min-h-screen flex items-center justify-center p-4 overflow-hidden">
     <div id="cute-character" class="cute-character">
         <div class="body">
-            <div class="ears left"></div>
-            <div class="ears right"></div>
+            <div class="hair"></div>
             <div class="face">
                 <div class="eye left"></div>
                 <div class="eye right"></div>
@@ -29,9 +224,9 @@
     </div>
 
     <div id="decorations" class="fixed inset-0 overflow-hidden pointer-events-none"></div>    
-    <div class="container">
-        <div id="maybe-response" class="card-shadow">
-            <div style="margin-bottom: 1.5rem; position: relative; width: 6rem; height: 6rem; margin-left: auto; margin-right: auto;">
+    <div class="container max-w-md mx-auto z-10">
+        <div id="maybe-response" class="bg-white rounded-3xl card-shadow p-8 text-center opacity-0">
+            <div class="mb-6 relative w-24 h-24 mx-auto">
                 <div class="crying-face">
                     <div class="eyes">
                         <div class="eye">
@@ -45,42 +240,38 @@
                 </div>
             </div>
             
-            <h2>Are you sure??</h2>
-            <p class="italic text-primary" style="font-size: 1.25rem; margin-bottom: 0.5rem;">Don't you love me? <span style="font-size: 1.5rem;">💔</span></p>
-            <p class="text-gray-600" style="margin-bottom: 1.5rem;">I was really looking forward to spending time with you...</p>
+            <h2 class="text-2xl font-bold text-primary mb-4">Are you sure??</h2>
+            <p class="text-xl italic text-primary mb-2">Don't you love me? <span class="text-2xl">💔</span></p>
+            <p class="text-gray-600 mb-6">I was really looking forward to spending time with you...</p>
             
-            <div class="button-container">
-                <button id="runaway-btn" class="running-button">
+            <div class="mb-6 relative h-20">
+                <button id="runaway-btn" class="running-button bg-secondary hover:bg-secondary-dark text-white font-bold py-3 px-6 rounded-full">
                     I'm really busy
                 </button>
-                <div id="break-left" class="break-left">I'm re</div>
-                <div id="break-right" class="break-right">ally busy</div>
-                <a id="fixed-btn" href="happy.html" class="fixed-button" style="display: none;">I'll make time for you</a>
             </div>
             
-            <div class="grid">
-                <a href="happy.html" class="yes-button">
-                    <i class="fas fa-heart" style="margin-right: 0.5rem;"></i>Yes
-                </a>
-                <a href="happy.html" class="yes-button">
-                    <i class="fas fa-heart-circle" style="margin-right: 0.5rem;"></i>Of course yes
-                </a>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <button id="yes-anyway" class="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-4 rounded-full transform transition-all duration-300 hover:scale-105">
+                    <i class="fas fa-heart mr-2"></i>Yes
+                </button>
+                <button id="of-course-yes" class="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-4 rounded-full transform transition-all duration-300 hover:scale-105">
+                    <i class="fas fa-heart-circle-check mr-2"></i>Of course yes
+                </button>
             </div>
         </div>
     </div>
     
+    <script src="script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
                 document.getElementById('maybe-response').classList.add('fade-in');
+                // Initialize decorations like on other pages
+                initDecorations();
             }, 100);
             
             const runawayBtn = document.getElementById('runaway-btn');
-            const breakLeftPiece = document.getElementById('break-left');
-            const breakRightPiece = document.getElementById('break-right');
-            const fixedBtn = document.getElementById('fixed-btn');
             const cuteCharacter = document.getElementById('cute-character');
-            
             let slideAwayTriggered = false;
             let attempts = 0;
             let hammerTime = false;
@@ -90,7 +281,7 @@
                 
                 attempts++;
                 
-                if (attempts >= 5 && !hammerTime) {
+                if (attempts >= 10 && !hammerTime) {
                     hammerTime = true;
                     summonHammerCharacter();
                     return;
@@ -150,36 +341,54 @@
                     const hammer = cuteCharacter.querySelector('.hammer');
                     hammer.classList.add('smash');
                     
+                    // Wait for the smash animation to complete (2 seconds)
                     setTimeout(() => {
+                        // Store the button's current position before breaking
+                        const currentPos = runawayBtn.getBoundingClientRect();
+                        const originalTop = runawayBtn.style.top;
+                        const originalLeft = runawayBtn.style.left;
+                        
+                        // Add the cracked effect and keep it for 2 seconds
                         runawayBtn.classList.add('cracked');
                         
                         setTimeout(() => {
-                            // Hide original button and show broken pieces
-                            runawayBtn.style.opacity = '0';
-                            breakLeftPiece.style.display = 'flex';
-                            breakRightPiece.style.display = 'flex';
+                            // Position the button exactly where it is before applying the falling animation
+                            runawayBtn.style.position = 'fixed';
+                            runawayBtn.style.top = currentPos.top + 'px';
+                            runawayBtn.style.left = currentPos.left + 'px';
+                            runawayBtn.style.transform = 'none';
                             
-                            // Start falling animation for pieces
-                            breakLeftPiece.style.animationPlayState = 'running';
-                            breakRightPiece.style.animationPlayState = 'running';
+                            // Add the falling class that lasts 5 seconds
+                            runawayBtn.classList.add('falling');
                             
+                            // After 5 seconds (falling animation complete)
                             setTimeout(() => {
-                                // Hide broken pieces and show fixed button
-                                breakLeftPiece.style.display = 'none';
-                                breakRightPiece.style.display = 'none';
-                                runawayBtn.style.display = 'none';
-                                fixedBtn.style.display = 'block';
+                                runawayBtn.textContent = "I'll make time for you";
+                                runawayBtn.style.pointerEvents = "none";
+                                runawayBtn.classList.remove('running-button', 'cracked', 'falling');
+                                runawayBtn.classList.add('bg-primary', 'text-white');
+                                runawayBtn.style.position = 'absolute';
+                                runawayBtn.style.left = '50%';
+                                runawayBtn.style.top = '0';
+                                runawayBtn.style.transform = 'translateX(-50%)';
                                 
-                                // Move cute character away
                                 cuteCharacter.style.right = '-100px';
                                 setTimeout(() => {
                                     cuteCharacter.classList.remove('visible');
                                 }, 1000);
-                            }, 1000);
-                        }, 500);
-                    }, 200);
+                            }, 5000); // 5 seconds for falling animation
+                        }, 2000); // 2 seconds for cracked effect
+                    }, 2000); // 2 seconds for smash animation
                 }, 2000);
             }
+            
+            document.getElementById('yes-anyway').addEventListener('click', function() {
+                window.location.href = 'happy.html';
+            });
+            
+            document.getElementById('of-course-yes').addEventListener('click', function() {
+                window.location.href = 'happy.html';
+            });
         });
     </script>
 </body>
