@@ -39,8 +39,8 @@
             position: fixed;
             top: 50%;
             right: -100px;
-            width: 100px;
-            height: 100px;
+            width: 60px;
+            height: 120px;
             transform: translateY(-50%);
             z-index: 1000;
             transition: right 1s ease-in-out, top 1s ease-in-out, left 1s ease-in-out;
@@ -52,80 +52,171 @@
         }
 
         .cute-character .body {
-            width: 80px;
-            height: 80px;
-            background-color: #FFD1DC;
-            border-radius: 50%;
+            width: 40px;
+            height: 60px;
+            background-color: #FFB6C1;
+            border-radius: 10px 10px 0 0;
             position: relative;
             overflow: visible;
         }
 
+        .cute-character .head {
+            position: absolute;
+            top: -30px;
+            left: 5px;
+            width: 30px;
+            height: 30px;
+            background-color: #FFD1DC;
+            border-radius: 50%;
+        }
+
         .cute-character .hair {
             position: absolute;
-            top: -15px;
-            left: 5px;
-            width: 70px;
-            height: 40px;
+            top: -40px;
+            left: 2px;
+            width: 36px;
+            height: 20px;
             background-color: #8B4513;
             border-radius: 50% 50% 0 0;
         }
 
         .cute-character .face {
             position: absolute;
-            top: 20px;
-            left: 15px;
-            width: 50px;
-            height: 40px;
+            top: -25px;
+            left: 5px;
+            width: 30px;
+            height: 20px;
         }
 
         .cute-character .eye {
             position: absolute;
-            width: 12px;
-            height: 12px;
+            width: 6px;
+            height: 6px;
             background-color: #4B0082;
             border-radius: 50%;
         }
 
         .cute-character .eye.left {
-            left: 8px;
+            left: 6px;
         }
 
         .cute-character .eye.right {
-            right: 8px;
+            right: 6px;
+        }
+
+        .cute-character .angry-brows {
+            position: absolute;
+            width: 8px;
+            height: 2px;
+            background-color: #333;
+            transform: rotate(30deg);
+        }
+
+        .cute-character .angry-brows.left {
+            left: 4px;
+            top: -3px;
+        }
+
+        .cute-character .angry-brows.right {
+            right: 4px;
+            top: -3px;
+            transform: rotate(-30deg);
         }
 
         .cute-character .blush {
             position: absolute;
-            width: 15px;
-            height: 8px;
+            width: 6px;
+            height: 4px;
             background-color: #FF6B9D;
             border-radius: 50%;
             opacity: 0.5;
         }
 
         .cute-character .blush.left {
-            left: 5px;
-            top: 25px;
+            left: 4px;
+            top: 12px;
         }
 
         .cute-character .blush.right {
-            right: 5px;
-            top: 25px;
+            right: 4px;
+            top: 12px;
         }
 
         .cute-character .mouth {
             position: absolute;
-            bottom: 8px;
-            left: 20px;
-            width: 16px;
-            height: 8px;
+            bottom: 4px;
+            left: 12px;
+            width: 8px;
+            height: 4px;
             border-bottom: 2px solid #333;
-            border-radius: 50%;
+            border-radius: 0;
+            transform: rotate(180deg);
+        }
+
+        .cute-character .legs {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 40px;
+            height: 50px;
+        }
+
+        .cute-character .leg {
+            position: absolute;
+            width: 10px;
+            height: 45px;
+            background-color: #FFB6C1;
+            border-radius: 0 0 5px 5px;
+        }
+
+        .cute-character .leg.left {
+            left: 5px;
+        }
+
+        .cute-character .leg.right {
+            right: 5px;
+        }
+
+        .cute-character .arms {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 40px;
+        }
+
+        .cute-character .arm {
+            position: absolute;
+            width: 8px;
+            height: 35px;
+            background-color: #FFB6C1;
+            border-radius: 5px;
+        }
+
+        .cute-character .arm.left {
+            left: -5px;
+            transform-origin: top;
+            animation: leftArmSwing 0.5s infinite alternate;
+        }
+
+        .cute-character .arm.right {
+            right: -5px;
+            transform-origin: top;
+            animation: rightArmSwing 0.5s infinite alternate;
+        }
+
+        @keyframes leftArmSwing {
+            from { transform: rotate(20deg); }
+            to { transform: rotate(60deg); }
+        }
+
+        @keyframes rightArmSwing {
+            from { transform: rotate(-20deg); }
+            to { transform: rotate(-60deg); }
         }
 
         .cute-character .hammer {
             position: absolute;
-            top: -30px;
+            top: -20px;
             right: -20px;
             width: 40px;
             height: 60px;
@@ -152,6 +243,15 @@
             border-radius: 4px;
         }
 
+        .walking {
+            animation: walking 0.5s infinite alternate;
+        }
+
+        @keyframes walking {
+            0% { transform: translateY(-50%) rotate(0deg); }
+            100% { transform: translateY(-50%) rotate(5deg); }
+        }
+
         .smash {
             animation: smash 2s ease-in-out;
         }
@@ -163,8 +263,6 @@
             75% { transform: rotate(-30deg); }
             100% { transform: rotate(0deg); }
         }
-
-        /* Removed crack-effect class to fix the cross overlay issue */
 
         .button-piece {
             position: fixed;
@@ -189,7 +287,6 @@
             animation: fallRight 3s forwards cubic-bezier(0.42, 0, 0.58, 1);
         }
 
-        /* Updated falling animations to be smoother with cubic-bezier */
         @keyframes fallLeft {
             0% { transform: translateY(0) rotate(0deg); }
             100% { transform: translateY(600px) rotate(-75deg); opacity: 0; }
@@ -219,30 +316,58 @@
             pointer-events: all;
         }
 
-        /* Decoration styles */
         .floating-heart {
             position: absolute;
             font-size: 24px;
             color: #FF6B9D;
-            animation: float-up 15s linear infinite;
+            animation: float-around 15s linear infinite;
             opacity: 0.8;
             z-index: 1;
         }
 
-        @keyframes float-up {
+        @keyframes float-around {
             0% {
-                transform: translateY(100vh) rotate(0deg);
-                opacity: 0;
+                transform: translate(0, 0) rotate(0deg);
             }
-            10% {
-                opacity: 0.8;
+            25% {
+                transform: translate(100px, 100px) rotate(90deg);
             }
-            90% {
-                opacity: 0.8;
+            50% {
+                transform: translate(0, 200px) rotate(180deg);
+            }
+            75% {
+                transform: translate(-100px, 100px) rotate(270deg);
             }
             100% {
-                transform: translateY(-100px) rotate(360deg);
-                opacity: 0;
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
+        .floating-butterfly {
+            position: absolute;
+            font-size: 24px;
+            animation: flutter 20s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes flutter {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            20% {
+                transform: translate(150px, -100px) rotate(10deg);
+            }
+            40% {
+                transform: translate(300px, 0) rotate(-10deg);
+            }
+            60% {
+                transform: translate(150px, 100px) rotate(10deg);
+            }
+            80% {
+                transform: translate(0, 0) rotate(-10deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(0deg);
             }
         }
 
@@ -338,13 +463,24 @@
 <body class="bg-background min-h-screen flex items-center justify-center p-4 overflow-hidden">
     <div id="cute-character" class="cute-character">
         <div class="body">
+            <div class="head"></div>
             <div class="hair"></div>
             <div class="face">
                 <div class="eye left"></div>
                 <div class="eye right"></div>
+                <div class="angry-brows left"></div>
+                <div class="angry-brows right"></div>
                 <div class="blush left"></div>
                 <div class="blush right"></div>
                 <div class="mouth"></div>
+            </div>
+            <div class="arms">
+                <div class="arm left"></div>
+                <div class="arm right"></div>
+            </div>
+            <div class="legs">
+                <div class="leg left"></div>
+                <div class="leg right"></div>
             </div>
             <div class="hammer">
                 <div class="handle"></div>
@@ -413,7 +549,7 @@
                 
                 attempts++;
                 
-                if (attempts >= 10 && !hammerTime) {
+                if (attempts >= 5 && !hammerTime) {
                     hammerTime = true;
                     summonHammerCharacter();
                     return;
@@ -459,39 +595,31 @@
                 const btnCenterY = btnRect.top + btnRect.height / 2;
                 
                 cuteCharacter.classList.add('visible');
-                
-                setTimeout(() => {
-                    cuteCharacter.style.right = '50%';
-                }, 100);
+                cuteCharacter.classList.add('walking');
                 
                 setTimeout(() => {
                     cuteCharacter.style.right = (window.innerWidth - btnCenterX - 40) + 'px';
                     cuteCharacter.style.top = (btnCenterY - 20) + 'px';
-                }, 1500);
+                }, 100);
                 
                 setTimeout(() => {
+                    cuteCharacter.classList.remove('walking');
                     const hammer = cuteCharacter.querySelector('.hammer');
                     hammer.classList.add('smash');
                     
                     setTimeout(() => {
-                        // Get button position for the broken pieces
                         const btnRect = runawayBtn.getBoundingClientRect();
                         
-                        // Create the pieces
                         createButtonPieces(btnRect);
                         
-                        // Hide original button
                         runawayBtn.style.opacity = "0";
                         runawayBtn.style.pointerEvents = "none";
                         
-                        // Show replacement button after pieces finish falling
                         setTimeout(() => {
                             replacementBtn.classList.add('show');
                             
-                            // Add sparkle effect around new button
                             createSparklesAroundButton(replacementBtn);
                             
-                            // Hide character
                             cuteCharacter.style.right = '-100px';
                             setTimeout(() => {
                                 cuteCharacter.classList.remove('visible');
@@ -502,7 +630,6 @@
             }
             
             function createButtonPieces(btnRect) {
-                // Create left piece
                 const leftPiece = document.createElement('div');
                 leftPiece.className = 'button-piece piece-left';
                 leftPiece.style.width = btnRect.width + 'px';
@@ -512,7 +639,6 @@
                 leftPiece.textContent = "I'm re";
                 document.body.appendChild(leftPiece);
                 
-                // Create right piece
                 const rightPiece = document.createElement('div');
                 rightPiece.className = 'button-piece piece-right';
                 rightPiece.style.width = btnRect.width + 'px';
@@ -522,7 +648,6 @@
                 rightPiece.textContent = "ally busy";
                 document.body.appendChild(rightPiece);
                 
-                // Remove pieces after animation completes
                 setTimeout(() => {
                     leftPiece.remove();
                     rightPiece.remove();
@@ -561,23 +686,21 @@
                 }
             }
             
-            // Enhanced decoration function with floating hearts
             function initDecorations() {
                 const decorations = document.getElementById('decorations');
                 
-                // Create floating hearts
                 for (let i = 0; i < 15; i++) {
                     const heart = document.createElement('div');
                     heart.className = 'floating-heart';
                     heart.innerHTML = '❤️';
                     heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = Math.random() * 100 + 'vh';
                     heart.style.animationDelay = (Math.random() * 15) + 's';
                     heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
                     heart.style.opacity = Math.random() * 0.7 + 0.3;
                     decorations.appendChild(heart);
                 }
                 
-                // Create some sparkles
                 for (let i = 0; i < 10; i++) {
                     const sparkle = document.createElement('div');
                     sparkle.className = 'sparkle';
@@ -587,16 +710,13 @@
                     decorations.appendChild(sparkle);
                 }
                 
-                // Add butterflies
                 for (let i = 0; i < 5; i++) {
                     const butterfly = document.createElement('div');
+                    butterfly.className = 'floating-butterfly';
                     butterfly.innerHTML = '🦋';
-                    butterfly.style.position = 'absolute';
-                    butterfly.style.fontSize = (Math.random() * 20 + 15) + 'px';
                     butterfly.style.left = Math.random() * 100 + 'vw';
                     butterfly.style.top = Math.random() * 100 + 'vh';
-                    butterfly.style.zIndex = '1';
-                    butterfly.style.animation = `float-up ${15 + Math.random() * 10}s linear infinite`;
+                    butterfly.style.fontSize = (Math.random() * 20 + 15) + 'px';
                     butterfly.style.animationDelay = (Math.random() * 10) + 's';
                     decorations.appendChild(butterfly);
                 }
