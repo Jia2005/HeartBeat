@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="output.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+
     <style>
         .running-button {
             position: absolute;
@@ -35,41 +36,45 @@
             transition: opacity 0.5s ease-in-out;
         }
 
-        .puppy-character {
+        .baby-character {
             position: fixed;
-            top: 50%;
-            right: -100px;
+            bottom: -150px;
+            left: -150px;
             width: 120px;
             height: 120px;
-            transform: translateY(-50%);
             z-index: 1000;
-            transition: right 1s ease-in-out, top 1s ease-in-out, left 1s ease-in-out;
+            transition: bottom 0.5s ease-in-out, left 0.5s ease-in-out;
             display: none;
         }
 
-        .puppy-character.visible {
+        .baby-character.visible {
             display: block;
         }
 
-        .walking {
-            animation: walking 0.5s infinite alternate;
+        .baby-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
-        @keyframes walking {
-            0% { transform: translateY(-50%) rotate(0deg); }
-            100% { transform: translateY(-50%) rotate(5deg); }
+        .hammer {
+            position: absolute;
+            width: 40px;
+            height: 80px;
+            right: -10px;
+            top: -40px;
+            transform-origin: bottom right;
+            transition: transform 0.3s ease-in-out;
         }
 
-        .smash {
-            animation: smash 2s ease-in-out;
+        .hammer-swing {
+            animation: hammerSwing 1s ease-in-out;
         }
 
-        @keyframes smash {
-            0% { transform: translateY(-50%) rotate(0deg); }
-            25% { transform: translateY(-50%) rotate(-30deg); }
-            50% { transform: translateY(-50%) rotate(-45deg); }
-            75% { transform: translateY(-50%) rotate(-30deg); }
-            100% { transform: translateY(-50%) rotate(0deg); }
+        @keyframes hammerSwing {
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(-70deg); }
+            100% { transform: rotate(0deg); }
         }
 
         .button-piece {
@@ -88,21 +93,23 @@
         .piece-left {
             clip-path: polygon(0 0, 50% 0, 60% 100%, 0 100%);
             animation: fallLeft 3s forwards cubic-bezier(0.42, 0, 0.58, 1);
+            z-index: 50;
         }
 
         .piece-right {
             clip-path: polygon(50% 0, 100% 0, 100% 100%, 40% 100%);
             animation: fallRight 3s forwards cubic-bezier(0.42, 0, 0.58, 1);
+            z-index: 50;
         }
 
         @keyframes fallLeft {
             0% { transform: translateY(0) rotate(0deg); }
-            100% { transform: translateY(600px) rotate(-75deg); opacity: 0; }
+            100% { transform: translateY(600px) rotate(-45deg); opacity: 0; }
         }
 
         @keyframes fallRight {
             0% { transform: translateY(0) rotate(0deg); }
-            100% { transform: translateY(600px) rotate(75deg); opacity: 0; }
+            100% { transform: translateY(600px) rotate(45deg); opacity: 0; }
         }
 
         .replacement-button {
@@ -267,95 +274,30 @@
             transform: rotate(180deg);
         }
 
-        .lucide-puppy {
-            position: fixed;
-            top: 50%;
-            right: -120px;
-            transform: translateY(-50%);
-            width: 120px;
-            height: 120px;
-            z-index: 1000;
-            transition: right 1s ease-in-out, top 1s ease-in-out;
-            display: none;
+        .walking {
+            animation: walking 0.5s infinite alternate;
         }
 
-        .lucide-puppy.visible {
-            display: block;
-        }
-
-        .hammer {
-            position: absolute;
-            top: 10px;
-            right: -5px;
-            transform-origin: 90% 90%;
-            transition: transform 0.5s ease-in-out;
-        }
-
-        .hammer-swing {
-            animation: hammerSwing 1s ease-in-out;
-        }
-
-        @keyframes hammerSwing {
-            0% { transform: rotate(0deg); }
-            50% { transform: rotate(-90deg); }
-            100% { transform: rotate(0deg); }
+        @keyframes walking {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-10px); }
         }
     </style>
 </head>
 <body class="bg-background min-h-screen flex items-center justify-center p-4 overflow-hidden">
-    <div id="cute-puppy" class="puppy-character">
-        <svg viewBox="0 0 240 240" width="120" height="120">
-            <!-- Puppy Body -->
-            <ellipse cx="120" cy="150" rx="70" ry="60" fill="#D2B48C" />
-            <circle cx="120" cy="100" r="55" fill="#D2B48C" />
-            
-            <!-- Ears -->
-            <path d="M75,70 L40,30 L85,60" fill="#A0522D" />
-            <path d="M165,70 L200,30 L155,60" fill="#A0522D" />
-            
-            <path d="M75,70 L45,35 L85,60" fill="#D2B48C" />
-            <path d="M165,70 L195,35 L155,60" fill="#D2B48C" />
-            
-            <!-- Eyes -->
-            <ellipse cx="95" cy="90" rx="10" ry="12" fill="white" />
-            <ellipse cx="145" cy="90" rx="10" ry="12" fill="white" />
-            
-            <circle cx="95" cy="92" r="5" fill="black" />
-            <circle cx="145" cy="92" r="5" fill="black" />
-            
-            <!-- Nose -->
-            <ellipse cx="120" cy="115" rx="12" ry="8" fill="#8B4513" />
-            
-            <!-- Mouth -->
-            <path d="M105,125 Q120,135 135,125" stroke="black" stroke-width="2" fill="transparent" />
-            
-            <!-- Whiskers -->
-            <line x1="100" y1="115" x2="70" y2="110" stroke="black" stroke-width="1.5" />
-            <line x1="100" y1="120" x2="70" y2="120" stroke="black" stroke-width="1.5" />
-            <line x1="100" y1="125" x2="70" y2="130" stroke="black" stroke-width="1.5" />
-            
-            <line x1="140" y1="115" x2="170" y2="110" stroke="black" stroke-width="1.5" />
-            <line x1="140" y1="120" x2="170" y2="120" stroke="black" stroke-width="1.5" />
-            <line x1="140" y1="125" x2="170" y2="130" stroke="black" stroke-width="1.5" />
-            
-            <!-- Tongue -->
-            <path d="M115,130 Q120,140 125,130" fill="#FF9494" />
-            
-            <!-- Spots -->
-            <ellipse cx="90" cy="160" rx="15" ry="12" fill="#A0522D" />
-            <ellipse cx="150" cy="155" rx="18" ry="14" fill="#A0522D" />
-            
-            <!-- Hammer -->
-            <g class="hammer">
-                <rect x="180" y="60" width="20" height="60" fill="#8B4513" transform="rotate(-25, 180, 60)" />
-                <rect x="175" y="40" width="30" height="20" fill="#A0522D" transform="rotate(-25, 175, 40)" />
-                <rect x="175" y="40" width="30" height="8" fill="#708090" transform="rotate(-25, 175, 40)" />
-            </g>
-        </svg>
+    <div id="baby-character" class="baby-character">
+        <img src="./../Images/baby.png" alt="Baby" class="baby-image">
+        <div class="hammer">
+            <svg viewBox="0 0 40 80" width="40" height="80">
+                <rect x="15" y="40" width="10" height="40" fill="#8B4513" />
+                <rect x="5" y="30" width="30" height="15" fill="#A0522D" />
+                <rect x="5" y="30" width="30" height="5" fill="#708090" />
+            </svg>
+        </div>
     </div>
 
     <div id="decorations" class="fixed inset-0 overflow-hidden pointer-events-none"></div>    
-    <div class="container max-w-md mx-auto z-10">
+     <div class="container max-w-md mx-auto z-10">
         <div id="maybe-response" class="bg-white rounded-3xl card-shadow p-8 text-center opacity-0">
             <div class="mb-6 relative w-24 h-24 mx-auto">
                 <div class="crying-face">
@@ -405,7 +347,9 @@
             
             const runawayBtn = document.getElementById('runaway-btn');
             const replacementBtn = document.getElementById('replacement-btn');
-            const lucidePuppy = document.getElementById('cute-puppy');
+            const babyCharacter = document.getElementById('baby-character');
+            const hammer = document.querySelector('.hammer');
+            
             let slideAwayTriggered = false;
             let attempts = 0;
             let hammerTime = false;
@@ -415,9 +359,9 @@
                 
                 attempts++;
                 
-                if (attempts >= 5 && !hammerTime) {
+                if (attempts >= 1 && !hammerTime) {
                     hammerTime = true;
-                    summonLucidePuppy();
+                    summonBabyWithHammer();
                     return;
                 }
                 
@@ -455,42 +399,68 @@
                 }
             });
             
-            function summonLucidePuppy() {
+            function summonBabyWithHammer() {
                 const btnRect = runawayBtn.getBoundingClientRect();
                 const btnCenterX = btnRect.left + btnRect.width / 2;
                 const btnCenterY = btnRect.top + btnRect.height / 2;
                 
-                lucidePuppy.classList.add('visible');
+                babyCharacter.classList.add('visible');
+                babyCharacter.classList.add('walking');
                 
-                setTimeout(() => {
-                    lucidePuppy.style.right = (window.innerWidth - btnCenterX - 60) + 'px';
-                    lucidePuppy.style.top = (btnCenterY - 20) + 'px';
-                }, 100);
+                babyCharacter.style.bottom = '20px';
+                babyCharacter.style.left = '20px';
                 
-                setTimeout(() => {
-                    const hammer = lucidePuppy.querySelector('.hammer');
-                    hammer.classList.add('hammer-swing');
-                    
-                    setTimeout(() => {
-                        const btnRect = runawayBtn.getBoundingClientRect();
-                        
-                        createButtonPieces(btnRect);
-                        
-                        runawayBtn.style.opacity = "0";
-                        runawayBtn.style.pointerEvents = "none";
+                const steps = 10;
+                const walkPath = [];
+                
+                for (let i = 0; i <= steps; i++) {
+                    const position = {
+                        left: 20 + ((btnCenterX - 60) - 20) * (i / steps),
+                        bottom: 20 + ((window.innerHeight - btnCenterY - 60) - 20) * (i / steps)
+                    };
+                    walkPath.push(position);
+                }
+                
+                let step = 0;
+                const walkInterval = setInterval(() => {
+                    if (step < walkPath.length) {
+                        babyCharacter.style.left = walkPath[step].left + 'px';
+                        babyCharacter.style.bottom = walkPath[step].bottom + 'px';
+                        step++;
+                    } else {
+                        clearInterval(walkInterval);
+                        babyCharacter.classList.remove('walking');
                         
                         setTimeout(() => {
-                            replacementBtn.classList.add('show');
+                            hammer.classList.add('hammer-swing');
                             
-                            createSparklesAroundButton(replacementBtn);
-                            
-                            lucidePuppy.style.right = '-120px';
                             setTimeout(() => {
-                                lucidePuppy.classList.remove('visible');
+                                const btnRect = runawayBtn.getBoundingClientRect();
+                                
+                                // Create the broken button pieces
+                                createButtonPieces(btnRect);
+                                
+                                // Hide the original button
+                                runawayBtn.style.opacity = "0";
+                                runawayBtn.style.pointerEvents = "none";
+                                
+                                setTimeout(() => {
+                                    replacementBtn.classList.add('show');
+                                    
+                                    createSparklesAroundButton(replacementBtn);
+                                    
+                                    babyCharacter.classList.add('walking');
+                                    babyCharacter.style.left = '-150px';
+                                    
+                                    setTimeout(() => {
+                                        babyCharacter.classList.remove('visible');
+                                        babyCharacter.classList.remove('walking');
+                                    }, 1000);
+                                }, 1500);
                             }, 1000);
-                        }, 2500);
-                    }, 1000);
-                }, 2000);
+                        }, 500);
+                    }
+                }, 150);
             }
             
             function createButtonPieces(btnRect) {
