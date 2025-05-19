@@ -138,18 +138,28 @@ body {
 }
 
 .running-button {
-    transition: all 0.3s ease-out;
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    top: 0;
+    width: 160px; 
+    height: 48px; 
+    transition: left 0.3s ease, top 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .slide-away {
-    animation: slideAway 0.5s ease-out;
+    animation: slideAway 1s ease-in-out;
 }
 
 @keyframes slideAway {
-    0% { transform: translateX(-50%); }
-    100% { transform: translateX(-200%); }
+    to {
+        left: 200%;
+    }
+}
+
+.fade-in {
+    opacity: 1 !important;
+    transition: opacity 0.5s ease-in-out;
 }
