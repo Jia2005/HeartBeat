@@ -164,42 +164,86 @@
             100% { transform: rotate(0deg); }
         }
 
-        .cracked {
-            position: relative;
-            animation: crackedStay 2s ease-in-out forwards;
-        }
-
-        @keyframes crackedStay {
-            0%, 100% { opacity: 1; }
-        }
-
-        .cracked::before {
-            content: "";
+        .crack-effect {
             position: absolute;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                linear-gradient(45deg, transparent 45%, #333 45%, #333 55%, transparent 55%),
-                linear-gradient(135deg, transparent 45%, #333 45%, #333 55%, transparent 55%);
-            background-size: 10px 10px;
-            opacity: 0.7;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 45%, #333 45%, #333 55%, transparent 55%);
             pointer-events: none;
-            z-index: 1;
+            opacity: 0;
+            z-index: 10;
         }
 
-        .falling {
-            animation: fall 5s ease-in forwards;
+        .crack-effect.show {
+            opacity: 0.7;
+            animation: flash 0.5s;
         }
 
-        @keyframes fall {
+        @keyframes flash {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .button-piece {
+            position: fixed;
+            background-color: #6C63FF;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 24px;
+            z-index: 5;
+        }
+
+        .piece-left {
+            clip-path: polygon(0 0, 50% 0, 60% 100%, 0 100%);
+            animation: fallLeft 3s forwards ease-in-out;
+        }
+
+        .piece-right {
+            clip-path: polygon(50% 0, 100% 0, 100% 100%, 40% 100%);
+            animation: fallRight 3s forwards ease-in-out;
+        }
+
+        @keyframes fallLeft {
             0% { transform: translateY(0) rotate(0deg); }
-            20% { transform: translateY(100px) rotate(15deg); }
-            40% { transform: translateY(300px) rotate(30deg); }
-            60% { transform: translateY(500px) rotate(45deg); }
-            80% { transform: translateY(700px) rotate(60deg); }
-            100% { transform: translateY(1000px) rotate(75deg); opacity: 0; }
+            20% { transform: translateY(40px) rotate(-15deg); }
+            40% { transform: translateY(120px) rotate(-30deg); }
+            60% { transform: translateY(240px) rotate(-45deg); }
+            80% { transform: translateY(400px) rotate(-60deg); }
+            100% { transform: translateY(600px) rotate(-75deg); opacity: 0; }
+        }
+
+        @keyframes fallRight {
+            0% { transform: translateY(0) rotate(0deg); }
+            20% { transform: translateY(40px) rotate(15deg); }
+            40% { transform: translateY(120px) rotate(30deg); }
+            60% { transform: translateY(240px) rotate(45deg); }
+            80% { transform: translateY(400px) rotate(60deg); }
+            100% { transform: translateY(600px) rotate(75deg); opacity: 0; }
+        }
+
+        .replacement-button {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            pointer-events: none;
+        }
+
+        .replacement-button.show {
+            opacity: 1;
+            pointer-events: all;
         }
     </style>
 </head>
@@ -246,6 +290,10 @@
                 <button id="runaway-btn" class="running-button bg-secondary hover:bg-secondary-dark text-white font-bold py-3 px-6 rounded-full">
                     I'm really busy
                 </button>
+                <div id="crack-effect" class="crack-effect"></div>
+                <a href="happy.html" id="replacement-btn" class="replacement-button bg-secondary hover:bg-secondary-dark text-white font-bold py-3 px-6 rounded-full">
+                    I'll make time for you
+                </a>
             </div>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -258,8 +306,7 @@
             </div>
         </div>
     </div>
-    
-    <script src="script.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
@@ -268,7 +315,9 @@
             }, 100);
             
             const runawayBtn = document.getElementById('runaway-btn');
+            const replacementBtn = document.getElementById('replacement-btn');
             const cuteCharacter = document.getElementById('cute-character');
+            const crackEffect = document.getElementById('crack-effect');
             let slideAwayTriggered = false;
             let attempts = 0;
             let hammerTime = false;
@@ -339,38 +388,53 @@
                     hammer.classList.add('smash');
                     
                     setTimeout(() => {
-                        const currentPos = runawayBtn.getBoundingClientRect();
-                        const originalTop = runawayBtn.style.top;
-                        const originalLeft = runawayBtn.style.left;
+                        // Show crack effect
+                        crackEffect.classList.add('show');
                         
-                        runawayBtn.classList.add('cracked');
+                        // Get button position for the broken pieces
+                        const btnRect = runawayBtn.getBoundingClientRect();
                         
+                        // Create the pieces
+                        createButtonPieces(btnRect);
+                        
+                        // Hide original button
+                        runawayBtn.style.opacity = "0";
+                        runawayBtn.style.pointerEvents = "none";
+                        
+                        // Show replacement button after pieces finish falling
                         setTimeout(() => {
-                            runawayBtn.style.position = 'fixed';
-                            runawayBtn.style.top = currentPos.top + 'px';
-                            runawayBtn.style.left = currentPos.left + 'px';
-                            runawayBtn.style.transform = 'none';
+                            replacementBtn.classList.add('show');
                             
-                            runawayBtn.classList.add('falling');
-                            
+                            // Hide character
+                            cuteCharacter.style.right = '-100px';
                             setTimeout(() => {
-                                runawayBtn.textContent = "I'll make time for you";
-                                runawayBtn.style.pointerEvents = "none";
-                                runawayBtn.classList.remove('running-button', 'cracked', 'falling');
-                                runawayBtn.classList.add('bg-primary', 'text-white');
-                                runawayBtn.style.position = 'absolute';
-                                runawayBtn.style.left = '50%';
-                                runawayBtn.style.top = '0';
-                                runawayBtn.style.transform = 'translateX(-50%)';
-                                
-                                cuteCharacter.style.right = '-100px';
-                                setTimeout(() => {
-                                    cuteCharacter.classList.remove('visible');
-                                }, 1000);
-                            }, 5000);
-                        }, 2000);
+                                cuteCharacter.classList.remove('visible');
+                            }, 1000);
+                        }, 3000);
                     }, 2000);
                 }, 2000);
+            }
+            
+            function createButtonPieces(btnRect) {
+                // Create left piece
+                const leftPiece = document.createElement('div');
+                leftPiece.className = 'button-piece piece-left';
+                leftPiece.style.width = btnRect.width + 'px';
+                leftPiece.style.height = btnRect.height + 'px';
+                leftPiece.style.left = btnRect.left + 'px';
+                leftPiece.style.top = btnRect.top + 'px';
+                leftPiece.textContent = "I'm re";
+                document.body.appendChild(leftPiece);
+                
+                // Create right piece
+                const rightPiece = document.createElement('div');
+                rightPiece.className = 'button-piece piece-right';
+                rightPiece.style.width = btnRect.width + 'px';
+                rightPiece.style.height = btnRect.height + 'px';
+                rightPiece.style.left = btnRect.left + 'px';
+                rightPiece.style.top = btnRect.top + 'px';
+                rightPiece.textContent = "ally busy";
+                document.body.appendChild(rightPiece);
             }
             
             document.getElementById('yes-anyway').addEventListener('click', function() {
@@ -380,6 +444,11 @@
             document.getElementById('of-course-yes').addEventListener('click', function() {
                 window.location.href = 'happy.html';
             });
+            
+            // Placeholder for initDecorations function if needed
+            function initDecorations() {
+                // Add decorations if needed
+            }
         });
     </script>
 </body>
