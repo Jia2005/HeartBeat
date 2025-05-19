@@ -35,212 +35,28 @@
             transition: opacity 0.5s ease-in-out;
         }
 
-        .cute-character {
+        .kitten-character {
             position: fixed;
             top: 50%;
             right: -100px;
-            width: 60px;
+            width: 120px;
             height: 120px;
             transform: translateY(-50%);
             z-index: 1000;
             transition: right 1s ease-in-out, top 1s ease-in-out, left 1s ease-in-out;
             display: none;
+            border-radius: 10px;
+            overflow: hidden;
         }
 
-        .cute-character.visible {
-            display: block;
-        }
-
-        .cute-character .body {
-            width: 40px;
-            height: 60px;
-            background-color: #FFB6C1;
-            border-radius: 10px 10px 0 0;
-            position: relative;
-            overflow: visible;
-        }
-
-        .cute-character .head {
-            position: absolute;
-            top: -30px;
-            left: 5px;
-            width: 30px;
-            height: 30px;
-            background-color: #FFD1DC;
-            border-radius: 50%;
-        }
-
-        .cute-character .hair {
-            position: absolute;
-            top: -40px;
-            left: 2px;
-            width: 36px;
-            height: 20px;
-            background-color: #8B4513;
-            border-radius: 50% 50% 0 0;
-        }
-
-        .cute-character .face {
-            position: absolute;
-            top: -25px;
-            left: 5px;
-            width: 30px;
-            height: 20px;
-        }
-
-        .cute-character .eye {
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background-color: #4B0082;
-            border-radius: 50%;
-        }
-
-        .cute-character .eye.left {
-            left: 6px;
-        }
-
-        .cute-character .eye.right {
-            right: 6px;
-        }
-
-        .cute-character .angry-brows {
-            position: absolute;
-            width: 8px;
-            height: 2px;
-            background-color: #333;
-            transform: rotate(30deg);
-        }
-
-        .cute-character .angry-brows.left {
-            left: 4px;
-            top: -3px;
-        }
-
-        .cute-character .angry-brows.right {
-            right: 4px;
-            top: -3px;
-            transform: rotate(-30deg);
-        }
-
-        .cute-character .blush {
-            position: absolute;
-            width: 6px;
-            height: 4px;
-            background-color: #FF6B9D;
-            border-radius: 50%;
-            opacity: 0.5;
-        }
-
-        .cute-character .blush.left {
-            left: 4px;
-            top: 12px;
-        }
-
-        .cute-character .blush.right {
-            right: 4px;
-            top: 12px;
-        }
-
-        .cute-character .mouth {
-            position: absolute;
-            bottom: 4px;
-            left: 12px;
-            width: 8px;
-            height: 4px;
-            border-bottom: 2px solid #333;
-            border-radius: 0;
-            transform: rotate(180deg);
-        }
-
-        .cute-character .legs {
-            position: absolute;
-            bottom: -50px;
-            left: 0;
-            width: 40px;
-            height: 50px;
-        }
-
-        .cute-character .leg {
-            position: absolute;
-            width: 10px;
-            height: 45px;
-            background-color: #FFB6C1;
-            border-radius: 0 0 5px 5px;
-        }
-
-        .cute-character .leg.left {
-            left: 5px;
-        }
-
-        .cute-character .leg.right {
-            right: 5px;
-        }
-
-        .cute-character .arms {
-            position: absolute;
-            top: 0;
+        .kitten-character img {
             width: 100%;
-            height: 40px;
+            height: 100%;
+            object-fit: cover;
         }
 
-        .cute-character .arm {
-            position: absolute;
-            width: 8px;
-            height: 35px;
-            background-color: #FFB6C1;
-            border-radius: 5px;
-        }
-
-        .cute-character .arm.left {
-            left: -5px;
-            transform-origin: top;
-            animation: leftArmSwing 0.5s infinite alternate;
-        }
-
-        .cute-character .arm.right {
-            right: -5px;
-            transform-origin: top;
-            animation: rightArmSwing 0.5s infinite alternate;
-        }
-
-        @keyframes leftArmSwing {
-            from { transform: rotate(20deg); }
-            to { transform: rotate(60deg); }
-        }
-
-        @keyframes rightArmSwing {
-            from { transform: rotate(-20deg); }
-            to { transform: rotate(-60deg); }
-        }
-
-        .cute-character .hammer {
-            position: absolute;
-            top: -20px;
-            right: -20px;
-            width: 40px;
-            height: 60px;
-            transform-origin: bottom right;
-        }
-
-        .cute-character .hammer .handle {
-            position: absolute;
-            bottom: 0;
-            right: 10px;
-            width: 8px;
-            height: 40px;
-            background-color: #8B4513;
-            border-radius: 4px;
-        }
-
-        .cute-character .hammer .head {
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 25px;
-            height: 20px;
-            background-color: #808080;
-            border-radius: 4px;
+        .kitten-character.visible {
+            display: block;
         }
 
         .walking {
@@ -461,32 +277,8 @@
     </style>
 </head>
 <body class="bg-background min-h-screen flex items-center justify-center p-4 overflow-hidden">
-    <div id="cute-character" class="cute-character">
-        <div class="body">
-            <div class="head"></div>
-            <div class="hair"></div>
-            <div class="face">
-                <div class="eye left"></div>
-                <div class="eye right"></div>
-                <div class="angry-brows left"></div>
-                <div class="angry-brows right"></div>
-                <div class="blush left"></div>
-                <div class="blush right"></div>
-                <div class="mouth"></div>
-            </div>
-            <div class="arms">
-                <div class="arm left"></div>
-                <div class="arm right"></div>
-            </div>
-            <div class="legs">
-                <div class="leg left"></div>
-                <div class="leg right"></div>
-            </div>
-            <div class="hammer">
-                <div class="handle"></div>
-                <div class="head"></div>
-            </div>
-        </div>
+    <div id="kitten-character" class="kitten-character">
+        <img src="/api/placeholder/120/120" alt="kitten">
     </div>
 
     <div id="decorations" class="fixed inset-0 overflow-hidden pointer-events-none"></div>    
@@ -539,7 +331,7 @@
             
             const runawayBtn = document.getElementById('runaway-btn');
             const replacementBtn = document.getElementById('replacement-btn');
-            const cuteCharacter = document.getElementById('cute-character');
+            const kittenCharacter = document.getElementById('kitten-character');
             let slideAwayTriggered = false;
             let attempts = 0;
             let hammerTime = false;
@@ -551,7 +343,7 @@
                 
                 if (attempts >= 5 && !hammerTime) {
                     hammerTime = true;
-                    summonHammerCharacter();
+                    summonKitten();
                     return;
                 }
                 
@@ -589,23 +381,22 @@
                 }
             });
             
-            function summonHammerCharacter() {
+            function summonKitten() {
                 const btnRect = runawayBtn.getBoundingClientRect();
                 const btnCenterX = btnRect.left + btnRect.width / 2;
                 const btnCenterY = btnRect.top + btnRect.height / 2;
                 
-                cuteCharacter.classList.add('visible');
-                cuteCharacter.classList.add('walking');
+                kittenCharacter.classList.add('visible');
+                kittenCharacter.classList.add('walking');
                 
                 setTimeout(() => {
-                    cuteCharacter.style.right = (window.innerWidth - btnCenterX - 40) + 'px';
-                    cuteCharacter.style.top = (btnCenterY - 20) + 'px';
+                    kittenCharacter.style.right = (window.innerWidth - btnCenterX - 60) + 'px';
+                    kittenCharacter.style.top = (btnCenterY - 20) + 'px';
                 }, 100);
                 
                 setTimeout(() => {
-                    cuteCharacter.classList.remove('walking');
-                    const hammer = cuteCharacter.querySelector('.hammer');
-                    hammer.classList.add('smash');
+                    kittenCharacter.classList.remove('walking');
+                    kittenCharacter.classList.add('smash');
                     
                     setTimeout(() => {
                         const btnRect = runawayBtn.getBoundingClientRect();
@@ -620,9 +411,9 @@
                             
                             createSparklesAroundButton(replacementBtn);
                             
-                            cuteCharacter.style.right = '-100px';
+                            kittenCharacter.style.right = '-120px';
                             setTimeout(() => {
-                                cuteCharacter.classList.remove('visible');
+                                kittenCharacter.classList.remove('visible');
                             }, 1000);
                         }, 2500);
                     }, 1000);
@@ -717,7 +508,6 @@
                     butterfly.style.left = Math.random() * 100 + 'vw';
                     butterfly.style.top = Math.random() * 100 + 'vh';
                     butterfly.style.fontSize = (Math.random() * 20 + 15) + 'px';
-                    butterfly.style.animationDelay = (Math.random() * 10) + 's';
                     decorations.appendChild(butterfly);
                 }
             }
