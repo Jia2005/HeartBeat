@@ -45,14 +45,6 @@
             z-index: 1000;
             transition: right 1s ease-in-out, top 1s ease-in-out, left 1s ease-in-out;
             display: none;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-
-        .kitten-character img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
 
         .kitten-character.visible {
@@ -73,11 +65,11 @@
         }
 
         @keyframes smash {
-            0% { transform: rotate(0deg); }
-            25% { transform: rotate(-30deg); }
-            50% { transform: rotate(-45deg); }
-            75% { transform: rotate(-30deg); }
-            100% { transform: rotate(0deg); }
+            0% { transform: translateY(-50%) rotate(0deg); }
+            25% { transform: translateY(-50%) rotate(-30deg); }
+            50% { transform: translateY(-50%) rotate(-45deg); }
+            75% { transform: translateY(-50%) rotate(-30deg); }
+            100% { transform: translateY(-50%) rotate(0deg); }
         }
 
         .button-piece {
@@ -136,23 +128,23 @@
             position: absolute;
             font-size: 24px;
             color: #FF6B9D;
-            animation: float-around 15s linear infinite;
+            animation: float-circle 20s linear infinite;
             opacity: 0.8;
             z-index: 1;
         }
 
-        @keyframes float-around {
+        @keyframes float-circle {
             0% {
                 transform: translate(0, 0) rotate(0deg);
             }
             25% {
-                transform: translate(100px, 100px) rotate(90deg);
+                transform: translate(100px, -100px) rotate(90deg);
             }
             50% {
-                transform: translate(0, 200px) rotate(180deg);
+                transform: translate(0, -200px) rotate(180deg);
             }
             75% {
-                transform: translate(-100px, 100px) rotate(270deg);
+                transform: translate(-100px, -100px) rotate(270deg);
             }
             100% {
                 transform: translate(0, 0) rotate(360deg);
@@ -162,28 +154,28 @@
         .floating-butterfly {
             position: absolute;
             font-size: 24px;
-            animation: flutter 20s linear infinite;
+            animation: flutter-circle 30s linear infinite;
             z-index: 1;
         }
 
-        @keyframes flutter {
+        @keyframes flutter-circle {
             0% {
                 transform: translate(0, 0) rotate(0deg);
             }
             20% {
-                transform: translate(150px, -100px) rotate(10deg);
+                transform: translate(100px, -50px) rotate(72deg);
             }
             40% {
-                transform: translate(300px, 0) rotate(-10deg);
+                transform: translate(50px, -100px) rotate(144deg);
             }
             60% {
-                transform: translate(150px, 100px) rotate(10deg);
+                transform: translate(-50px, -100px) rotate(216deg);
             }
             80% {
-                transform: translate(0, 0) rotate(-10deg);
+                transform: translate(-100px, -50px) rotate(288deg);
             }
             100% {
-                transform: translate(0, 0) rotate(0deg);
+                transform: translate(0, 0) rotate(360deg);
             }
         }
 
@@ -278,7 +270,46 @@
 </head>
 <body class="bg-background min-h-screen flex items-center justify-center p-4 overflow-hidden">
     <div id="kitten-character" class="kitten-character">
-        <img src="./../Images/puppy.png" alt="kitten">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <!-- Cat Body -->
+            <ellipse cx="100" cy="120" rx="60" ry="50" fill="#FFA07A" />
+            
+            <!-- Head -->
+            <circle cx="100" cy="80" r="40" fill="#FFA07A" />
+            
+            <!-- Ears -->
+            <polygon points="70,60 60,30 85,50" fill="#FFA07A" />
+            <polygon points="130,60 140,30 115,50" fill="#FFA07A" />
+            <polygon points="72,58 64,35 85,50" fill="#FFCBA4" />
+            <polygon points="128,58 136,35 115,50" fill="#FFCBA4" />
+            
+            <!-- Eyes -->
+            <ellipse cx="85" cy="75" rx="7" ry="10" fill="white" />
+            <ellipse cx="115" cy="75" rx="7" ry="10" fill="white" />
+            <circle cx="85" cy="77" r="5" fill="black" />
+            <circle cx="115" cy="77" r="5" fill="black" />
+            <circle cx="83" cy="74" r="2" fill="white" />
+            <circle cx="113" cy="74" r="2" fill="white" />
+            
+            <!-- Nose -->
+            <path d="M100,85 L95,90 Q100,95 105,90 Z" fill="#FF9494" />
+            
+            <!-- Mouth -->
+            <path d="M95,95 Q100,100 105,95" stroke="black" stroke-width="2" fill="transparent" />
+            
+            <!-- Whiskers -->
+            <line x1="90" y1="90" x2="60" y2="85" stroke="black" stroke-width="1" />
+            <line x1="90" y1="93" x2="60" y2="93" stroke="black" stroke-width="1" />
+            <line x1="90" y1="96" x2="60" y2="101" stroke="black" stroke-width="1" />
+            <line x1="110" y1="90" x2="140" y2="85" stroke="black" stroke-width="1" />
+            <line x1="110" y1="93" x2="140" y2="93" stroke="black" stroke-width="1" />
+            <line x1="110" y1="96" x2="140" y2="101" stroke="black" stroke-width="1" />
+            
+            <!-- Hammer -->
+            <rect x="140" y="90" width="10" height="45" fill="#8B4513" transform="rotate(-45, 140, 90)" />
+            <rect x="135" y="60" width="25" height="15" fill="#A0522D" transform="rotate(-45, 135, 60)" />
+            <rect x="135" y="60" width="20" height="5" fill="#708090" transform="rotate(-45, 135, 60)" />
+        </svg>
     </div>
 
     <div id="decorations" class="fixed inset-0 overflow-hidden pointer-events-none"></div>    
@@ -508,6 +539,7 @@
                     butterfly.style.left = Math.random() * 100 + 'vw';
                     butterfly.style.top = Math.random() * 100 + 'vh';
                     butterfly.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                    butterfly.style.animationDelay = (Math.random() * 10) + 's';
                     decorations.appendChild(butterfly);
                 }
             }
