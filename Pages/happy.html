@@ -3,66 +3,536 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy</title>
+    <title>Are You Sure?</title>
     <link rel="stylesheet" href="output.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .running-button {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 48px;
+            transition: left 0.3s ease, top 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide-away {
+            animation: slideAway 1s ease-in-out;
+        }
+
+        @keyframes slideAway {
+            to {
+                left: 200%;
+            }
+        }
+
+        .fade-in {
+            opacity: 1 !important;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .kitten-character {
+            position: fixed;
+            top: 50%;
+            right: -100px;
+            width: 120px;
+            height: 120px;
+            transform: translateY(-50%);
+            z-index: 1000;
+            transition: right 1s ease-in-out, top 1s ease-in-out, left 1s ease-in-out;
+            display: none;
+        }
+
+        .kitten-character.visible {
+            display: block;
+        }
+
+        .walking {
+            animation: walking 0.5s infinite alternate;
+        }
+
+        @keyframes walking {
+            0% { transform: translateY(-50%) rotate(0deg); }
+            100% { transform: translateY(-50%) rotate(5deg); }
+        }
+
+        .smash {
+            animation: smash 2s ease-in-out;
+        }
+
+        @keyframes smash {
+            0% { transform: translateY(-50%) rotate(0deg); }
+            25% { transform: translateY(-50%) rotate(-30deg); }
+            50% { transform: translateY(-50%) rotate(-45deg); }
+            75% { transform: translateY(-50%) rotate(-30deg); }
+            100% { transform: translateY(-50%) rotate(0deg); }
+        }
+
+        .button-piece {
+            position: fixed;
+            background-color: #6C63FF;
+            color: white;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 24px;
+            z-index: 5;
+        }
+
+        .piece-left {
+            clip-path: polygon(0 0, 50% 0, 60% 100%, 0 100%);
+            animation: fallLeft 3s forwards cubic-bezier(0.42, 0, 0.58, 1);
+        }
+
+        .piece-right {
+            clip-path: polygon(50% 0, 100% 0, 100% 100%, 40% 100%);
+            animation: fallRight 3s forwards cubic-bezier(0.42, 0, 0.58, 1);
+        }
+
+        @keyframes fallLeft {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(600px) rotate(-75deg); opacity: 0; }
+        }
+
+        @keyframes fallRight {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(600px) rotate(75deg); opacity: 0; }
+        }
+
+        .replacement-button {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            pointer-events: none;
+        }
+
+        .replacement-button.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .floating-heart {
+            position: absolute;
+            font-size: 24px;
+            color: #FF6B9D;
+            animation: float-circle 20s linear infinite;
+            opacity: 0.8;
+            z-index: 1;
+        }
+
+        @keyframes float-circle {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(100px, -100px) rotate(90deg);
+            }
+            50% {
+                transform: translate(0, -200px) rotate(180deg);
+            }
+            75% {
+                transform: translate(-100px, -100px) rotate(270deg);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg);
+            }
+        }
+
+        .floating-butterfly {
+            position: absolute;
+            font-size: 24px;
+            animation: flutter-circle 30s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes flutter-circle {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+            20% {
+                transform: translate(100px, -50px) rotate(72deg) scale(1.2);
+            }
+            40% {
+                transform: translate(50px, -100px) rotate(144deg) scale(1);
+            }
+            60% {
+                transform: translate(-50px, -100px) rotate(216deg) scale(1.2);
+            }
+            80% {
+                transform: translate(-100px, -50px) rotate(288deg) scale(1);
+            }
+            100% {
+                transform: translate(0, 0) rotate(360deg) scale(1);
+            }
+        }
+
+        .sparkle {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background-color: #FFD700;
+            border-radius: 50%;
+            animation: sparkle 2s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes sparkle {
+            0%, 100% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .crying-face {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            background-color: #FFDB58;
+            border-radius: 50%;
+        }
+
+        .eyes {
+            display: flex;
+            justify-content: space-around;
+            padding-left: -5px;
+            padding-right: -5px;
+            padding-top: 20px;
+        }
+
+        .eye {
+            width: 20px;
+            height: 20px;
+            background-color: #333;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .tear {
+            position: absolute;
+            width: 8px;
+            height: 20px;
+            background-color: #7DF9FF;
+            border-radius: 50%;
+            animation: tear-drop 3s infinite;
+        }
+
+        .tear-left {
+            left: -5px;
+            top: 20px;
+        }
+
+        .tear-right {
+            right: -5px;
+            top: 20px;
+        }
+
+        @keyframes tear-drop {
+            0% {
+                height: 0;
+                top: 20px;
+                opacity: 0;
+            }
+            30% {
+                height: 20px;
+                opacity: 1;
+            }
+            100% {
+                height: 20px;
+                top: 60px;
+                opacity: 0;
+            }
+        }
+
+        .mouth {
+            width: 30px;
+            height: 15px;
+            margin: 20px auto 0;
+            transform: rotate(180deg);
+        }
+    </style>
 </head>
-<body class="bg-background min-h-screen flex items-center justify-center p-4">
-    <div id="decorations" class="fixed inset-0 overflow-hidden pointer-events-none"></div>
-    <div id="hearts-container" class="fixed inset-0 pointer-events-none"></div>    
-    <div class="container max-w-md mx-auto z-10">
-        <div id="yes-response" class="bg-white rounded-3xl card-shadow p-8 text-center opacity-0">
-            <div class="text-8xl mb-6 animate-bounce">😄</div>
-            <h2 class="text-3xl font-bold text-primary mb-4">YAYAYAYYYYYY!</h2>
-            <p class="text-xl text-gray-600 mb-6">Looking forward to our date!</p>
+<body class="bg-background min-h-screen flex items-center justify-center p-4 overflow-hidden">
+    <div id="kitten-character" class="kitten-character">
+        <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="100" cy="120" rx="60" ry="50" fill="#FFA07A" />
+            <circle cx="100" cy="80" r="40" fill="#FFA07A" />
+            <polygon points="70,60 60,30 85,50" fill="#FFA07A" />
+            <polygon points="130,60 140,30 115,50" fill="#FFA07A" />
+            <polygon points="72,58 64,35 85,50" fill="#FFCBA4" />
+            <polygon points="128,58 136,35 115,50" fill="#FFCBA4" />
             
-            <div class="mt-6 flex flex-col items-center">
-                <p class="text-lg text-primary font-bold mb-4">Let me know when you're free:</p>
-                <div class="grid grid-cols-2 gap-4 mb-6 w-full max-w-xs">
-                    <button class="day-btn bg-pink-100 hover:bg-pink-200 text-primary py-2 px-4 rounded-lg transition-all">Friday</button>
-                    <button class="day-btn bg-pink-100 hover:bg-pink-200 text-primary py-2 px-4 rounded-lg transition-all">Saturday</button>
-                    <button class="day-btn bg-pink-100 hover:bg-pink-200 text-primary py-2 px-4 rounded-lg transition-all">Sunday</button>
-                    <button class="day-btn bg-pink-100 hover:bg-pink-200 text-primary py-2 px-4 rounded-lg transition-all">Monday</button>
+            <ellipse cx="85" cy="75" rx="7" ry="10" fill="white" />
+            <ellipse cx="115" cy="75" rx="7" ry="10" fill="white" />
+            <path d="M78,75 L92,75" stroke="red" stroke-width="2" />
+            <path d="M108,75 L122,75" stroke="red" stroke-width="2" />
+            <circle cx="85" cy="77" r="3" fill="black" />
+            <circle cx="115" cy="77" r="3" fill="black" />
+            
+            <path d="M100,85 L95,90 Q100,95 105,90 Z" fill="#FF9494" />
+            
+            <path d="M90,95 Q100,105 110,95" stroke="black" stroke-width="2" fill="transparent" />
+            
+            <line x1="90" y1="90" x2="60" y2="85" stroke="black" stroke-width="1" />
+            <line x1="90" y1="93" x2="60" y2="93" stroke="black" stroke-width="1" />
+            <line x1="90" y1="96" x2="60" y2="101" stroke="black" stroke-width="1" />
+            <line x1="110" y1="90" x2="140" y2="85" stroke="black" stroke-width="1" />
+            <line x1="110" y1="93" x2="140" y2="93" stroke="black" stroke-width="1" />
+            <line x1="110" y1="96" x2="140" y2="101" stroke="black" stroke-width="1" />
+            
+            <path d="M90,85 L95,90" stroke="black" stroke-width="2" />
+            <path d="M110,85 L105,90" stroke="black" stroke-width="2" />
+            
+            <rect x="140" y="90" width="12" height="50" fill="#8B4513" transform="rotate(-45, 140, 90)" />
+            <rect x="135" y="60" width="30" height="18" fill="#A0522D" transform="rotate(-45, 135, 60)" />
+            <rect x="135" y="60" width="25" height="6" fill="#708090" transform="rotate(-45, 135, 60)" />
+        </svg>
+    </div>
+
+    <div id="decorations" class="fixed inset-0 overflow-hidden pointer-events-none"></div>    
+    <div class="container max-w-md mx-auto z-10">
+        <div id="maybe-response" class="bg-white rounded-3xl card-shadow p-8 text-center opacity-0">
+            <div class="mb-6 relative w-24 h-24 mx-auto">
+                <div class="crying-face">
+                    <div class="eyes">
+                        <div class="eye">
+                            <div class="tear tear-left"></div>
+                        </div>
+                        <div class="eye">
+                            <div class="tear tear-right"></div>
+                        </div>
+                    </div>
+                    <div class="mouth"></div>
                 </div>
-                <div id="selected-day" class="hidden">
-                    <p class="text-lg text-primary">You selected: <span id="day-choice" class="font-bold"></span></p>
-                    <p class="text-gray-600 mt-2">I'll text you the details! 💕</p>
-                </div>
-                <button id="restart-btn" class="mt-8 text-sm text-gray-500 hover:text-primary transition-colors">
-                    <i class="fas fa-redo mr-1"></i> Start Over
+            </div>
+            
+            <h2 class="text-2xl font-bold text-primary mb-4">Are you sure??</h2>
+            <p class="text-xl italic text-primary mb-2">Don't you love me? <span class="text-2xl">💔</span></p>
+            <p class="text-gray-600 mb-6">I was really looking forward to spending time with you...</p>
+            
+            <div class="mb-4 relative h-20">
+                <button id="runaway-btn" class="running-button bg-secondary hover:bg-secondary-dark text-white font-bold py-3 px-6 rounded-full">
+                    I'm really busy
+                </button>
+                <a href="happy.html" id="replacement-btn" class="replacement-button bg-secondary hover:bg-secondary-dark text-white font-bold py-3 px-6 rounded-full">
+                    I'll make time for you
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <button id="yes-anyway" class="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-4 rounded-full transform transition-all duration-300 hover:scale-105">
+                    <i class="fas fa-heart mr-2"></i>Yes
+                </button>
+                <button id="of-course-yes" class="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-4 rounded-full transform transition-all duration-300 hover:scale-105">
+                    <i class="fas fa-heart-circle-check mr-2"></i>Of course yes
                 </button>
             </div>
         </div>
     </div>
-    
-    <script src="script.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => {
-                document.getElementById('yes-response').classList.add('fade-in');
-                createHearts(30);
+                document.getElementById('maybe-response').classList.add('fade-in');
+                initDecorations();
             }, 100);
             
-            const dayButtons = document.querySelectorAll('.day-btn');
-            dayButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    dayButtons.forEach(btn => {
-                        btn.classList.remove('bg-primary', 'text-white');
-                        btn.classList.add('bg-pink-100');
-                    });
-                    this.classList.add('bg-primary', 'text-white');
-                    this.classList.remove('bg-pink-100');                    
-                    document.getElementById('day-choice').textContent = this.textContent;
-                    document.getElementById('selected-day').classList.remove('hidden');
-                    createHearts(20);
-                });
+            const runawayBtn = document.getElementById('runaway-btn');
+            const replacementBtn = document.getElementById('replacement-btn');
+            const kittenCharacter = document.getElementById('kitten-character');
+            let slideAwayTriggered = false;
+            let attempts = 0;
+            let hammerTime = false;
+            
+            runawayBtn.addEventListener('mouseover', function(e) {
+                if (slideAwayTriggered || hammerTime) return;
+                
+                attempts++;
+                
+                if (attempts >= 5 && !hammerTime) {
+                    hammerTime = true;
+                    summonKitten();
+                    return;
+                }
+                
+                const viewportWidth = window.innerWidth;
+                const viewportHeight = window.innerHeight;                
+                const btnRect = this.getBoundingClientRect();
+                const padding = 20; 
+                const maxX = viewportWidth - btnRect.width - padding;
+                const minX = padding;
+                const maxY = viewportHeight - btnRect.height - padding;
+                const minY = padding;
+            
+                let newX = Math.floor(Math.random() * (maxX - minX)) + minX;
+                let newY = Math.floor(Math.random() * (maxY - minY)) + minY;
+                
+                const parentRect = this.parentElement.getBoundingClientRect();
+                const relativeX = newX - parentRect.left;
+                const relativeY = newY - parentRect.top;
+                
+                this.style.left = relativeX + 'px';
+                this.style.top = relativeY + 'px';
+                this.style.transform = 'none';
+                
+                if (Math.random() < 0.1) {
+                    slideAwayTriggered = true;
+                    this.classList.add('slide-away');
+                    
+                    setTimeout(() => {
+                        this.classList.remove('slide-away');
+                        this.style.left = '50%';
+                        this.style.top = '0';
+                        this.style.transform = 'translateX(-50%)';
+                        slideAwayTriggered = false;
+                    }, 1000);
+                }
             });
             
-            document.getElementById('restart-btn').addEventListener('click', function() {
-                window.location.href = 'index.html';
+            function summonKitten() {
+                const btnRect = runawayBtn.getBoundingClientRect();
+                const btnCenterX = btnRect.left + btnRect.width / 2;
+                const btnCenterY = btnRect.top + btnRect.height / 2;
+                
+                kittenCharacter.classList.add('visible');
+                kittenCharacter.classList.add('walking');
+                
+                setTimeout(() => {
+                    kittenCharacter.style.right = (window.innerWidth - btnCenterX - 60) + 'px';
+                    kittenCharacter.style.top = (btnCenterY - 20) + 'px';
+                }, 100);
+                
+                setTimeout(() => {
+                    kittenCharacter.classList.remove('walking');
+                    kittenCharacter.classList.add('smash');
+                    
+                    setTimeout(() => {
+                        const btnRect = runawayBtn.getBoundingClientRect();
+                        
+                        createButtonPieces(btnRect);
+                        
+                        runawayBtn.style.opacity = "0";
+                        runawayBtn.style.pointerEvents = "none";
+                        
+                        setTimeout(() => {
+                            replacementBtn.classList.add('show');
+                            
+                            createSparklesAroundButton(replacementBtn);
+                            
+                            kittenCharacter.style.right = '-120px';
+                            setTimeout(() => {
+                                kittenCharacter.classList.remove('visible');
+                            }, 1000);
+                        }, 2500);
+                    }, 1000);
+                }, 2000);
+            }
+            
+            function createButtonPieces(btnRect) {
+                const leftPiece = document.createElement('div');
+                leftPiece.className = 'button-piece piece-left';
+                leftPiece.style.width = btnRect.width + 'px';
+                leftPiece.style.height = btnRect.height + 'px';
+                leftPiece.style.left = btnRect.left + 'px';
+                leftPiece.style.top = btnRect.top + 'px';
+                leftPiece.textContent = "I'm re";
+                document.body.appendChild(leftPiece);
+                
+                const rightPiece = document.createElement('div');
+                rightPiece.className = 'button-piece piece-right';
+                rightPiece.style.width = btnRect.width + 'px';
+                rightPiece.style.height = btnRect.height + 'px';
+                rightPiece.style.left = btnRect.left + 'px';
+                rightPiece.style.top = btnRect.top + 'px';
+                rightPiece.textContent = "ally busy";
+                document.body.appendChild(rightPiece);
+                
+                setTimeout(() => {
+                    leftPiece.remove();
+                    rightPiece.remove();
+                }, 3000);
+            }
+            
+            document.getElementById('yes-anyway').addEventListener('click', function() {
+                window.location.href = 'happy.html';
             });
-            autoRedirect('index.html', 30);
+            
+            document.getElementById('of-course-yes').addEventListener('click', function() {
+                window.location.href = 'happy.html';
+            });
+            
+            function createSparklesAroundButton(button) {
+                const btnRect = button.getBoundingClientRect();
+                
+                for(let i = 0; i < 10; i++) {
+                    setTimeout(() => {
+                        const sparkle = document.createElement('div');
+                        sparkle.className = 'sparkle';
+                        const angle = Math.random() * Math.PI * 2;
+                        const distance = 30 + Math.random() * 20;
+                        
+                        const centerX = btnRect.left + btnRect.width/2;
+                        const centerY = btnRect.top + btnRect.height/2;
+                        
+                        sparkle.style.left = (centerX + Math.cos(angle) * distance) + 'px';
+                        sparkle.style.top = (centerY + Math.sin(angle) * distance) + 'px';
+                        document.body.appendChild(sparkle);
+                        
+                        setTimeout(() => {
+                            sparkle.remove();
+                        }, 2000);
+                    }, i * 200);
+                }
+            }
+            
+            function initDecorations() {
+                const decorations = document.getElementById('decorations');
+                
+                for (let i = 0; i < 15; i++) {
+                    const heart = document.createElement('div');
+                    heart.className = 'floating-heart';
+                    heart.innerHTML = '❤️';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.top = Math.random() * 100 + 'vh';
+                    heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                    heart.style.opacity = Math.random() * 0.7 + 0.3;
+                    decorations.appendChild(heart);
+                }
+                
+                for (let i = 0; i < 10; i++) {
+                    const sparkle = document.createElement('div');
+                    sparkle.className = 'sparkle';
+                    sparkle.style.left = Math.random() * 100 + 'vw';
+                    sparkle.style.top = Math.random() * 100 + 'vh';
+                    decorations.appendChild(sparkle);
+                }
+                
+                for (let i = 0; i < 5; i++) {
+                    const butterfly = document.createElement('div');
+                    butterfly.className = 'floating-butterfly';
+                    butterfly.innerHTML = '🦋';
+                    butterfly.style.left = Math.random() * 100 + 'vw';
+                    butterfly.style.top = Math.random() * 100 + 'vh';
+                    butterfly.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                    decorations.appendChild(butterfly);
+                }
+            }
         });
     </script>
 </body>
