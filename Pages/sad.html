@@ -39,7 +39,7 @@
         .baby-character {
             position: fixed;
             bottom: -150px;
-            left: -150px;
+            left: -100px;
             width: 120px;
             height: 120px;
             z-index: 1000;
@@ -61,8 +61,8 @@
             position: absolute;
             width: 40px;
             height: 80px;
-            right: -10px;
-            top: -40px;
+            right: 8px;
+            top: -50px;
             transform-origin: bottom right;
             transition: transform 0.3s ease-in-out;
         }
@@ -73,7 +73,7 @@
 
         @keyframes hammerSwing {
             0% { transform: rotate(0deg); }
-            50% { transform: rotate(-70deg); }
+            50% { transform: rotate(40deg); }
             100% { transform: rotate(0deg); }
         }
 
@@ -284,6 +284,7 @@
         }
     </style>
 </head>
+
 <body class="bg-background min-h-screen flex items-center justify-center p-4 overflow-hidden">
     <div id="baby-character" class="baby-character">
         <img src="./../Images/baby.png" alt="Baby" class="baby-image">
