@@ -9,6 +9,287 @@
     <link rel="stylesheet" href="styles.css">
 
     <style>
+        :root {
+            --primary-color: #4F46E5;
+            --primary-dark: #3730A3;
+            --secondary-color: #EC4899;
+            --secondary-dark: #DB2777;
+            --background-color: #F8FAFC;
+            --text-primary: #1F2937;
+            --text-secondary: #6B7280;
+            --border-color: #E5E7EB;
+            --success-color: #10B981;
+            --warning-color: #F59E0B;
+            --error-color: #EF4444;
+        }
+
+        [data-theme="high-contrast"] {
+            --primary-color: #0000FF;
+            --primary-dark: #000080;
+            --secondary-color: #FF00FF;
+            --secondary-dark: #800080;
+            --background-color: #FFFFFF;
+            --text-primary: #000000;
+            --text-secondary: #333333;
+            --border-color: #000000;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--background-color);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .accessibility-controls {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 2000;
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .accessibility-btn {
+            background: var(--primary-color);
+            color: white;
+            border: 2px solid var(--primary-color);
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            font-weight: 600;
+            min-height: 44px;
+            min-width: 44px;
+        }
+
+        .accessibility-btn:hover,
+        .accessibility-btn:focus {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+            outline: 3px solid #FFD700;
+            outline-offset: 2px;
+        }
+
+        .accessibility-btn.active {
+            background: var(--success-color);
+            border-color: var(--success-color);
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .skip-link {
+            position: absolute;
+            top: -40px;
+            left: 6px;
+            background: var(--primary-color);
+            color: white;
+            padding: 8px;
+            text-decoration: none;
+            border-radius: 4px;
+            z-index: 3000;
+            font-weight: 600;
+        }
+
+        .skip-link:focus {
+            top: 6px;
+            outline: 3px solid #FFD700;
+            outline-offset: 2px;
+        }
+
+        .container {
+            max-width: 28rem;
+            margin: 0 auto;
+            padding: 1rem;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .card-shadow {
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .main-card {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2rem;
+            text-align: center;
+            border: 2px solid var(--border-color);
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .main-card.fade-out {
+            opacity: 0;
+        }
+
+        .main-card.fade-in {
+            opacity: 1;
+        }
+
+        .emoji-face {
+            margin: 0 auto 1.5rem;
+            position: relative;
+            width: 6rem;
+            height: 6rem;
+        }
+
+        .crying-face {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background-color: #FFDB58;
+            border-radius: 50%;
+            border: 3px solid var(--border-color);
+        }
+
+        .eyes {
+            display: flex;
+            justify-content: space-around;
+            padding: 1.25rem 0.5rem 0;
+        }
+
+        .eye {
+            width: 1.25rem;
+            height: 1.25rem;
+            background-color: #333;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .tear {
+            position: absolute;
+            width: 0.5rem;
+            height: 1.25rem;
+            background-color: #7DF9FF;
+            border-radius: 50%;
+            animation: tear-drop 2s infinite;
+        }
+
+        .tear-left {
+            left: -0.3125rem;
+            top: 1.25rem;
+        }
+
+        .tear-right {
+            right: -0.3125rem;
+            top: 1.25rem;
+        }
+
+        @keyframes tear-drop {
+            0% {
+                height: 0;
+                top: 1.25rem;
+                opacity: 0;
+            }
+            30% {
+                height: 0.9375rem;
+                opacity: 1;
+            }
+            100% {
+                height: 0.9375rem;
+                top: 3.75rem;
+                opacity: 0;
+            }
+        }
+
+        .mouth {
+            width: 1.875rem;
+            height: 0.9375rem;
+            margin: 1.25rem auto 0;
+            border: 3px solid #333;
+            border-top: none;
+            border-radius: 0 0 30px 30px;
+        }
+
+        .main-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            font-style: italic;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .description {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+        }
+
+        .button-container {
+            margin-bottom: 1rem;
+            position: relative;
+            height: 5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .primary-button {
+            background: var(--secondary-color);
+            color: white;
+            border: 3px solid var(--secondary-color);
+            font-weight: 700;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            font-size: 1rem;
+            min-height: 48px;
+            min-width: 160px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .primary-button:hover {
+            background: var(--secondary-dark);
+            border-color: var(--secondary-dark);
+            transform: scale(1.05);
+        }
+
+        .primary-button:focus {
+            outline: 3px solid #FFD700;
+            outline-offset: 3px;
+        }
+
+        .primary-button.keyboard-accessible {
+            position: static;
+            transform: none !important;
+        }
+
+        .primary-button.keyboard-accessible:hover {
+            transform: scale(1.05) !important;
+        }
+
         .running-button {
             position: absolute;
             left: 50%;
@@ -21,19 +302,63 @@
             justify-content: center;
         }
 
-        .slide-away {
-            animation: slideAway 1s ease-in-out;
+        .replacement-button {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 160px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            pointer-events: none;
         }
 
-        @keyframes slideAway {
-            to {
-                left: 200%;
+        .replacement-button.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+
+        @media (min-width: 640px) {
+            .button-grid {
+                grid-template-columns: 1fr 1fr;
             }
         }
 
-        .fade-in {
-            opacity: 1 !important;
-            transition: opacity 0.5s ease-in-out;
+        .secondary-button {
+            background: var(--primary-color);
+            color: white;
+            border: 3px solid var(--primary-color);
+            font-weight: 700;
+            padding: 0.75rem 1rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            font-size: 1rem;
+            min-height: 48px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .secondary-button:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .secondary-button:focus {
+            outline: 3px solid #FFD700;
+            outline-offset: 3px;
         }
 
         .baby-character {
@@ -79,7 +404,7 @@
 
         .button-piece {
             position: fixed;
-            background-color: #6C63FF;
+            background-color: var(--secondary-color);
             color: white;
             font-weight: bold;
             display: flex;
@@ -93,13 +418,11 @@
         .piece-left {
             clip-path: polygon(0 0, 50% 0, 60% 100%, 0 100%);
             animation: fallLeft 3s forwards cubic-bezier(0.42, 0, 0.58, 1);
-            z-index: 50;
         }
 
         .piece-right {
             clip-path: polygon(50% 0, 100% 0, 100% 100%, 40% 100%);
             animation: fallRight 3s forwards cubic-bezier(0.42, 0, 0.58, 1);
-            z-index: 50;
         }
 
         @keyframes fallLeft {
@@ -112,28 +435,12 @@
             100% { transform: translateY(600px) rotate(45deg); opacity: 0; }
         }
 
-        .replacement-button {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 160px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 1s ease-in-out;
+        .decorations {
+            position: fixed;
+            inset: 0;
+            overflow: hidden;
             pointer-events: none;
-        }
-
-        .replacement-button:hover {
-            scale: 1.05;
-            transition: ease-in-out;
-            transition-duration: 0.5s;
-        }
-        .replacement-button.show {
-            opacity: 1;
-            pointer-events: all;
+            z-index: 1;
         }
 
         .floating-heart {
@@ -142,53 +449,29 @@
             color: #FF6B9D;
             animation: float-circle 20s linear infinite;
             opacity: 0.8;
-            z-index: 1;
         }
 
         @keyframes float-circle {
-            0% {
-                transform: translate(0, 0) rotate(0deg);
-            }
-            25% {
-                transform: translate(100px, -100px) rotate(90deg);
-            }
-            50% {
-                transform: translate(0, -200px) rotate(180deg);
-            }
-            75% {
-                transform: translate(-100px, -100px) rotate(270deg);
-            }
-            100% {
-                transform: translate(0, 0) rotate(360deg);
-            }
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(100px, -100px) rotate(90deg); }
+            50% { transform: translate(0, -200px) rotate(180deg); }
+            75% { transform: translate(-100px, -100px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
         }
 
         .floating-butterfly {
             position: absolute;
             font-size: 24px;
             animation: flutter-circle 30s linear infinite;
-            z-index: 1;
         }
 
         @keyframes flutter-circle {
-            0% {
-                transform: translate(0, 0) rotate(0deg) scale(1);
-            }
-            20% {
-                transform: translate(100px, -50px) rotate(72deg) scale(1.2);
-            }
-            40% {
-                transform: translate(50px, -100px) rotate(144deg) scale(1);
-            }
-            60% {
-                transform: translate(-50px, -100px) rotate(216deg) scale(1.2);
-            }
-            80% {
-                transform: translate(-100px, -50px) rotate(288deg) scale(1);
-            }
-            100% {
-                transform: translate(0, 0) rotate(360deg) scale(1);
-            }
+            0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+            20% { transform: translate(100px, -50px) rotate(72deg) scale(1.2); }
+            40% { transform: translate(50px, -100px) rotate(144deg) scale(1); }
+            60% { transform: translate(-50px, -100px) rotate(216deg) scale(1.2); }
+            80% { transform: translate(-100px, -50px) rotate(288deg) scale(1); }
+            100% { transform: translate(0, 0) rotate(360deg) scale(1); }
         }
 
         .sparkle {
@@ -198,85 +481,11 @@
             background-color: #FFD700;
             border-radius: 50%;
             animation: sparkle 2s linear infinite;
-            z-index: 1;
         }
 
         @keyframes sparkle {
-            0%, 100% {
-                opacity: 0;
-                transform: scale(0);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-
-        .crying-face {
-            position: relative;
-            width: 120px;
-            height: 120px;
-            background-color: #FFDB58;
-            border-radius: 50%;
-        }
-
-        .eyes {
-            display: flex;
-            justify-content: space-around;
-            padding-left: -5px;
-            padding-right: -5px;
-            padding-top: 20px;
-        }
-
-        .eye {
-            width: 20px;
-            height: 20px;
-            background-color: #333;
-            border-radius: 50%;
-            position: relative;
-        }
-
-        .tear {
-            position: absolute;
-            width: 8px;
-            height: 20px;
-            background-color: #7DF9FF;
-            border-radius: 50%;
-            animation: tear-drop 2s infinite;
-        }
-
-        .tear-left {
-            left: -5px;
-            top: 20px;
-        }
-
-        .tear-right {
-            right: -5px;
-            top: 20px;
-        }
-
-        @keyframes tear-drop {
-            0% {
-                height: 0;
-                top: 20px;
-                opacity: 0;
-            }
-            30% {
-                height: 15px;
-                opacity: 1;
-            }
-            100% {
-                height: 15px;
-                top: 60px;
-                opacity: 0;
-            }
-        }
-
-        .mouth {
-            width: 30px;
-            height: 15px;
-            margin: 20px auto 0;
-            transform: rotate(180deg);
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
         }
 
         .walking {
@@ -287,14 +496,130 @@
             0% { transform: translateY(0); }
             100% { transform: translateY(-10px); }
         }
+
+        .slide-away {
+            animation: slideAway 1s ease-in-out;
+        }
+
+        @keyframes slideAway {
+            to { left: 200%; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .floating-heart,
+            .floating-butterfly,
+            .sparkle,
+            .tear,
+            .walking {
+                animation: none !important;
+            }
+            
+            .running-button {
+                position: static !important;
+                transform: none !important;
+            }
+        }
+
+        .reduced-motion .floating-heart,
+        .reduced-motion .floating-butterfly,
+        .reduced-motion .sparkle,
+        .reduced-motion .tear,
+        .reduced-motion .walking {
+            animation: none !important;
+        }
+
+        .reduced-motion .running-button {
+            position: static !important;
+            transform: none !important;
+        }
+
+        .status-indicator {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .status-busy {
+            background-color: var(--error-color);
+        }
+
+        .status-available {
+            background-color: var(--success-color);
+        }
+
+        .large-text {
+            font-size: 1.2em;
+        }
+
+        .large-text .main-title {
+            font-size: 2rem;
+        }
+
+        .large-text .subtitle {
+            font-size: 1.5rem;
+        }
+
+        .large-text .description {
+            font-size: 1.2rem;
+        }
+
+        .focus-visible {
+            outline: 3px solid #FFD700 !important;
+            outline-offset: 3px !important;
+        }
+
+        @media (max-width: 640px) {
+            .accessibility-controls {
+                position: static;
+                justify-content: center;
+                padding: 10px;
+                background: rgba(255, 255, 255, 0.9);
+                border-bottom: 1px solid var(--border-color);
+            }
+            
+            .container {
+                padding-top: 0;
+            }
+        }
     </style>
 </head>
 
-<body class="bg-background min-h-screen flex items-center justify-center p-4 overflow-hidden">
+<body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <div class="accessibility-controls" role="toolbar" aria-label="Accessibility options">
+        <button id="high-contrast-btn" class="accessibility-btn" aria-pressed="false" title="Toggle high contrast mode">
+            <i class="fas fa-adjust" aria-hidden="true"></i>
+            <span class="sr-only">High Contrast</span>
+        </button>
+        <button id="large-text-btn" class="accessibility-btn" aria-pressed="false" title="Toggle large text">
+            <i class="fas fa-font" aria-hidden="true"></i>
+            <span class="sr-only">Large Text</span>
+        </button>
+        <button id="reduce-motion-btn" class="accessibility-btn" aria-pressed="false" title="Reduce animations">
+            <i class="fas fa-pause" aria-hidden="true"></i>
+            <span class="sr-only">Reduce Motion</span>
+        </button>
+        <button id="keyboard-mode-btn" class="accessibility-btn" aria-pressed="false" title="Enable keyboard-friendly mode">
+            <i class="fas fa-keyboard" aria-hidden="true"></i>
+            <span class="sr-only">Keyboard Mode</span>
+        </button>
+    </div>
+
     <div id="baby-character" class="baby-character" aria-hidden="true">
-        <img src="./../Images/baby.png" alt="Animated baby character" class="baby-image">
+        <img src="/api/placeholder/120/120" alt="" class="baby-image">
         <div class="hammer">
-            <svg viewBox="0 0 40 80" width="40" height="80">
+            <svg viewBox="0 0 40 80" width="40" height="80" aria-hidden="true">
                 <rect x="15" y="40" width="10" height="40" fill="#8B4513" />
                 <rect x="5" y="30" width="30" height="15" fill="#A0522D" />
                 <rect x="5" y="30" width="30" height="5" fill="#708090" />
@@ -302,10 +627,11 @@
         </div>
     </div>
 
-    <div id="decorations" class="fixed inset-0 overflow-hidden pointer-events-none" aria-hidden="true"></div>    
-     <div class="container max-w-md mx-auto z-10">
-        <div id="maybe-response" class="bg-white rounded-3xl card-shadow p-8 text-center opacity-0">
-            <div class="mb-6 relative w-24 h-24 mx-auto" aria-label="Crying emoji face">
+    <div id="decorations" class="decorations" aria-hidden="true"></div>
+    
+    <div class="container">
+        <main id="main-content" class="main-card card-shadow" role="main">
+            <div class="emoji-face" role="img" aria-label="Crying face emoji">
                 <div class="crying-face">
                     <div class="eyes">
                         <div class="eye">
@@ -319,259 +645,52 @@
                 </div>
             </div>
             
-            <h2 class="text-2xl font-bold text-primary mb-4">Are you sure??</h2>
-            <p class="text-xl italic text-primary mb-2">Don't you love me? <span class="text-2xl" aria-hidden="true">💔</span><span class="sr-only">broken heart</span></p>
-            <p class="text-gray-600 mb-6">I was really looking forward to spending time with you...</p>
+            <h1 class="main-title">Are you sure??</h1>
+            <p class="subtitle">
+                Don't you love me? 
+                <span aria-hidden="true">💔</span>
+                <span class="sr-only">broken heart</span>
+                <span class="status-indicator status-busy" aria-label="Currently feeling sad"></span>
+            </p>
+            <p class="description">I was really looking forward to spending time with you...</p>
             
-            <div class="mb-4 relative h-20">
-                <button id="runaway-btn" class="running-button bg-secondary hover:bg-secondary-dark text-white font-bold py-3 px-6 rounded-full" aria-label="I'm really busy">
+            <div class="button-container">
+                <button id="runaway-btn" class="primary-button running-button" 
+                        aria-describedby="runaway-description">
                     I'm really busy
+                    <span class="status-indicator status-busy" aria-label="Busy status"></span>
                 </button>
-                <a href="happy.html" id="replacement-btn" class="replacement-button bg-secondary hover:bg-secondary-dark text-white font-bold py-3 px-6 rounded-full" aria-label="I'll make time for you">
+                <div id="runaway-description" class="sr-only">
+                    This button may move around. Use keyboard mode if you have difficulty clicking it.
+                </div>
+                <a href="happy.html" id="replacement-btn" class="primary-button replacement-button">
                     I'll make time for you 😅😅
+                    <span class="status-indicator status-available" aria-label="Available status"></span>
                 </a>
             </div>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <button id="yes-anyway" class="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-4 rounded-full transform transition-all duration-300 hover:scale-105" aria-label="Yes button">
-                    <i class="fas fa-heart mr-2" aria-hidden="true"></i>Yes
+            <div class="button-grid">
+                <button id="yes-anyway" class="secondary-button" aria-describedby="yes-description">
+                    <i class="fas fa-heart" aria-hidden="true"></i>
+                    <span>Yes</span>
+                    <span class="status-indicator status-available" aria-label="Positive choice"></span>
                 </button>
-                <button id="of-course-yes" class="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-4 rounded-full transform transition-all duration-300 hover:scale-105" aria-label="Of course yes button">
-                    <i class="fas fa-heart mr-2" aria-hidden="true"></i>Ofcourse, Yes!! 
+                <div id="yes-description" class="sr-only">
+                    Choose this to proceed with a positive response
+                </div>
+                
+                <button id="of-course-yes" class="secondary-button" aria-describedby="ofcourse-description">
+                    <i class="fas fa-heart" aria-hidden="true"></i>
+                    <span>Of course, Yes!!</span>
+                    <span class="status-indicator status-available" aria-label="Very positive choice"></span>
                 </button>
+                <div id="ofcourse-description" class="sr-only">
+                    Choose this for an enthusiastic positive response
+                </div>
             </div>
-        </div>
+        </main>
     </div>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            initDecorations();
-            
-            setTimeout(() => {
-                document.getElementById('maybe-response').classList.add('fade-in');
-            }, 100);
-            
-            const runawayBtn = document.getElementById('runaway-btn');
-            const replacementBtn = document.getElementById('replacement-btn');
-            const babyCharacter = document.getElementById('baby-character');
-            const hammer = document.querySelector('.hammer');
-            
-            let slideAwayTriggered = false;
-            let attempts = 0;
-            let hammerTime = false;
-            
-            function handleRunawayInteraction(e) {
-                if (slideAwayTriggered || hammerTime) return;
-                
-                attempts++;
-                
-                if (attempts >= 5 && !hammerTime) {
-                    hammerTime = true;
-                    summonBabyWithHammer();
-                    return;
-                }
-                
-                const viewportWidth = window.innerWidth;
-                const viewportHeight = window.innerHeight;                
-                const btnRect = runawayBtn.getBoundingClientRect();
-                const padding = 20; 
-                const maxX = viewportWidth - btnRect.width - padding;
-                const minX = padding;
-                const maxY = viewportHeight - btnRect.height - padding;
-                const minY = padding;
-            
-                let newX = Math.floor(Math.random() * (maxX - minX)) + minX;
-                let newY = Math.floor(Math.random() * (maxY - minY)) + minY;
-                
-                const parentRect = runawayBtn.parentElement.getBoundingClientRect();
-                const relativeX = newX - parentRect.left;
-                const relativeY = newY - parentRect.top;
-                
-                runawayBtn.style.left = relativeX + 'px';
-                runawayBtn.style.top = relativeY + 'px';
-                runawayBtn.style.transform = 'none';
-                
-                if (Math.random() < 0.1) {
-                    slideAwayTriggered = true;
-                    runawayBtn.classList.add('slide-away');
-                    
-                    setTimeout(() => {
-                        runawayBtn.classList.remove('slide-away');
-                        runawayBtn.style.left = '50%';
-                        runawayBtn.style.top = '0';
-                        runawayBtn.style.transform = 'translateX(-50%)';
-                        slideAwayTriggered = false;
-                    }, 1000);
-                }
-            }
-            
-            runawayBtn.addEventListener('mouseover', handleRunawayInteraction);
-            runawayBtn.addEventListener('touchstart', function(e) {
-                e.preventDefault();
-                handleRunawayInteraction(e);
-            });
-            
-            function summonBabyWithHammer() {
-                const btnRect = runawayBtn.getBoundingClientRect();
-                const btnCenterX = btnRect.left + btnRect.width / 2;
-                const btnCenterY = btnRect.top + btnRect.height / 2;
-                
-                babyCharacter.classList.add('visible');
-                babyCharacter.classList.add('walking');
-                
-                babyCharacter.style.bottom = '20px';
-                babyCharacter.style.left = '20px';
-                
-                const steps = 10;
-                const walkPath = [];
-                
-                const targetLeft = btnCenterX - 150; 
-                
-                for (let i = 0; i <= steps; i++) {
-                    const position = {
-                        left: 20 + ((targetLeft - 20) * (i / steps)),
-                        bottom: 20 + ((window.innerHeight - btnCenterY - 60) - 20) * (i / steps)
-                    };
-                    walkPath.push(position);
-                }
-                
-                let step = 0;
-                const walkInterval = setInterval(() => {
-                    if (step < walkPath.length) {
-                        babyCharacter.style.left = walkPath[step].left + 'px';
-                        babyCharacter.style.bottom = walkPath[step].bottom + 'px';
-                        step++;
-                    } else {
-                        clearInterval(walkInterval);
-                        babyCharacter.classList.remove('walking');
-                        
-                        setTimeout(() => {
-                            hammer.classList.add('hammer-swing');
-                            
-                            setTimeout(() => {
-                                const btnRect = runawayBtn.getBoundingClientRect();
-                                createButtonPieces(btnRect);
-                                runawayBtn.style.opacity = "0";
-                                runawayBtn.style.pointerEvents = "none";
-                                
-                                setTimeout(() => {
-                                    replacementBtn.classList.add('show');
-                                    
-                                    createSparklesAroundButton(replacementBtn);
-                                    
-                                    babyCharacter.classList.add('walking');
-                                    babyCharacter.style.left = '-150px';
-                                    
-                                    setTimeout(() => {
-                                        babyCharacter.classList.remove('visible');
-                                        babyCharacter.classList.remove('walking');
-                                    }, 1000);
-                                }, 1500);
-                            }, 1000);
-                        }, 500);
-                    }
-                }, 150);
-            }
-            
-            function createButtonPieces(btnRect) {
-                const leftPiece = document.createElement('div');
-                leftPiece.className = 'button-piece piece-left';
-                leftPiece.setAttribute('aria-hidden', 'true');
-                leftPiece.style.width = btnRect.width + 'px';
-                leftPiece.style.height = btnRect.height + 'px';
-                leftPiece.style.left = btnRect.left + 'px';
-                leftPiece.style.top = btnRect.top + 'px';
-                leftPiece.textContent = "I'm re";
-                document.body.appendChild(leftPiece);
-                
-                const rightPiece = document.createElement('div');
-                rightPiece.className = 'button-piece piece-right';
-                rightPiece.setAttribute('aria-hidden', 'true');
-                rightPiece.style.width = btnRect.width + 'px';
-                rightPiece.style.height = btnRect.height + 'px';
-                rightPiece.style.left = btnRect.left + 'px';
-                rightPiece.style.top = btnRect.top + 'px';
-                rightPiece.textContent = "ally busy";
-                document.body.appendChild(rightPiece);
-                
-                setTimeout(() => {
-                    leftPiece.remove();
-                    rightPiece.remove();
-                }, 3000);
-            }
-            
-            document.getElementById('yes-anyway').addEventListener('click', function() {
-                window.location.href = 'happy.html';
-            });
-            
-            document.getElementById('of-course-yes').addEventListener('click', function() {
-                window.location.href = 'happy.html';
-            });
-            
-            function createSparklesAroundButton(button) {
-                const btnRect = button.getBoundingClientRect();
-                
-                for(let i = 0; i < 10; i++) {
-                    setTimeout(() => {
-                        const sparkle = document.createElement('div');
-                        sparkle.className = 'sparkle';
-                        sparkle.setAttribute('aria-hidden', 'true');
-                        const angle = Math.random() * Math.PI * 2;
-                        const distance = 30 + Math.random() * 20;
-                        
-                        const centerX = btnRect.left + btnRect.width/2;
-                        const centerY = btnRect.top + btnRect.height/2;
-                        
-                        sparkle.style.left = (centerX + Math.cos(angle) * distance) + 'px';
-                        sparkle.style.top = (centerY + Math.sin(angle) * distance) + 'px';
-                        document.body.appendChild(sparkle);
-                        
-                        setTimeout(() => {
-                            sparkle.remove();
-                        }, 2000);
-                    }, i * 200);
-                }
-            }
-            
-            function initDecorations() {
-                const decorations = document.getElementById('decorations');
-                
-                for (let i = 0; i < 15; i++) {
-                    const heart = document.createElement('div');
-                    heart.className = 'floating-heart';
-                    heart.innerHTML = '❤️';
-                    heart.setAttribute('aria-hidden', 'true');
-                    heart.style.left = Math.random() * 100 + 'vw';
-                    heart.style.top = Math.random() * 100 + 'vh';
-                    heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
-                    heart.style.opacity = Math.random() * 0.7 + 0.3;
-                    heart.style.animationDelay = '-' + (Math.random() * 20) + 's';
-                    decorations.appendChild(heart);
-                }
-                
-                for (let i = 0; i < 10; i++) {
-                    const sparkle = document.createElement('div');
-                    sparkle.className = 'sparkle';
-                    sparkle.setAttribute('aria-hidden', 'true');
-                    sparkle.style.left = Math.random() * 100 + 'vw';
-                    sparkle.style.top = Math.random() * 100 + 'vh';
-                    sparkle.style.animationDelay = '-' + (Math.random() * 2) + 's';
-                    decorations.appendChild(sparkle);
-                }
-                
-                for (let i = 0; i < 5; i++) {
-                    const butterfly = document.createElement('div');
-                    butterfly.className = 'floating-butterfly';
-                    butterfly.innerHTML = '🦋';
-                    butterfly.setAttribute('aria-hidden', 'true');
-                    butterfly.style.left = Math.random() * 100 + 'vw';
-                    butterfly.style.top = Math.random() * 100 + 'vh';
-                    butterfly.style.fontSize = (Math.random() * 20 + 15) + 'px';
-                    butterfly.style.animationDelay = '-' + (Math.random() * 30) + 's';
-                    decorations.appendChild(butterfly);
-                }
-            }
-        });
-    </script>
+    <div aria-live="polite" aria-atomic="true" class="sr-only" id="status-announcements"></div>
 </body>
 </html>
