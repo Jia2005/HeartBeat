@@ -59,10 +59,6 @@ body {
     animation: floatReverse 2.5s ease-in-out infinite;
 }
 
-.tear {
-    animation: tearDrop 2s infinite;
-}
-
 .heart {
     position: absolute;
     opacity: 0;
