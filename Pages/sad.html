@@ -166,12 +166,12 @@
         .eyes {
             display: flex;
             justify-content: space-around;
-            padding: 1.25rem 0.5rem 0;
+            padding: 3px 5px 0;
         }
 
         .eye {
-            width: 1.25rem;
-            height: 1.25rem;
+            width: 1rem;
+            height: 1rem;
             background-color: #333;
             border-radius: 50%;
             position: relative;
@@ -219,7 +219,7 @@
             margin: 1.25rem auto 0;
             border: 3px solid #333;
             border-top: none;
-            border-radius: 0 0 30px 30px;
+            margin-bottom: 3rem;
         }
 
         .main-title {
@@ -617,7 +617,7 @@
     </div>
 
     <div id="baby-character" class="baby-character" aria-hidden="true">
-        <img src="/api/placeholder/120/120" alt="" class="baby-image">
+        <img src="./../Images/baby.png" alt="" class="baby-image">
         <div class="hammer">
             <svg viewBox="0 0 40 80" width="40" height="80" aria-hidden="true">
                 <rect x="15" y="40" width="10" height="40" fill="#8B4513" />
@@ -692,5 +692,6 @@
     </div>
 
     <div aria-live="polite" aria-atomic="true" class="sr-only" id="status-announcements"></div>
+    <script src="script.js"></script>
 </body>
 </html>
