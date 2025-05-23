@@ -1,12 +1,14 @@
 import { Heart, Cloud, Star, Eye, Pause, Type, RotateCcw } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-function HappyPage() {
+function Happy() {
   const [colorBlindMode, setColorBlindMode] = useState(false);
   const [animationsDisabled, setAnimationsDisabled] = useState(false);
   const [fontSize, setFontSize] = useState('normal');
   const [selectedDay, setSelectedDay] = useState('');
   const [flyingHearts, setFlyingHearts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!animationsDisabled) {
@@ -34,10 +36,7 @@ function HappyPage() {
   };
 
   const handleRestart = () => {
-    setSelectedDay('');
-    setColorBlindMode(false);
-    setAnimationsDisabled(false);
-    setFontSize('normal');
+    navigate("/");
   };
 
   const toggleColorBlindMode = () => {
@@ -403,4 +402,4 @@ function HappyPage() {
   );
 }
 
-export default HappyPage;
+export default Happy;
