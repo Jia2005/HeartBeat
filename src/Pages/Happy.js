@@ -1,31 +1,45 @@
 import { Heart, Cloud, Star, Eye, Pause, Type, RotateCcw } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function HappyPage() {
   const [colorBlindMode, setColorBlindMode] = useState(false);
   const [animationsDisabled, setAnimationsDisabled] = useState(false);
   const [fontSize, setFontSize] = useState('normal');
   const [selectedDay, setSelectedDay] = useState('');
-  const [showHearts, setShowHearts] = useState(false);
+  const [flyingHearts, setFlyingHearts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Create initial heart animation
-    setShowHearts(true);
-    const timer = setTimeout(() => setShowHearts(false), 3000);
-    return () => clearTimeout(timer);
-  }, []);
+    if (!animationsDisabled) {
+      createFlyingHearts(50);
+    }
+  }, [animationsDisabled]);
+
+  const createFlyingHearts = (count) => {
+    const hearts = Array.from({ length: count }, (_, i) => ({
+      id: Date.now() + i,
+      left: Math.random() * 100,
+      delay: Math.random() * 3000,
+      duration: 3000 + Math.random() * 2000,
+      size: 16 + Math.random() * 16
+    }));
+    setFlyingHearts(hearts);
+    
+    setTimeout(() => {
+      setFlyingHearts([]);
+    }, 6000);
+  };
 
   const handleDaySelect = (day) => {
     setSelectedDay(day);
-    // Trigger hearts animation
-    setShowHearts(true);
-    setTimeout(() => setShowHearts(false), 2000);
+    if (!animationsDisabled) {
+      createFlyingHearts(20);
+    }
   };
 
   const handleRestart = () => {
-    // In a real app, this would navigate back to the question page
-    setSelectedDay('');
-    console.log('Navigate back to question page');
+    navigate('/');
   };
 
   const toggleColorBlindMode = () => {
@@ -127,7 +141,6 @@ function HappyPage() {
     >
       <div className="absolute inset-0 bg-pattern opacity-30" aria-hidden="true"></div>
       
-      {/* Accessibility Controls */}
       <div className="fixed top-4 right-4 z-50 flex gap-2" role="toolbar" aria-label="Accessibility controls">
         <button
           onClick={toggleColorBlindMode}
@@ -164,27 +177,26 @@ function HappyPage() {
         </button>
       </div>
 
-      {/* Floating Hearts Animation */}
-      {shouldAnimate && showHearts && (
+      {shouldAnimate && flyingHearts.length > 0 && (
         <div className="fixed inset-0 overflow-hidden pointer-events-none z-20" aria-hidden="true">
-          {Array.from({ length: 20 }).map((_, i) => (
+          {flyingHearts.map((heart) => (
             <div
-              key={i}
-              className="absolute animate-float"
+              key={heart.id}
+              className="absolute animate-fly-up"
               style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 2}s`,
-                animationDuration: `${2 + Math.random() * 2}s`
+                left: `${heart.left}%`,
+                bottom: '-50px',
+                animationDelay: `${heart.delay}ms`,
+                animationDuration: `${heart.duration}ms`,
+                fontSize: `${heart.size}px`
               }}
             >
-              <Heart className={`${colors.iconColors.heart} w-6 h-6 animate-pulse`} />
+              ❤️
             </div>
           ))}
         </div>
       )}
 
-      {/* Background Decorative Elements */}
       {shouldAnimate && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
           {Array.from({ length: 12 }).map((_, i) => (
@@ -229,6 +241,20 @@ function HappyPage() {
           50% { transform: translateY(20px); }
         }
 
+        @keyframes flyUp {
+          0% {
+            transform: translateY(0) rotate(0deg);
+            opacity: 1;
+          }
+          50% {
+            opacity: 1;
+          }
+          100% {
+            transform: translateY(-120vh) rotate(360deg);
+            opacity: 0;
+          }
+        }
+
         .animate-bounce-custom {
           animation: ${shouldAnimate ? 'bounce 2s infinite' : 'none'};
         }
@@ -239,6 +265,10 @@ function HappyPage() {
 
         .animate-float-reverse {
           animation: ${shouldAnimate ? 'floatReverse 2.5s ease-in-out infinite' : 'none'};
+        }
+
+        .animate-fly-up {
+          animation: flyUp linear forwards;
         }
 
         .card-shadow {
@@ -261,7 +291,8 @@ function HappyPage() {
         @media (prefers-reduced-motion: reduce) {
           .animate-bounce-custom,
           .animate-float,
-          .animate-float-reverse {
+          .animate-float-reverse,
+          .animate-fly-up {
             animation: none !important;
           }
         }
@@ -367,7 +398,7 @@ function HappyPage() {
         {colorBlindMode && "Color-blind friendly mode enabled with high contrast colors and visual indicators"}
         {animationsDisabled && "Animations disabled for reduced motion"}
         {fontSize !== 'normal' && `Font size changed to ${fontSize}`}
-        {showHearts && "Heart animation playing"}
+        {flyingHearts.length > 0 && "Hearts flying animation playing"}
         {selectedDay && `You selected ${selectedDay} for your date`}
       </div>
     </div>
