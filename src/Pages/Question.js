@@ -1,17 +1,19 @@
 import { Heart, Cloud, Star, Clock, Eye, Pause, Type } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Question() {
   const [colorBlindMode, setColorBlindMode] = useState(false);
   const [animationsDisabled, setAnimationsDisabled] = useState(false);
   const [fontSize, setFontSize] = useState('normal');
+  const navigate = useNavigate();
 
   const handleYesClick = () => {
-    alert('Yay! 🎉 They said yes!');
+    navigate('/happy');
   };
 
   const handleMaybeClick = () => {
-    alert('Maybe next time! 💙');
+    navigate('/sad');
   };
 
   const toggleColorBlindMode = () => {
