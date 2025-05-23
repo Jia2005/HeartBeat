@@ -31,6 +31,10 @@ function HappyPage() {
     }, 6000);
   };
 
+  const handleDaySelect = (day) => {
+    setSelectedDay(day);
+  };
+
   const handleRestart = () => {
     navigate('/');
   };
