@@ -7,11 +7,11 @@ function Question() {
   const [fontSize, setFontSize] = useState('normal');
 
   const handleYesClick = () => {
-    alert('Yay! Thank you for saying yes! 💕');
+    alert('Yay! 🎉 They said yes!');
   };
 
   const handleMaybeClick = () => {
-    alert('That\'s okay! Maybe another time 😊');
+    alert('Maybe next time! 💙');
   };
 
   const toggleColorBlindMode = () => {
@@ -32,23 +32,23 @@ function Question() {
   const getColorScheme = () => {
     if (colorBlindMode) {
       return {
-        primary: 'from-gray-100 via-blue-50 to-yellow-50',
+        primary: 'from-gray-100 via-blue-50 to-orange-50',
         cardBg: 'bg-white border-4 border-blue-600',
         titleColor: 'text-blue-800',
         textColor: 'text-gray-900',
         buttonPrimary: 'bg-blue-700 hover:bg-blue-800 focus:ring-blue-500 border-4 border-blue-900',
-        buttonSecondary: 'bg-yellow-600 hover:bg-yellow-700 focus:ring-yellow-500 border-4 border-yellow-800',
+        buttonSecondary: 'bg-orange-600 hover:bg-orange-700 focus:ring-orange-500 border-4 border-orange-800',
         iconColors: {
           heart: 'text-blue-700',
           cloud: 'text-gray-600',
-          star: 'text-yellow-600'
+          star: 'text-orange-600'
         },
         accentBorder: 'border-blue-600'
       };
     }
     return {
       primary: 'from-pink-100 via-purple-50 to-indigo-100',
-      cardBg: 'bg-white',
+      cardBg: 'bg-white border-4 border-pink-400',
       titleColor: 'text-pink-600',
       textColor: 'text-gray-700',
       buttonPrimary: 'bg-pink-500 hover:bg-pink-600 focus:ring-pink-300',
@@ -70,7 +70,9 @@ function Question() {
           emoji: 'text-9xl',
           subtitle: 'text-2xl',
           message: 'text-3xl',
-          button: 'text-lg py-4 px-10'
+          button: 'text-lg py-4 px-10',
+          containerWidth: 'max-w-3xl',
+          textWrap: 'whitespace-nowrap'
         };
       case 'extra-large':
         return {
@@ -78,7 +80,9 @@ function Question() {
           emoji: 'text-9xl',
           subtitle: 'text-3xl',
           message: 'text-4xl',
-          button: 'text-xl py-5 px-12'
+          button: 'text-xl py-5 px-12',
+          containerWidth: 'max-w-5xl',
+          textWrap: 'whitespace-nowrap'
         };
       default:
         return {
@@ -86,7 +90,9 @@ function Question() {
           emoji: 'text-8xl',
           subtitle: 'text-xl',
           message: 'text-2xl',
-          button: 'text-base py-3 px-8'
+          button: 'text-base py-3 px-8',
+          containerWidth: 'max-w-md',
+          textWrap: ''
         };
     }
   };
@@ -126,11 +132,16 @@ function Question() {
         
         <button
           onClick={cycleFontSize}
-          className={`p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-300 ${fontSize !== 'normal' ? 'ring-4 ring-green-600 bg-green-50' : ''}`}
+          className={`p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-300 ${fontSize !== 'normal' ? 'ring-4 ring-green-600 bg-green-50' : ''} relative`}
           aria-label={`Current font size: ${fontSize}. Click to change`}
           title="Change font size"
         >
-          <Type className={`w-5 h-5 ${fontSize !== 'normal' ? 'text-green-700' : 'text-gray-700'}`} />
+          <div className="flex flex-col items-center">
+            <Type className={`w-4 h-4 ${fontSize !== 'normal' ? 'text-green-700' : 'text-gray-700'} mb-1`} />
+            <span className={`text-xs font-bold ${fontSize !== 'normal' ? 'text-green-700' : 'text-gray-700'}`}>
+              {fontSize === 'normal' ? 'N' : fontSize === 'large' ? 'L' : 'XL'}
+            </span>
+          </div>
         </button>
       </div>
 
@@ -248,33 +259,34 @@ function Question() {
           <div className={`absolute ${colorBlindMode ? 'text-blue-700' : 'text-purple-400'} opacity-25 text-5xl top-1/2 left-10 animate-float`}>
             <div className="text-5xl">💖</div>
           </div>
-          <div className={`absolute ${colorBlindMode ? 'text-yellow-600' : 'text-pink-400'} opacity-25 text-4xl top-1/3 right-10 animate-float-reverse`}>
+          <div className={`absolute ${colorBlindMode ? 'text-orange-600' : 'text-pink-400'} opacity-25 text-4xl top-1/3 right-10 animate-float-reverse`}>
             <div className="text-4xl">✨</div>
           </div>
         </div>
       )}
 
-      <div className="container max-w-md mx-auto z-10 relative">
+      <div className={`container ${fontSizes.containerWidth} mx-auto z-10 relative transition-all duration-500 px-4`}>
         <div 
-          className={`${colors.cardBg} rounded-3xl card-shadow p-8 text-center transition-all duration-500 ${shouldAnimate ? 'transform hover:scale-105' : ''} ${colorBlindMode ? 'shadow-2xl' : ''}`}
+          className={`${colors.cardBg} rounded-3xl card-shadow p-6 md:p-8 text-center transition-all duration-500 ${shouldAnimate ? 'transform hover:scale-105' : ''} ${colorBlindMode ? 'shadow-2xl' : ''} ${fontSize === 'normal' ? 'min-h-[600px]' : 'min-h-fit'} flex flex-col justify-center relative`}
           role="dialog"
           aria-labelledby="invitation-title"
           aria-describedby="invitation-description"
         >
+          <div className={`absolute -top-2 -right-2 transform rotate-12 ${colorBlindMode ? 'text-blue-600' : 'text-pink-500'}`} aria-hidden="true">
+            <span className="text-2xl">❤️</span>
+          </div>
+          
           <div className="relative mb-6">
             <h1 
               id="invitation-title"
-              className={`${fontSizes.title} font-bold ${colors.titleColor} mb-2 ${colorBlindMode ? 'underline decoration-4 decoration-blue-600' : ''}`}
+              className={`${fontSizes.title} font-bold ${colors.titleColor} mb-2 ${colorBlindMode ? 'underline decoration-4 decoration-blue-600' : ''} ${fontSizes.textWrap}`}
             >
               Will you go out with me?
             </h1>
-            <div className={`absolute -top-12 -right-6 transform rotate-12 opacity-50 ${colorBlindMode ? 'text-blue-600' : 'text-pink-500'}`} aria-hidden="true">
-              <span className="text-4xl">❤️</span>
-            </div>
           </div>
           
           <div 
-            className={`${fontSizes.emoji} mb-6 ${shouldAnimate ? 'animate-bounce-custom' : ''} ${colorBlindMode ? 'bg-blue-100 rounded-full p-4 inline-block' : ''}`}
+            className={`${fontSizes.emoji} mb-6 ${shouldAnimate ? 'animate-bounce-custom' : ''} ${colorBlindMode ? 'bg-blue-100 rounded-full p-4 inline-block mx-auto' : ''}`}
             role="img"
             aria-label="Heart eyes emoji"
           >
@@ -282,13 +294,13 @@ function Question() {
           </div>
           
           <p 
-            className={`${fontSizes.subtitle} ${colors.textColor} mb-4 ${colorBlindMode ? 'font-bold border-l-4 border-blue-600 pl-4' : ''}`}
+            className={`${fontSizes.subtitle} ${colors.textColor} mb-4 ${colorBlindMode ? 'font-bold border-l-4 border-blue-600 pl-4 mx-auto max-w-xs' : ''} ${fontSizes.textWrap}`}
             id="invitation-description"
           >
             Please lets go!!!
           </p>
 
-          <p className={`${fontSizes.message} font-bold ${colors.titleColor} mb-8 ${colorBlindMode ? 'bg-yellow-100 p-4 rounded-lg border-2 border-yellow-600' : ''}`}>
+          <p className={`${fontSizes.message} font-bold ${colors.titleColor} mb-8 ${colorBlindMode ? 'bg-blue-100 p-4 rounded-lg border-2 border-blue-600 mx-auto' : ''} ${fontSizes.textWrap}`}>
             I really want to spend time with you! 
             <span role="img" aria-label="heart and pleading face emoji"> ❤️🥺</span>
           </p>
@@ -300,7 +312,7 @@ function Question() {
           >
             <button 
               onClick={handleYesClick}
-              className={`${colors.buttonPrimary} text-white font-bold ${fontSizes.button} rounded-full transform transition-all duration-300 ${shouldAnimate ? 'hover:scale-105 hover:-translate-y-1' : ''} focus:outline-none focus:ring-4 ${colorBlindMode ? 'shadow-lg relative' : ''}`}
+              className={`${colors.buttonPrimary} text-white font-bold ${fontSizes.button} rounded-full transform transition-all duration-300 ${shouldAnimate ? 'hover:scale-105 hover:-translate-y-1' : ''} focus:outline-none focus:ring-4 ${colorBlindMode ? 'shadow-lg relative' : ''} ${fontSizes.textWrap}`}
               aria-describedby="yes-description"
             >
               <Heart className="w-4 h-4 mr-2 inline" aria-hidden="true" />
@@ -317,7 +329,7 @@ function Question() {
             
             <button 
               onClick={handleMaybeClick}
-              className={`${colors.buttonSecondary} text-white font-bold ${fontSizes.button} rounded-full transform transition-all duration-300 ${shouldAnimate ? 'hover:scale-105 hover:-translate-y-1' : ''} focus:outline-none focus:ring-4 mt-3 sm:mt-0 ${colorBlindMode ? 'shadow-lg relative pattern-dots' : ''}`}
+              className={`${colors.buttonSecondary} text-white font-bold ${fontSizes.button} rounded-full transform transition-all duration-300 ${shouldAnimate ? 'hover:scale-105 hover:-translate-y-1' : ''} focus:outline-none focus:ring-4 mt-0 ${colorBlindMode ? 'shadow-lg relative pattern-dots' : ''} ${fontSizes.textWrap}`}
               aria-describedby="maybe-description"
             >
               <Clock className="w-4 h-4 mr-2 inline" aria-hidden="true" />
@@ -336,7 +348,7 @@ function Question() {
           {colorBlindMode && (
             <div className="mt-6 p-4 bg-gray-100 rounded-lg border-2 border-gray-400">
               <p className="text-sm text-gray-800 font-medium">
-                🔵 Blue button = Yes! | 🟡 Yellow button = Maybe later
+                🔵 Blue button = Yes! | 🟠 Orange button = Maybe later
               </p>
             </div>
           )}
