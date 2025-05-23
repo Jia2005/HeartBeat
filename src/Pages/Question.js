@@ -1,23 +1,31 @@
 import React, { useState, useEffect } from 'react';
+import { Heart, Cloud, Star, Clock } from 'lucide-react';
 
-function Question() {
+export default function HeartBeat() {
   const [attempts, setAttempts] = useState(0);
 
   const handleYesClick = () => {
-    alert('Yes! You chose to go out! 💕');
+    window.location.href = '/happy';
   };
 
   const handleMaybeClick = (e) => {
+    if (attempts >= 3) {
+      window.location.href = '/sad';
+      return;
+    }
+    
     e.preventDefault();
     const newAttempts = attempts + 1;
     setAttempts(newAttempts);
-    
+
     if (newAttempts >= 3) {
-      alert('After multiple attempts... Maybe later then! 😔');
+      setTimeout(() => {
+        window.location.href = '/sad';
+      }, 500);
       return;
     }
 
-    const button = e.target;
+    const button = e.target.closest('button');
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
     const btnRect = button.getBoundingClientRect();
@@ -43,7 +51,7 @@ function Question() {
   const handleMaybeHover = (e) => {
     if (attempts >= 3) return;
     
-    const button = e.target;
+    const button = e.target.closest('button');
     const viewportWidth = window.innerWidth;
     const viewportHeight = window.innerHeight;
     const btnRect = button.getBoundingClientRect();
@@ -70,6 +78,27 @@ function Question() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-pink-100 via-purple-50 to-indigo-100 font-comic relative overflow-hidden">
+      <div className="absolute inset-0 bg-pattern opacity-30"></div>
+      
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {Array.from({ length: 15 }).map((_, i) => (
+          <div
+            key={i}
+            className={`absolute animate-float ${i % 2 === 0 ? 'animate-float-reverse' : ''}`}
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+              opacity: Math.random() * 0.3 + 0.1
+            }}
+          >
+            {i % 4 === 0 && <Heart className="text-pink-400 w-6 h-6" />}
+            {i % 4 === 1 && <Cloud className="text-blue-400 w-8 h-8" />}
+            {i % 4 === 2 && <Star className="text-yellow-400 w-5 h-5" />}
+            {i % 4 === 3 && <div className="text-purple-400 text-2xl">💕</div>}
+          </div>
+        ))}
+      </div>
       <style jsx>{`
         @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
         .font-comic {
@@ -112,20 +141,34 @@ function Question() {
           box-shadow: 0 10px 25px -5px rgba(255, 107, 157, 0.3), 
                       0 8px 10px -6px rgba(255, 107, 157, 0.2);
         }
+
+        .bg-pattern {
+          background-image: 
+            radial-gradient(circle at 25% 25%, rgba(255, 107, 157, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 75% 75%, rgba(139, 69, 193, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
+            url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ff6b9d' fill-opacity='0.03'%3E%3Ccircle cx='9' cy='9' r='1'/%3E%3Ccircle cx='49' cy='49' r='1'/%3E%3Ccircle cx='29' cy='29' r='1'/%3E%3Ccircle cx='39' cy='19' r='1'/%3E%3Ccircle cx='19' cy='39' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
       `}</style>
 
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute text-pink-500 opacity-20 text-8xl top-10 left-10 animate-float">
-          ❤️
+          <Heart className="w-20 h-20" />
         </div>
         <div className="absolute text-blue-400 opacity-20 text-6xl top-20 right-20 animate-float-reverse">
-          ☁️
+          <Cloud className="w-16 h-16" />
         </div>
         <div className="absolute text-pink-500 opacity-20 text-7xl bottom-10 left-1/4 animate-float">
-          😘
+          <div className="text-7xl">😘</div>
         </div>
         <div className="absolute text-blue-400 opacity-20 text-6xl bottom-20 right-1/3 animate-float-reverse">
-          ⭐
+          <Star className="w-16 h-16" />
+        </div>
+        <div className="absolute text-purple-400 opacity-25 text-5xl top-1/2 left-10 animate-float">
+          <div className="text-5xl">💖</div>
+        </div>
+        <div className="absolute text-pink-400 opacity-25 text-4xl top-1/3 right-10 animate-float-reverse">
+          <div className="text-4xl">✨</div>
         </div>
       </div>
 
@@ -149,7 +192,7 @@ function Question() {
               onClick={handleYesClick}
               className="bg-pink-500 hover:bg-pink-600 text-white font-bold py-3 px-8 rounded-full transform transition-all duration-300 hover:scale-105 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-pink-200"
             >
-              <span className="mr-2">❤️</span>Yes!
+              <Heart className="w-4 h-4 mr-2 inline" />Yes!
             </button>
             
             <button 
@@ -157,7 +200,7 @@ function Question() {
               onMouseOver={handleMaybeHover}
               className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-8 rounded-full transform transition-all duration-300 hover:scale-105 hover:-translate-y-1 focus:outline-none focus:ring-4 focus:ring-blue-200 mt-3 sm:mt-0"
             >
-              <span className="mr-2">🕐</span>Maybe later
+              <Clock className="w-4 h-4 mr-2 inline" />Maybe later
             </button>
           </div>
         </div>
@@ -165,5 +208,3 @@ function Question() {
     </div>
   );
 }
-
-export default Question;
