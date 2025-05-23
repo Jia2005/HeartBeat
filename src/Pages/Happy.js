@@ -1,6 +1,5 @@
 import { Heart, Cloud, Star, Eye, Pause, Type, RotateCcw } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 function HappyPage() {
   const [colorBlindMode, setColorBlindMode] = useState(false);
@@ -8,7 +7,6 @@ function HappyPage() {
   const [fontSize, setFontSize] = useState('normal');
   const [selectedDay, setSelectedDay] = useState('');
   const [flyingHearts, setFlyingHearts] = useState([]);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (!animationsDisabled) {
@@ -36,7 +34,10 @@ function HappyPage() {
   };
 
   const handleRestart = () => {
-    navigate('/');
+    setSelectedDay('');
+    setColorBlindMode(false);
+    setAnimationsDisabled(false);
+    setFontSize('normal');
   };
 
   const toggleColorBlindMode = () => {
@@ -216,7 +217,7 @@ function HappyPage() {
         </div>
       )}
 
-      <style jsx>{`
+      <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
         .font-comic {
           font-family: 'Comic Neue', cursive;
@@ -329,7 +330,7 @@ function HappyPage() {
           </p>
 
           <div className="mt-6 flex flex-col items-center">
-            <p className={`${fontSizes.message} ${colors.titleColor} font-bold mb-4 ${colorBlindMode ? 'bg-blue-100 p-3 rounded-lg border-2 border-blue-600' : ''}`}>
+            <p className={`${fontSizes.message} ${colors.titleColor} font-bold mb-4 ${colorBlindMode ? 'bg-blue-100 p-2 rounded-lg border-2 border-blue-600' : ''}`}>
               Let me know when you're free:
             </p>
             
@@ -361,7 +362,7 @@ function HappyPage() {
             </div>
             
             {selectedDay && (
-              <div className={`text-center mb-6 ${colorBlindMode ? 'bg-green-100 p-4 rounded-lg border-2 border-green-600' : ''}`}>
+              <div className={`text-center mb-6 w-full max-w-sm ${colorBlindMode ? 'bg-green-100 p-3 rounded-lg border-2 border-green-600' : ''}`}>
                 <p className={`${fontSizes.message} ${colors.titleColor} font-semibold`}>
                   You selected: <span className="font-bold">{selectedDay}</span>
                 </p>
@@ -382,9 +383,9 @@ function HappyPage() {
           </div>
 
           {colorBlindMode && (
-            <div className="mt-6 p-4 bg-gray-100 rounded-lg border-2 border-gray-400">
-              <p className="text-sm text-gray-800 font-medium">
-                🔵 Blue highlights = Selected items | 🟢 Green checkmarks = Confirmed choices
+            <div className="mt-4 p-2 bg-gray-100 rounded-lg border-2 border-gray-400 w-full max-w-sm mx-auto">
+              <p className="text-xs text-gray-800 font-medium">
+                🔵 Blue = Selected | 🟢 Green = Confirmed
               </p>
             </div>
           )}
