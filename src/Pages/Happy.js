@@ -31,13 +31,6 @@ function HappyPage() {
     }, 6000);
   };
 
-  const handleDaySelect = (day) => {
-    setSelectedDay(day);
-    if (!animationsDisabled) {
-      createFlyingHearts(20);
-    }
-  };
-
   const handleRestart = () => {
     navigate('/');
   };
