@@ -6,15 +6,17 @@ function Happy() {
   const [colorBlindMode, setColorBlindMode] = useState(false);
   const [animationsDisabled, setAnimationsDisabled] = useState(false);
   const [fontSize, setFontSize] = useState('normal');
-  const [selectedDay, setSelectedDay] = useState('');
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTime, setSelectedTime] = useState('');
   const [flyingHearts, setFlyingHearts] = useState([]);
+  const [animationKey, setAnimationKey] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!animationsDisabled) {
       createFlyingHearts(50);
     }
-  }, [animationsDisabled]);
+  }, [animationsDisabled, animationKey]);
 
   const createFlyingHearts = (count) => {
     const hearts = Array.from({ length: count }, (_, i) => ({
@@ -31,8 +33,42 @@ function Happy() {
     }, 6000);
   };
 
-  const handleDaySelect = (day) => {
-    setSelectedDay(day);
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
+
+  const handleTimeChange = (time) => {
+    setSelectedTime(time);
+  };
+
+  const formatSelectedDateTime = () => {
+    if (!selectedDate && !selectedTime) return '';
+    
+    let result = '';
+    if (selectedDate) {
+      const date = new Date(selectedDate);
+      const dayName = date.toLocaleDateString('en-US', { weekday: 'long' });
+      const formattedDate = date.toLocaleDateString('en-US', { 
+        month: 'long', 
+        day: 'numeric',
+        year: 'numeric'
+      });
+      result += `${dayName}, ${formattedDate}`;
+    }
+    
+    if (selectedTime) {
+      const [hours, minutes] = selectedTime.split(':');
+      const time = new Date();
+      time.setHours(parseInt(hours), parseInt(minutes));
+      const formattedTime = time.toLocaleTimeString('en-US', {
+        hour: 'numeric',
+        minute: '2-digit',
+        hour12: true
+      });
+      result += selectedDate ? ` at ${formattedTime}` : formattedTime;
+    }
+    
+    return result;
   };
 
   const handleRestart = () => {
@@ -195,10 +231,10 @@ function Happy() {
       )}
 
       {shouldAnimate && (
-        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true" key={animationKey}>
           {Array.from({ length: 12 }).map((_, i) => (
             <div
-              key={i}
+              key={`${animationKey}-${i}`}
               className={`absolute animate-float ${i % 2 === 0 ? 'animate-float-reverse' : ''}`}
               style={{
                 left: `${Math.random() * 100}%`,
@@ -333,37 +369,41 @@ function Happy() {
               Let me know when you're free:
             </p>
             
-            <div 
-              className="grid grid-cols-2 gap-3 mb-4 w-full max-w-xs"
-              role="group"
-              aria-label="Available days"
-            >
-              {['Friday', 'Saturday', 'Sunday', 'Monday'].map((day) => (
-                <button
-                  key={day}
-                  onClick={() => handleDaySelect(day)}
-                  className={`${
-                    selectedDay === day 
-                      ? colors.dayButtonSelected 
-                      : colors.dayButton
-                  } ${fontSizes.button} rounded-lg transition-all duration-300 ${shouldAnimate ? 'transform hover:scale-105' : ''} focus:outline-none focus:ring-4 ${colorBlindMode ? 'shadow-md relative' : ''}`}
-                  aria-pressed={selectedDay === day}
-                  aria-describedby={`${day.toLowerCase()}-description`}
-                >
-                  {day}
-                  {colorBlindMode && selectedDay === day && (
-                    <span className="absolute -top-2 -right-2 bg-green-500 text-white text-xs px-2 py-1 rounded-full font-bold">
-                      ✓
-                    </span>
-                  )}
-                </button>
-              ))}
+            <div className="flex flex-col gap-4 items-center justify-center w-full max-w-sm">
+              <div className="flex flex-col gap-1 w-full">
+                <label htmlFor="date-input" className={`text-sm font-semibold ${colors.titleColor} ${colorBlindMode ? 'bg-blue-100 px-2 py-1 rounded' : ''}`}>
+                  📅 Pick a date:
+                </label>
+                <input
+                  id="date-input"
+                  type="date"
+                  value={selectedDate}
+                  onChange={(e) => handleDateChange(e.target.value)}
+                  className={`${fontSizes.button} rounded-lg border-2 ${colorBlindMode ? 'border-blue-400 focus:border-blue-600' : 'border-pink-300 focus:border-pink-500'} focus:outline-none focus:ring-2 focus:ring-pink-300 px-3 py-2 ${colorBlindMode ? 'bg-blue-50' : 'bg-pink-50'} w-full`}
+                  min={new Date().toISOString().split('T')[0]}
+                />
+              </div>
+              
+              <div className="flex flex-col gap-1 w-full">
+                <label htmlFor="time-input" className={`text-sm font-semibold ${colors.titleColor} ${colorBlindMode ? 'bg-blue-100 px-2 py-1 rounded' : ''}`}>
+                  🕐 Pick a time:
+                </label>
+                <input
+                  id="time-input"
+                  type="time"
+                  value={selectedTime}
+                  onChange={(e) => handleTimeChange(e.target.value)}
+                  className={`${fontSizes.button} rounded-lg border-2 ${colorBlindMode ? 'border-blue-400 focus:border-blue-600' : 'border-pink-300 focus:border-pink-500'} focus:outline-none focus:ring-2 focus:ring-pink-300 px-3 py-2 ${colorBlindMode ? 'bg-blue-50' : 'bg-pink-50'} w-full`}
+                />
+              </div>
             </div>
             
-            {selectedDay && (
-              <div className={`text-center mb-4 w-full max-w-sm ${colorBlindMode ? 'bg-green-100 p-3 rounded-lg border-2 border-green-600' : ''}`}>
+            {(selectedDate || selectedTime) && (
+              <div className={`text-center mb-4 mt-4 w-full max-w-sm ${colorBlindMode ? 'bg-green-100 p-3 rounded-lg border-2 border-green-600' : ''}`}>
                 <p className={`${fontSizes.message} ${colors.titleColor} font-semibold`}>
-                  You selected: <span className="font-bold">{selectedDay}</span>
+                  You selected: <span className="font-bold">
+                    {formatSelectedDateTime()}
+                  </span>
                 </p>
                 <p className={`${colors.textColor} mt-1`}>
                   I'll text you the details! 💕
@@ -373,7 +413,7 @@ function Happy() {
             
             <button 
               onClick={handleRestart}
-              className={`mt-2 text-sm ${colors.textColor} hover:${colors.titleColor} transition-colors duration-200 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-pink-300 rounded px-2 py-1`}
+              className={`mt-2text-sm ${colors.textColor} hover:${colors.titleColor} transition-colors duration-200 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-pink-300 rounded px-2 py-1`}
               aria-label="Start over and go back to the question"
             >
               <RotateCcw className="w-4 h-4" />
@@ -388,7 +428,7 @@ function Happy() {
         {animationsDisabled && "Animations disabled for reduced motion"}
         {fontSize !== 'normal' && `Font size changed to ${fontSize}`}
         {flyingHearts.length > 0 && "Hearts flying animation playing"}
-        {selectedDay && `You selected ${selectedDay} for your date`}
+        {(selectedDate || selectedTime) && `You selected ${formatSelectedDateTime()} for your date`}
       </div>
     </div>
   );
