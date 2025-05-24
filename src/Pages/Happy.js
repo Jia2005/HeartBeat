@@ -380,14 +380,6 @@ function Happy() {
               Start Over
             </button>
           </div>
-
-          {colorBlindMode && (
-            <div className="mt-4 p-2 bg-gray-100 rounded-lg border-2 border-gray-400 w-full max-w-sm mx-auto">
-              <p className="text-xs text-gray-800 font-medium">
-                🔵 Blue = Selected | 🟢 Green = Confirmed
-              </p>
-            </div>
-          )}
         </div>
       </div>
 
