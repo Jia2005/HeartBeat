@@ -413,7 +413,7 @@ function Happy() {
             
             <button 
               onClick={handleRestart}
-              className={`mt-2text-sm ${colors.textColor} hover:${colors.titleColor} transition-colors duration-200 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-pink-300 rounded px-2 py-1`}
+              className={`mt-2 text-sm ${colors.textColor} hover:${colors.titleColor} transition-colors duration-200 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-pink-300 rounded px-2 py-1`}
               aria-label="Start over and go back to the question"
             >
               <RotateCcw className="w-4 h-4" />
