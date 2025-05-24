@@ -132,30 +132,30 @@ function Happy() {
       case 'large':
         return {
           title: 'text-3xl',
-          emoji: 'text-6xl',
-          subtitle: 'text-xl',
-          message: 'text-lg',
-          button: 'text-base py-2 px-4',
-          containerWidth: 'max-w-xl',
-          textWrap: 'whitespace-nowrap'
+          emoji: 'text-7xl',
+          subtitle: 'text-2xl',
+          message: 'text-2xl',
+          button: 'text-lg py-4 px-10',
+          containerWidth: 'max-w-3xl',
+          textWrap: 'whitespace-softwrap'
         };
       case 'extra-large':
         return {
-          title: 'text-4xl',
+          title: 'text-3xl',
           emoji: 'text-7xl',
           subtitle: 'text-2xl',
-          message: 'text-xl',
-          button: 'text-lg py-3 px-6',
-          containerWidth: 'max-w-2xl',
-          textWrap: 'whitespace-nowrap'
+          message: 'text-2xl',
+          button: 'text-xl py-5 px-12',
+          containerWidth: 'max-w-5xl',
+          textWrap: 'whitespace-softwrap'
         };
       default:
         return {
-          title: 'text-3xl',
-          emoji: 'text-8xl',
+          title: 'text-2xl',
+          emoji: 'text-6xl',
           subtitle: 'text-xl',
-          message: 'text-lg',
-          button: 'text-base py-2 px-4',
+          message: 'text-xl',
+          button: 'text-base py-3 px-8',
           containerWidth: 'max-w-md',
           textWrap: ''
         };
@@ -260,7 +260,7 @@ function Happy() {
         
         @keyframes bounce {
           0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-          40% { transform: translateY(-30px); }
+          40% { transform: translateY(-20px); }
           60% { transform: translateY(-15px); }
         }
 
@@ -333,7 +333,7 @@ function Happy() {
 
       <div className={`container ${fontSizes.containerWidth} mx-auto z-10 relative transition-all duration-500 px-4`}>
         <div 
-          className={`${colors.cardBg} rounded-3xl card-shadow p-4 md:p-6 text-center transition-all duration-500 ${shouldAnimate ? 'transform hover:scale-105' : ''} ${colorBlindMode ? 'shadow-2xl' : ''} relative`}
+          className={`${colors.cardBg} rounded-3xl card-shadow py-4 md:p-6 text-center transition-all duration-500 ${shouldAnimate ? 'transform hover:scale-105' : ''} ${colorBlindMode ? 'shadow-2xl' : ''} relative`}
           role="dialog"
           aria-labelledby="celebration-title"
           aria-describedby="celebration-description"
@@ -343,7 +343,7 @@ function Happy() {
           </div>
           
           <div 
-            className={`${fontSizes.emoji} mb-4 ${shouldAnimate ? 'animate-bounce-custom' : ''} ${colorBlindMode ? 'bg-blue-100 rounded-full p-4 inline-block mx-auto' : ''}`}
+            className={`${fontSizes.emoji} mb-2 ${shouldAnimate ? 'animate-bounce-custom' : ''} ${colorBlindMode ? 'bg-blue-100 rounded-full p-4 inline-block mx-auto' : ''}`}
             role="img"
             aria-label="Happy face emoji"
           >
@@ -358,20 +358,20 @@ function Happy() {
           </h1>
           
           <p 
-            className={`${fontSizes.subtitle} ${colors.textColor} mb-4 ${colorBlindMode ? 'font-bold border-l-4 border-blue-600 pl-4 mx-auto max-w-xs' : ''} ${fontSizes.textWrap}`}
+            className={`${fontSizes.subtitle} ${colors.textColor} mb-2 ${colorBlindMode ? 'font-bold border-l-4 border-blue-600 pl-4 mx-auto max-w-xs' : ''} ${fontSizes.textWrap}`}
             id="celebration-description"
           >
             Looking forward to our date!
           </p>
 
           <div className="mt-4 flex flex-col items-center">
-            <p className={`${fontSizes.message} ${colors.titleColor} font-bold mb-3 ${colorBlindMode ? 'bg-blue-100 p-2 rounded-lg border-2 border-blue-600' : ''}`}>
+            <p className={`${fontSizes.message} ${colors.titleColor} font-bold mb-2 ${colorBlindMode ? 'bg-blue-100 p-2 rounded-lg border-2 border-blue-600' : ''}`}>
               Let me know when you're free:
             </p>
             
             <div className="flex flex-col gap-4 items-center justify-center w-full max-w-sm">
               <div className="flex flex-col gap-1 w-full">
-                <label htmlFor="date-input" className={`text-sm font-semibold ${colors.titleColor} ${colorBlindMode ? 'bg-blue-100 px-2 py-1 rounded' : ''}`}>
+                <label htmlFor="date-input" className={`text-sm font-semibold ${colors.titleColor}`}>
                   📅 Pick a date:
                 </label>
                 <input
@@ -385,7 +385,7 @@ function Happy() {
               </div>
               
               <div className="flex flex-col gap-1 w-full">
-                <label htmlFor="time-input" className={`text-sm font-semibold ${colors.titleColor} ${colorBlindMode ? 'bg-blue-100 px-2 py-1 rounded' : ''}`}>
+                <label htmlFor="time-input" className={`text-sm font-semibold ${colors.titleColor} `}>
                   🕐 Pick a time:
                 </label>
                 <input
@@ -399,7 +399,7 @@ function Happy() {
             </div>
             
             {(selectedDate || selectedTime) && (
-              <div className={`text-center mb-4 mt-4 w-full max-w-sm ${colorBlindMode ? 'bg-green-100 p-3 rounded-lg border-2 border-green-600' : ''}`}>
+              <div className={`text-center mb-4 mt-4 w-full max-w-m ${colorBlindMode ? 'bg-green-100 p-3 rounded-lg border-2 border-green-600' : 'bg-orange-100 p-3 rounded-lg border-2 border-orange-600'}`}>
                 <p className={`${fontSizes.message} ${colors.titleColor} font-semibold`}>
                   You selected: <span className="font-bold">
                     {formatSelectedDateTime()}
