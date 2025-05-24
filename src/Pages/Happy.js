@@ -95,22 +95,22 @@ function Happy() {
     switch (fontSize) {
       case 'large':
         return {
-          title: 'text-4xl',
-          emoji: 'text-9xl',
-          subtitle: 'text-2xl',
-          message: 'text-xl',
-          button: 'text-lg py-3 px-6',
-          containerWidth: 'max-w-2xl',
+          title: 'text-3xl',
+          emoji: 'text-6xl',
+          subtitle: 'text-xl',
+          message: 'text-lg',
+          button: 'text-base py-2 px-4',
+          containerWidth: 'max-w-xl',
           textWrap: 'whitespace-nowrap'
         };
       case 'extra-large':
         return {
-          title: 'text-5xl',
-          emoji: 'text-9xl',
-          subtitle: 'text-3xl',
-          message: 'text-2xl',
-          button: 'text-xl py-4 px-8',
-          containerWidth: 'max-w-4xl',
+          title: 'text-4xl',
+          emoji: 'text-7xl',
+          subtitle: 'text-2xl',
+          message: 'text-xl',
+          button: 'text-lg py-3 px-6',
+          containerWidth: 'max-w-2xl',
           textWrap: 'whitespace-nowrap'
         };
       default:
@@ -297,7 +297,7 @@ function Happy() {
 
       <div className={`container ${fontSizes.containerWidth} mx-auto z-10 relative transition-all duration-500 px-4`}>
         <div 
-          className={`${colors.cardBg} rounded-3xl card-shadow p-6 md:p-8 text-center transition-all duration-500 ${shouldAnimate ? 'transform hover:scale-105' : ''} ${colorBlindMode ? 'shadow-2xl' : ''} relative`}
+          className={`${colors.cardBg} rounded-3xl card-shadow p-4 md:p-6 text-center transition-all duration-500 ${shouldAnimate ? 'transform hover:scale-105' : ''} ${colorBlindMode ? 'shadow-2xl' : ''} relative`}
           role="dialog"
           aria-labelledby="celebration-title"
           aria-describedby="celebration-description"
@@ -307,7 +307,7 @@ function Happy() {
           </div>
           
           <div 
-            className={`${fontSizes.emoji} mb-6 ${shouldAnimate ? 'animate-bounce-custom' : ''} ${colorBlindMode ? 'bg-blue-100 rounded-full p-4 inline-block mx-auto' : ''}`}
+            className={`${fontSizes.emoji} mb-4 ${shouldAnimate ? 'animate-bounce-custom' : ''} ${colorBlindMode ? 'bg-blue-100 rounded-full p-4 inline-block mx-auto' : ''}`}
             role="img"
             aria-label="Happy face emoji"
           >
@@ -316,25 +316,25 @@ function Happy() {
           
           <h1 
             id="celebration-title"
-            className={`${fontSizes.title} font-bold ${colors.titleColor} mb-4 ${colorBlindMode ? 'underline decoration-4 decoration-blue-600' : ''} ${fontSizes.textWrap}`}
+            className={`${fontSizes.title} font-bold ${colors.titleColor} mb-3 ${colorBlindMode ? 'underline decoration-4 decoration-blue-600' : ''} ${fontSizes.textWrap}`}
           >
             YAYAYAYYYYYY!
           </h1>
           
           <p 
-            className={`${fontSizes.subtitle} ${colors.textColor} mb-6 ${colorBlindMode ? 'font-bold border-l-4 border-blue-600 pl-4 mx-auto max-w-xs' : ''} ${fontSizes.textWrap}`}
+            className={`${fontSizes.subtitle} ${colors.textColor} mb-4 ${colorBlindMode ? 'font-bold border-l-4 border-blue-600 pl-4 mx-auto max-w-xs' : ''} ${fontSizes.textWrap}`}
             id="celebration-description"
           >
             Looking forward to our date!
           </p>
 
-          <div className="mt-6 flex flex-col items-center">
-            <p className={`${fontSizes.message} ${colors.titleColor} font-bold mb-4 ${colorBlindMode ? 'bg-blue-100 p-2 rounded-lg border-2 border-blue-600' : ''}`}>
+          <div className="mt-4 flex flex-col items-center">
+            <p className={`${fontSizes.message} ${colors.titleColor} font-bold mb-3 ${colorBlindMode ? 'bg-blue-100 p-2 rounded-lg border-2 border-blue-600' : ''}`}>
               Let me know when you're free:
             </p>
             
             <div 
-              className="grid grid-cols-2 gap-3 mb-6 w-full max-w-xs"
+              className="grid grid-cols-2 gap-3 mb-4 w-full max-w-xs"
               role="group"
               aria-label="Available days"
             >
@@ -361,11 +361,11 @@ function Happy() {
             </div>
             
             {selectedDay && (
-              <div className={`text-center mb-6 w-full max-w-sm ${colorBlindMode ? 'bg-green-100 p-3 rounded-lg border-2 border-green-600' : ''}`}>
+              <div className={`text-center mb-4 w-full max-w-sm ${colorBlindMode ? 'bg-green-100 p-3 rounded-lg border-2 border-green-600' : ''}`}>
                 <p className={`${fontSizes.message} ${colors.titleColor} font-semibold`}>
                   You selected: <span className="font-bold">{selectedDay}</span>
                 </p>
-                <p className={`${colors.textColor} mt-2`}>
+                <p className={`${colors.textColor} mt-1`}>
                   I'll text you the details! 💕
                 </p>
               </div>
@@ -373,7 +373,7 @@ function Happy() {
             
             <button 
               onClick={handleRestart}
-              className={`mt-4 text-sm ${colors.textColor} hover:${colors.titleColor} transition-colors duration-200 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-pink-300 rounded px-2 py-1`}
+              className={`mt-2 text-sm ${colors.textColor} hover:${colors.titleColor} transition-colors duration-200 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-pink-300 rounded px-2 py-1`}
               aria-label="Start over and go back to the question"
             >
               <RotateCcw className="w-4 h-4" />
