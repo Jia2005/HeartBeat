@@ -10,6 +10,8 @@ Perfect for those who express love better through code than words! Statistically
 
 ## ✨ Accessibility Features
 
+![image](https://github.com/user-attachments/assets/de26e497-0aed-48cd-b772-fc61e82be480)
+
 Because love should be accessible to everyone! 💖
 - **👁️ Screen Reader Support**: Comprehensive aria-labels for visually impaired users - because everyone deserves to experience digital romance
 - **🎨 Colorblind-Friendly**: Multiple color contrast themes so colorblind users can see all the love too
@@ -51,6 +53,12 @@ Stop overthinking it, stop rehearsing in the mirror, and definitely stop asking 
 Okay, maybe don't overthink it. Just send the link! 💪
 
 ---
-*Crafted with ☕ by an engineer who's better at coding than flirting*
+
+<div align="center">
 
 **Disclaimer**: Results may vary. Side effects may include uncontrollable blushing, butterflies, and an inexplicable urge to learn React just to understand how much effort went into this. 😄
+
+</div>
+
+---
+*Crafted with ☕ by an engineer who's better at coding than flirting*
