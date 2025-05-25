@@ -24,15 +24,19 @@ Stop overthinking it, stop rehearsing in the mirror, and definitely stop asking 
 
 ### 🎯 Your Mission (Should You Choose to Accept It):
 1. **Take a deep breath** 😤 (seriously, you've got this!)
+   
 2. **Copy this magical link**: 
    ```
    🔗 Coming very soon... 😉
    ```
+
 3. **Send it to your crush** with something like:
    - "Hey, I made something for you 💕"
    - "Check this out when you have a minute 👀"
    - "I'm better at coding than talking, so... 🤷‍♂️"
+
 4. **Wait for the magic to happen** ✨
+
 5. **Try not to stare at your phone every 30 seconds** (we know you will anyway)
 
 ### 🎭 Pro Tips from Fellow Nervous Engineers:
