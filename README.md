@@ -51,10 +51,12 @@ Stop overthinking it, stop rehearsing in the mirror, and definitely stop asking 
 Okay, maybe don't overthink it. Just send the link! 💪
 
 ---
-*Crafted with ☕ by an engineer who's better at coding than flirting*
 
 <div align="center">
 
 **Disclaimer**: Results may vary. Side effects may include uncontrollable blushing, butterflies, and an inexplicable urge to learn React just to understand how much effort went into this. 😄
 
 </div>
+
+---
+*Crafted with ☕ by an engineer who's better at coding than flirting*
