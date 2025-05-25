@@ -2,13 +2,14 @@
 > The Engineer's Way to Ask Someone Out
 
 ## About
-HeartBeat is a delightful, interactive web app that helps people pop that special question: "Will you go out with me?" 💕
+HeartBeat is a delightful, interactive web app that helps people pop the special question: "Will you go out with me?" 💕
 
 With adorable animations that make hearts flutter, responsive design that looks great on any device, and a playful interface that's practically impossible to resist, it turns asking someone on a date into a fun, memorable moment! 🧠💘
 
 Perfect for those who express love better through code than words! Statistically proven to increase success rates by 127% compared to awkward in-person requests. 📊
 
 ## ✨ Accessibility Features
+
 Because love should be accessible to everyone! 💖
 - **👁️ Screen Reader Support**: Comprehensive aria-labels for visually impaired users - because everyone deserves to experience digital romance
 - **🎨 Colorblind-Friendly**: Multiple color contrast themes so colorblind users can see all the love too
