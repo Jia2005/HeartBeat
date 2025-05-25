@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 function Happy() {
   const [colorBlindMode, setColorBlindMode] = useState(false);
   const [animationsDisabled, setAnimationsDisabled] = useState(false);
-  const [fontSize, setFontSize] = useState('normal');
+  const [fontSize, setFontSize] = useState('normal'); 
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedTime, setSelectedTime] = useState('');
   const [flyingHearts, setFlyingHearts] = useState([]);
@@ -174,7 +174,7 @@ function Happy() {
     >
       <div className="absolute inset-0 bg-pattern opacity-30" aria-hidden="true"></div>
       
-      <div className="fixed top-4 right-4 z-50 flex gap-2" role="toolbar" aria-label="Accessibility controls">
+      <div className="fixed top-4 right-4 z-50 flex gap-4" role="toolbar" aria-label="Accessibility controls">
         <button
           onClick={toggleColorBlindMode}
           className={`p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-300 ${colorBlindMode ? 'ring-4 ring-blue-600 bg-blue-50' : ''}`}
@@ -399,13 +399,13 @@ function Happy() {
             </div>
             
             {(selectedDate || selectedTime) && (
-              <div className={`text-center mb-4 mt-4 w-full max-w-m ${colorBlindMode ? 'bg-green-100 p-3 rounded-lg border-2 border-green-600' : 'bg-orange-100 p-3 rounded-lg border-2 border-orange-600'}`}>
+              <div className={`text-center mb-4 mt-4 w-full max-w-m ${colorBlindMode ? 'bg-green-100 p-3 rounded-lg border-2 border-green-600' : 'bg-teal-100 p-3 rounded-lg border-2 border-teal-600'}`}>
                 <p className={`${fontSizes.message} ${colors.titleColor} font-semibold`}>
                   You selected: <span className="font-bold">
                     {formatSelectedDateTime()}
                   </span>
                 </p>
-                <p className={`${colors.textColor} mt-1`}>
+                <p className={`${colors.textColor} mt-1 font-bold`}>
                   I'll text you the details! 💕
                 </p>
               </div>
@@ -413,10 +413,10 @@ function Happy() {
             
             <button 
               onClick={handleRestart}
-              className={`mt-2 text-sm ${colors.textColor} hover:${colors.titleColor} transition-colors duration-200 flex items-center gap-2 focus:outline-none focus:ring-2 focus:ring-pink-300 rounded px-2 py-1`}
+              className={`mt-2 text-sm ${colors.textColor} hover:${colors.titleColor} transition-colors duration-200 flex items-center gap-2 font-bold text-xl focus:outline-none focus:ring-2 focus:ring-pink-300 rounded px-2 py-1`}
               aria-label="Start over and go back to the question"
             >
-              <RotateCcw className="w-4 h-4" />
+              <RotateCcw className="w-6 h-6" />
               Start Over
             </button>
           </div>

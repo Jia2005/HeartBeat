@@ -111,7 +111,7 @@ function Question() {
     >
       <div className="absolute inset-0 bg-pattern opacity-30" aria-hidden="true"></div>
       
-      <div className="fixed top-4 right-4 z-50 flex gap-2" role="toolbar" aria-label="Accessibility controls">
+      <div className="fixed top-4 right-4 z-50 flex gap-4" role="toolbar" aria-label="Accessibility controls">
         <button
           onClick={toggleColorBlindMode}
           className={`p-3 bg-white rounded-full shadow-lg hover:shadow-xl transition-all duration-200 focus:outline-none focus:ring-4 focus:ring-blue-300 ${colorBlindMode ? 'ring-4 ring-blue-600 bg-blue-50' : ''}`}
