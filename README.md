@@ -10,6 +10,8 @@ Perfect for those who express love better through code than words! Statistically
 
 ## ✨ Accessibility Features
 
+![image](https://github.com/user-attachments/assets/de26e497-0aed-48cd-b772-fc61e82be480)
+
 Because love should be accessible to everyone! 💖
 - **👁️ Screen Reader Support**: Comprehensive aria-labels for visually impaired users - because everyone deserves to experience digital romance
 - **🎨 Colorblind-Friendly**: Multiple color contrast themes so colorblind users can see all the love too
