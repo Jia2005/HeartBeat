@@ -53,4 +53,8 @@ Okay, maybe don't overthink it. Just send the link! 💪
 ---
 *Crafted with ☕ by an engineer who's better at coding than flirting*
 
+<div align="center">
+
 **Disclaimer**: Results may vary. Side effects may include uncontrollable blushing, butterflies, and an inexplicable urge to learn React just to understand how much effort went into this. 😄
+
+</div>
