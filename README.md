@@ -23,7 +23,8 @@ Because love should be accessible to everyone! 💖
 
 Stop overthinking it, stop rehearsing in the mirror, and definitely stop asking your friends for the "perfect text." Just send them this link and let technology do the heavy lifting! 🚀
 
-### 🎯 Your Mission (Should You Choose to Accept It):
+### 🎯 Your Mission
+
 1. **Take a deep breath** 😤 (seriously, you've got this!)
    
 2. **Copy this magical link**: 
