@@ -1,5 +1,6 @@
 import { Heart, Cloud, Star, Eye, Pause, Type, RotateCcw } from 'lucide-react';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Happy() {
   const [colorBlindMode, setColorBlindMode] = useState(false);
@@ -9,6 +10,7 @@ function Happy() {
   const [selectedTime, setSelectedTime] = useState('');
   const [flyingHearts, setFlyingHearts] = useState([]);
   const [animationKey, setAnimationKey] = useState(0);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!animationsDisabled) {
@@ -70,8 +72,7 @@ function Happy() {
   };
 
   const handleRestart = () => {
-    // navigate("/");
-    window.location.reload(); // Simple refresh for demo
+    navigate("/");
   };
 
   const toggleColorBlindMode = () => {
@@ -174,15 +175,8 @@ function Happy() {
       role="main"
       aria-label="Date accepted celebration page"
     >
-      {/* Enhanced cheerful background patterns */}
       <div className="absolute inset-0 bg-cheerful-pattern opacity-40" aria-hidden="true"></div>
-      
-
-      
-      {/* Sunburst effect */}
       <div className="absolute inset-0 bg-sunburst opacity-30" aria-hidden="true"></div>
-      
-      {/* Floating confetti */}
       {shouldAnimate && (
         <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
           {Array.from({ length: 20 }).map((_, i) => (
