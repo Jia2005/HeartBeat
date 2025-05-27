@@ -1,6 +1,6 @@
 import { Heart, Cloud, Star, Eye, Pause, Type, RotateCcw } from 'lucide-react';
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { parsePath, useNavigate } from 'react-router-dom';
 
 function Happy() {
   const [colorBlindMode, setColorBlindMode] = useState(false);
@@ -131,30 +131,32 @@ function Happy() {
     switch (fontSize) {
       case 'large':
         return {
-          title: 'text-3xl',
-          emoji: 'text-7xl',
-          subtitle: 'text-2xl',
+          title: 'text-4xl',
+          emoji: 'text-6xl',
+          subtitle: 'text-xl',
           message: 'text-2xl',
           button: 'text-lg py-4 px-10',
           containerWidth: 'max-w-3xl',
-          textWrap: 'whitespace-softwrap'
+          label: 'text-lg',
+          textWrap: 'whitespace-nowrap'
         };
       case 'extra-large':
         return {
-          title: 'text-3xl',
-          emoji: 'text-7xl',
+          title: 'text-4xl',
+          emoji: 'text-6xl',
           subtitle: 'text-2xl',
-          message: 'text-2xl',
+          message: 'text-3xl',
+          label: 'text-lg',
           button: 'text-xl py-5 px-12',
           containerWidth: 'max-w-5xl',
-          textWrap: 'whitespace-softwrap'
+          textWrap: 'whitespace-nowrap'
         };
       default:
         return {
           title: 'text-2xl',
           emoji: 'text-6xl',
           subtitle: 'text-xl',
-          message: 'text-xl',
+          message: 'text-2xl',
           button: 'text-base py-3 px-8',
           containerWidth: 'max-w-md',
           textWrap: ''
@@ -202,8 +204,8 @@ function Happy() {
           title="Change font size"
         >
           <div className="flex flex-col items-center">
-            <Type className={`${fontSize === 'normal' ? 'w-4 h-4' : fontSize === 'large' ? 'w-5 h-5' : 'w-6 h-6'} ${fontSize !== 'normal' ? 'text-green-700' : 'text-gray-700'} mb-1`} />
-            <span className={`${fontSize === 'normal' ? 'text-xs' : fontSize === 'large' ? 'text-sm' : 'text-base'} font-bold ${fontSize !== 'normal' ? 'text-green-700' : 'text-gray-700'}`}>
+            <Type className={`w-4 h-4 ${fontSize !== 'normal' ? 'text-green-700' : 'text-gray-700'} mb-1`} />
+            <span className={`text-xs font-bold ${fontSize !== 'normal' ? 'text-green-700' : 'text-gray-700'}`}>
               {fontSize === 'normal' ? 'N' : fontSize === 'large' ? 'L' : 'XL'}
             </span>
           </div>
