@@ -137,7 +137,7 @@ function Happy() {
           message: 'text-2xl',
           button: 'text-lg py-4 px-10',
           containerWidth: 'max-w-3xl',
-          label: 'text-lg',
+          label: 'text-md',
           textWrap: 'whitespace-nowrap'
         };
       case 'extra-large':
@@ -146,7 +146,7 @@ function Happy() {
           emoji: 'text-6xl',
           subtitle: 'text-2xl',
           message: 'text-3xl',
-          label: 'text-lg',
+          label: 'text-semibold',
           button: 'text-xl py-5 px-12',
           containerWidth: 'max-w-5xl',
           textWrap: 'whitespace-nowrap'
@@ -157,6 +157,7 @@ function Happy() {
           emoji: 'text-6xl',
           subtitle: 'text-xl',
           message: 'text-2xl',
+          label: 'text-sm',
           button: 'text-base py-3 px-8',
           containerWidth: 'max-w-md',
           textWrap: ''
@@ -335,7 +336,7 @@ function Happy() {
 
       <div className={`container ${fontSizes.containerWidth} mx-auto z-10 relative transition-all duration-500 px-4`}>
         <div 
-          className={`${colors.cardBg} rounded-3xl card-shadow py-4 md:p-6 text-center transition-all duration-500 ${shouldAnimate ? 'transform hover:scale-105' : ''} ${colorBlindMode ? 'shadow-2xl' : ''} relative`}
+          className={`${colors.cardBg} rounded-3xl card-shadow py-4 md:p-6 text-center transition-all duration-500 ${colorBlindMode ? 'shadow-2xl' : ''} relative`}
           role="dialog"
           aria-labelledby="celebration-title"
           aria-describedby="celebration-description"
@@ -373,7 +374,7 @@ function Happy() {
             
             <div className="flex flex-col gap-4 items-center justify-center w-full max-w-sm">
               <div className="flex flex-col gap-1 w-full">
-                <label htmlFor="date-input" className={`text-sm font-semibold ${colors.titleColor}`}>
+                <label htmlFor="date-input" className={`${fontSizes.label} font-semibold ${colors.titleColor}`}>
                   📅 Pick a date:
                 </label>
                 <input
@@ -387,7 +388,7 @@ function Happy() {
               </div>
               
               <div className="flex flex-col gap-1 w-full">
-                <label htmlFor="time-input" className={`text-sm font-semibold ${colors.titleColor} `}>
+                <label htmlFor="time-input" className={`${fontSizes.label} font-semibold ${colors.titleColor} `}>
                   🕐 Pick a time:
                 </label>
                 <input
@@ -415,7 +416,7 @@ function Happy() {
             
             <button 
               onClick={handleRestart}
-              className={`mt-2 text-sm ${colors.textColor} hover:${colors.titleColor} transition-colors duration-200 flex items-center gap-2 font-bold text-xl focus:outline-none focus:ring-2 focus:ring-pink-300 rounded px-2 py-1`}
+              className={`mt-2 ${colors.textColor} hover:${colors.titleColor} transition-colors duration-200 flex items-center gap-2 font-bold text-xl focus:outline-none focus:ring-2 focus:ring-pink-300 rounded px-2 py-1`}
               aria-label="Start over and go back to the question"
             >
               <RotateCcw className="w-6 h-6" />

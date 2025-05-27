@@ -269,7 +269,7 @@ function Question() {
 
       <div className={`container ${fontSizes.containerWidth} mx-auto z-10 relative transition-all duration-500 px-4`}>
         <div 
-          className={`${colors.cardBg} rounded-3xl card-shadow p-6 md:p-8 text-center transition-all duration-500 ${shouldAnimate ? 'transform hover:scale-105' : ''} ${colorBlindMode ? 'shadow-2xl' : ''} ${fontSize === 'normal' ? 'min-h-[600px]' : 'min-h-fit'} flex flex-col justify-center relative`}
+          className={`${colors.cardBg} rounded-3xl card-shadow p-6 md:p-8 text-center transition-all duration-500 ${colorBlindMode ? 'shadow-2xl' : ''} ${fontSize === 'normal' ? 'min-h-[600px]' : 'min-h-fit'} flex flex-col justify-center relative`}
           role="dialog"
           aria-labelledby="invitation-title"
           aria-describedby="invitation-description"
