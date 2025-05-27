@@ -94,7 +94,7 @@ function Question() {
           message: 'text-2xl',
           button: 'text-base py-3 px-8',
           containerWidth: 'max-w-md',
-          textWrap: ''
+          textWrap: 'whitespace-softwrap'
         };
     }
   };

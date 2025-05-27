@@ -202,8 +202,8 @@ function Happy() {
           title="Change font size"
         >
           <div className="flex flex-col items-center">
-            <Type className={`w-4 h-4 ${fontSize !== 'normal' ? 'text-green-700' : 'text-gray-700'} mb-1`} />
-            <span className={`text-xs font-bold ${fontSize !== 'normal' ? 'text-green-700' : 'text-gray-700'}`}>
+            <Type className={`${fontSize === 'normal' ? 'w-4 h-4' : fontSize === 'large' ? 'w-5 h-5' : 'w-6 h-6'} ${fontSize !== 'normal' ? 'text-green-700' : 'text-gray-700'} mb-1`} />
+            <span className={`${fontSize === 'normal' ? 'text-xs' : fontSize === 'large' ? 'text-sm' : 'text-base'} font-bold ${fontSize !== 'normal' ? 'text-green-700' : 'text-gray-700'}`}>
               {fontSize === 'normal' ? 'N' : fontSize === 'large' ? 'L' : 'XL'}
             </span>
           </div>
