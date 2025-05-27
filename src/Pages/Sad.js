@@ -434,71 +434,119 @@ const Sad = () => {
         }
 
         .crying-face {
-          position: relative;
-          width: 120px;
-          height: 120px;
-          background-color: #FFDB58;
-          border-radius: 50%;
+            position: relative;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(145deg, #FFE55C, #FFDB58);
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .eyebrows {
+            position: absolute;
+            top: 25px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 22.5px;
+        }
+
+        .eyebrow {
+            width: 15px;
+            height: 4px;
+            background-color: #D4AC0D;
+            border-radius: 5px;
+            transform: rotate(-15deg);
+        }
+
+        .eyebrow.right {
+            transform: rotate(15deg);
         }
 
         .eyes {
-          display: flex;
-          justify-content: space-around;
-          padding-left: -5px;
-          padding-right: -5px;
-          padding-top: 20px;
+            position: absolute;
+            top: 32.5px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 25px;
         }
 
         .eye {
-          width: 20px;
-          height: 20px;
-          background-color: #333;
-          border-radius: 50%;
-          position: relative;
+            width: 12.5px;
+            height: 17.5px;
+            background-color: #000;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        .eye::after {
+            content: '';
+            position: absolute;
+            top: 2.5px;
+            right: 2.5px;
+            width: 4px;
+            height: 4px;
+            background-color: white;
+            border-radius: 50%;
         }
 
         .tear {
-          position: absolute;
-          width: 8px;
-          height: 20px;
-          background-color: #7DF9FF;
-          border-radius: 50%;
-          animation: tear-drop 2s infinite;
+            position: absolute;
+            width: 6px;
+            height: 10px;
+            background: linear-gradient(180deg, #87CEEB, #4682B4);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: tear-drop 3s infinite;
         }
 
         .tear-left {
-          left: -5px;
-          top: 20px;
+            left: 42.5px;
+            top: 45px;
+            animation-delay: 1s;
         }
 
         .tear-right {
-          right: -5px;
-          top: 20px;
+            right: 42.5px;
+            top: 45px;
+            animation-delay: 1s;
         }
 
         @keyframes tear-drop {
-          0% {
-            height: 0;
-            top: 20px;
-            opacity: 0;
-          }
-          30% {
-            height: 15px;
-            opacity: 1;
-          }
-          100% {
-            height: 15px;
-            top: 60px;
-            opacity: 0;
-          }
+            0% {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.5);
+            }
+            20% {
+                opacity: 1;
+                transform: translateY(0px) scale(1);
+            }
+            80% {
+                opacity: 1;
+                transform: translateY(40px) scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(50px) scale(0.8);
+            }
         }
 
         .mouth {
-          width: 30px;
-          height: 15px;
-          margin: 20px auto 0;
-          transform: rotate(180deg);
+            position: absolute;
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 30px;
+            height: 15px;
+            background-color: #8B4513;
+            border-top-left-radius: 50px;
+            border-top-right-radius: 50px;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
         }
+
 
         .walking {
           animation: walking 0.5s infinite alternate;
@@ -639,19 +687,23 @@ const Sad = () => {
             <span className="text-2xl">❤️</span>
           </div>
         
-          <div className="mb-6 relative w-24 h-24 mx-auto">
-            <div className="crying-face">
-              <div className="eyes">
-                <div className="eye">
-                  <div className="tear tear-left"></div>
+            <div className="mb-6 relative w-24 h-24 mx-auto">
+                <div className="crying-face">
+                    <div className="eyebrows">
+                        <div className="eyebrow left"></div>
+                        <div className="eyebrow right"></div>
+                    </div>
+                    <div className="eyes">
+                        <div className="eye">
+                            <div className="tear tear-left"></div>
+                        </div>
+                        <div className="eye">
+                            <div className="tear tear-right"></div>
+                        </div>
+                    </div>
+                    <div className="mouth"></div>
                 </div>
-                <div className="eye">
-                  <div className="tear tear-right"></div>
-                </div>
-              </div>
-              <div className="mouth"></div>
             </div>
-          </div>
 
           <h2 className="text-2xl font-bold text-pink-600 mb-4">Are you sure??</h2>
           <p className="text-xl italic text-pink-600 mb-2">
