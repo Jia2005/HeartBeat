@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Heart, Cloud, Star } from 'lucide-react';
+import Baby from './../Images/baby.png';
 import { useNavigate } from 'react-router-dom';
-import Baby from './../Images/baby.png'; 
 
 const Sad = () => {
   const [fadeIn, setFadeIn] = useState(false);
@@ -17,33 +17,36 @@ const Sad = () => {
   const [babyPosition, setBabyPosition] = useState({ bottom: '-150px', left: '-100px' });
   const [sparkles, setSparkles] = useState([]);
   const [buttonPieces, setButtonPieces] = useState([]);
-  const [decorations, setDecorations] = useState({ hearts: [], sparkleElements: [], butterflies: [] });
-  const navigate = useNavigate();
+  const [decorations, setDecorations] = useState({ hearts: [], sparkleElements: [], butterflies: [], sadEmojis: [] });
+  const [raindrops, setRaindrops] = useState([]);
   const runawayBtnRef = useRef(null);
   const replacementBtnRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setTimeout(() => setFadeIn(true), 100);
     initDecorations();
+    initRaindrops();
   }, []);
 
   const initDecorations = () => {
     const hearts = [];
     const sparkleElements = [];
     const butterflies = [];
+    const sadEmojis = [];
 
-    for (let i = 0; i < 15; i++) {
+    for (let i = 0; i < 8; i++) {
       hearts.push({
         id: `heart-${i}`,
         left: Math.random() * 100,
         top: Math.random() * 100,
-        fontSize: Math.random() * 20 + 10,
-        opacity: Math.random() * 0.7 + 0.3,
+        fontSize: Math.random() * 15 + 8,
+        opacity: Math.random() * 0.4 + 0.2,
         animationDelay: -(Math.random() * 20)
       });
     }
 
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 6; i++) {
       sparkleElements.push({
         id: `sparkle-${i}`,
         left: Math.random() * 100,
@@ -52,17 +55,46 @@ const Sad = () => {
       });
     }
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 3; i++) {
       butterflies.push({
         id: `butterfly-${i}`,
         left: Math.random() * 100,
         top: Math.random() * 100,
-        fontSize: Math.random() * 20 + 15,
+        fontSize: Math.random() * 15 + 12,
         animationDelay: -(Math.random() * 30)
       });
     }
 
-    setDecorations({ hearts, sparkleElements, butterflies });
+    // Add sad emojis floating in background
+    const sadEmojiList = ['💔', '😢', '😭', '😞', '💧', '🌧️', '☁️', '😔', '💙', '🥺'];
+    for (let i = 0; i < 15; i++) {
+      sadEmojis.push({
+        id: `sad-emoji-${i}`,
+        emoji: sadEmojiList[Math.floor(Math.random() * sadEmojiList.length)],
+        left: Math.random() * 100,
+        top: Math.random() * 100,
+        fontSize: Math.random() * 20 + 15,
+        opacity: Math.random() * 0.6 + 0.3,
+        animationDelay: -(Math.random() * 25),
+        duration: 20 + Math.random() * 15
+      });
+    }
+
+    setDecorations({ hearts, sparkleElements, butterflies, sadEmojis });
+  };
+
+  const initRaindrops = () => {
+    const drops = [];
+    for (let i = 0; i < 50; i++) {
+      drops.push({
+        id: `drop-${i}`,
+        left: Math.random() * 100,
+        animationDelay: Math.random() * 3,
+        duration: 2 + Math.random() * 2,
+        opacity: Math.random() * 0.6 + 0.2
+      });
+    }
+    setRaindrops(drops);
   };
 
   const handleRunawayInteraction = (e) => {
@@ -134,18 +166,13 @@ const Sad = () => {
       } else {
         clearInterval(walkInterval);
         setBabyWalking(false);
-
         setTimeout(() => {
           setHammerSwing(true);
-
           setTimeout(() => {
             createButtonPieces();
             setRunawayVisible(false);
-
             setTimeout(() => {
               setShowReplacement(true);
-              createSparklesAroundButton();
-
               setBabyWalking(true);
               setBabyPosition({ left: '-150px', bottom: '20px' });
 
@@ -194,30 +221,14 @@ const Sad = () => {
     }, 3000);
   };
 
-  const createSparklesAroundButton = () => {
-    const newSparkles = [];
-    for (let i = 0; i < 10; i++) {
-      const angle = Math.random() * Math.PI * 2;
-      const distance = 30 + Math.random() * 20;
-      newSparkles.push({
-        id: i,
-        left: Math.cos(angle) * distance,
-        top: Math.sin(angle) * distance,
-        delay: i * 200
-      });
-    }
-    setSparkles(newSparkles);
-
-    setTimeout(() => setSparkles([]), 2000);
-  };
-
   const handleYesClick = () => {
     navigate('/happy');
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-pink-100 via-purple-50 to-indigo-100 font-comic relative overflow-hidden">
-      <div className="absolute inset-0 bg-pattern opacity-30" aria-hidden="true"></div>
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-slate-700 via-gray-800 to-slate-900 font-comic relative overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-t from-blue-900/30 via-purple-900/20 to-gray-800/40"></div>
+      <div className="absolute inset-0 bg-storm-clouds opacity-40"></div>
       
       <style jsx>{`
         @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap');
@@ -225,29 +236,162 @@ const Sad = () => {
           font-family: 'Comic Neue', cursive;
         }
 
-        .bg-pattern {
+        .bg-storm-clouds {
           background-image: 
-            radial-gradient(circle at 25% 25%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 75% 75%, rgba(99, 102, 241, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 50% 50%, rgba(147, 51, 234, 0.05) 0%, transparent 50%);
+            radial-gradient(ellipse at 20% 30%, rgba(75, 85, 99, 0.8) 20%, transparent 60%),
+            radial-gradient(ellipse at 80% 20%, rgba(55, 65, 81, 0.7) 25%, transparent 65%),
+            radial-gradient(ellipse at 40% 60%, rgba(107, 114, 128, 0.6) 15%, transparent 50%),
+            radial-gradient(ellipse at 70% 80%, rgba(75, 85, 99, 0.5) 30%, transparent 70%),
+            radial-gradient(ellipse at 10% 80%, rgba(55, 65, 81, 0.4) 20%, transparent 60%);
+          animation: driftClouds 30s ease-in-out infinite;
+        }
+
+        @keyframes driftClouds {
+          0%, 100% { transform: translateX(0); }
+          50% { transform: translateX(-20px); }
+        }
+
+        .raindrop {
+          position: absolute;
+          width: 2px;
+          height: 15px;
+          background: linear-gradient(to bottom, rgba(147, 197, 253, 0.8), rgba(59, 130, 246, 0.4));
+          border-radius: 0 0 2px 2px;
+          animation: rainfall linear infinite;
+        }
+
+        @keyframes rainfall {
+          0% {
+            transform: translateY(-100vh);
+            opacity: 1;
+          }
+          90% {
+            opacity: 0.8;
+          }
+          100% {
+            transform: translateY(100vh);
+            opacity: 0;
+          }
+        }
+
+        .floating-heart {
+          position: absolute;
+          font-size: 20px;
+          color: #8B5A9F;
+          animation: float-melancholy 25s linear infinite;
+          opacity: 0.6;
+          z-index: 1;
+          filter: saturate(0.7) brightness(0.8);
+        }
+
+        @keyframes float-melancholy {
+          0% {
+            transform: translate(0, 0) rotate(0deg);
+          }
+          25% {
+            transform: translate(-50px, -80px) rotate(45deg);
+          }
+          50% {
+            transform: translate(20px, -160px) rotate(90deg);
+          }
+          75% {
+            transform: translate(-30px, -80px) rotate(135deg);
+          }
+          100% {
+            transform: translate(0, 0) rotate(180deg);
+          }
+        }
+
+        .floating-butterfly {
+          position: absolute;
+          font-size: 18px;
+          animation: flutter-slow 40s linear infinite;
+          z-index: 1;
+          opacity: 0.5;
+          filter: grayscale(0.3) brightness(0.7);
+        }
+
+        @keyframes flutter-slow {
+          0% {
+            transform: translate(0, 0) rotate(0deg) scale(1);
+          }
+          25% {
+            transform: translate(60px, -40px) rotate(90deg) scale(0.8);
+          }
+          50% {
+            transform: translate(20px, -80px) rotate(180deg) scale(1);
+          }
+          75% {
+            transform: translate(-40px, -40px) rotate(270deg) scale(0.8);
+          }
+          100% {
+            transform: translate(0, 0) rotate(360deg) scale(1);
+          }
+        }
+
+        .floating-sad-emoji {
+          position: absolute;
+          animation: float-sad linear infinite;
+          z-index: 1;
+          pointer-events: none;
+        }
+
+        @keyframes float-sad {
+          0% {
+            transform: translate(0, 0) rotate(0deg);
+          }
+          25% {
+            transform: translate(-30px, -40px) rotate(5deg);
+          }
+          50% {
+            transform: translate(10px, -80px) rotate(-5deg);
+          }
+          75% {
+            transform: translate(-20px, -40px) rotate(3deg);
+          }
+          100% {
+            transform: translate(0, 0) rotate(0deg);
+          }
+        }
+
+        .sparkle {
+          position: absolute;
+          width: 6px;
+          height: 6px;
+          background-color: #A78BFA;
+          border-radius: 50%;
+          animation: sparkle-dim 3s linear infinite;
+          z-index: 1;
+          opacity: 0.4;
+        }
+
+        @keyframes sparkle-dim {
+          0%, 100% {
+            opacity: 0;
+            transform: scale(0);
+          }
+          50% {
+            opacity: 0.6;
+            transform: scale(1);
+          }
         }
 
         @keyframes float {
           0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-20px); }
+          50% { transform: translateY(-15px); }
         }
 
         @keyframes floatReverse {
           0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(20px); }
+          50% { transform: translateY(15px); }
         }
 
         .animate-float {
-          animation: float 3s ease-in-out infinite;
+          animation: float 4s ease-in-out infinite;
         }
 
         .animate-float-reverse {
-          animation: floatReverse 2.5s ease-in-out infinite;
+          animation: floatReverse 3.5s ease-in-out infinite;
         }
 
         .running-button {
@@ -311,7 +455,7 @@ const Sad = () => {
 
         .button-piece {
           position: fixed;
-          background-color: #6C63FF;
+          background-color: #3B82F6;
           color: white;
           font-weight: bold;
           display: flex;
@@ -355,82 +499,6 @@ const Sad = () => {
         .replacement-button.show {
           opacity: 1;
           pointer-events: all;
-        }
-
-        .floating-heart {
-          position: absolute;
-          font-size: 24px;
-          color: #FF6B9D;
-          animation: float-circle 20s linear infinite;
-          opacity: 0.8;
-          z-index: 1;
-        }
-
-        @keyframes float-circle {
-          0% {
-            transform: translate(0, 0) rotate(0deg);
-          }
-          25% {
-            transform: translate(100px, -100px) rotate(90deg);
-          }
-          50% {
-            transform: translate(0, -200px) rotate(180deg);
-          }
-          75% {
-            transform: translate(-100px, -100px) rotate(270deg);
-          }
-          100% {
-            transform: translate(0, 0) rotate(360deg);
-          }
-        }
-
-        .floating-butterfly {
-          position: absolute;
-          font-size: 24px;
-          animation: flutter-circle 30s linear infinite;
-          z-index: 1;
-        }
-
-        @keyframes flutter-circle {
-          0% {
-            transform: translate(0, 0) rotate(0deg) scale(1);
-          }
-          20% {
-            transform: translate(100px, -50px) rotate(72deg) scale(1.2);
-          }
-          40% {
-            transform: translate(50px, -100px) rotate(144deg) scale(1);
-          }
-          60% {
-            transform: translate(-50px, -100px) rotate(216deg) scale(1.2);
-          }
-          80% {
-            transform: translate(-100px, -50px) rotate(288deg) scale(1);
-          }
-          100% {
-            transform: translate(0, 0) rotate(360deg) scale(1);
-          }
-        }
-
-        .sparkle {
-          position: absolute;
-          width: 8px;
-          height: 8px;
-          background-color: #FFD700;
-          border-radius: 50%;
-          animation: sparkle 2s linear infinite;
-          z-index: 1;
-        }
-
-        @keyframes sparkle {
-          0%, 100% {
-            opacity: 0;
-            transform: scale(0);
-          }
-          50% {
-            opacity: 1;
-            transform: scale(1);
-          }
         }
 
         .crying-face {
@@ -547,7 +615,6 @@ const Sad = () => {
             border-bottom-right-radius: 0;
         }
 
-
         .walking {
           animation: walking 0.5s infinite alternate;
         }
@@ -568,10 +635,38 @@ const Sad = () => {
         }
 
         .card-shadow {
-          box-shadow: 0 10px 25px -5px rgba(255, 107, 157, 0.3), 
-                      0 8px 10px -6px rgba(255, 107, 157, 0.2);
+          box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.4), 
+                      0 8px 15px -6px rgba(0, 0, 0, 0.3);
+        }
+
+        .cute-button {
+          background: linear-gradient(135deg, #FF6B9D, #FFB5C1, #FFC0CB);
+          border: 2px solid #FF69B4;
+          box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
+        }
+
+        .cute-button:hover {
+          background: linear-gradient(135deg, #FF4081, #FF91A4, #FFB3BA);
+          box-shadow: 0 6px 20px rgba(255, 64, 129, 0.5);
+          transform: scale(1.05) translateY(-2px);
         }
       `}</style>
+
+      {/* Animated raindrops */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {raindrops.map((drop) => (
+          <div
+            key={drop.id}
+            className="raindrop"
+            style={{
+              left: drop.left + '%',
+              animationDelay: drop.animationDelay + 's',
+              animationDuration: drop.duration + 's',
+              opacity: drop.opacity
+            }}
+          />
+        ))}
+      </div>
 
       {babyVisible && (
         <div
@@ -607,7 +702,7 @@ const Sad = () => {
       ))}
 
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {Array.from({ length: 12 }).map((_, i) => (
+        {Array.from({ length: 6 }).map((_, i) => (
           <div
             key={i}
             className={`absolute ${i % 2 === 0 ? 'animate-float' : 'animate-float-reverse'}`}
@@ -618,53 +713,7 @@ const Sad = () => {
               opacity: Math.random() * 0.3 + 0.1
             }}
           >
-            {i % 4 === 0 && <Heart className="text-pink-400 w-6 h-6" />}
-            {i % 4 === 1 && <Cloud className="text-blue-400 w-8 h-8" />}
-            {i % 4 === 2 && <Star className="text-yellow-500 w-5 h-5" />}
-            {i % 4 === 3 && <div className="text-purple-400 text-2xl">💕</div>}
-          </div>
-        ))}
-
-        {decorations.hearts.map((heart) => (
-          <div
-            key={heart.id}
-            className="floating-heart"
-            style={{
-              left: heart.left + 'vw',
-              top: heart.top + 'vh',
-              fontSize: heart.fontSize + 'px',
-              opacity: heart.opacity,
-              animationDelay: heart.animationDelay + 's'
-            }}
-          >
-            ❤️
-          </div>
-        ))}
-
-        {decorations.sparkleElements.map((sparkle) => (
-          <div
-            key={sparkle.id}
-            className="sparkle"
-            style={{
-              left: sparkle.left + 'vw',
-              top: sparkle.top + 'vh',
-              animationDelay: sparkle.animationDelay + 's'
-            }}
-          />
-        ))}
-
-        {decorations.butterflies.map((butterfly) => (
-          <div
-            key={butterfly.id}
-            className="floating-butterfly"
-            style={{
-              left: butterfly.left + 'vw',
-              top: butterfly.top + 'vh',
-              fontSize: butterfly.fontSize + 'px',
-              animationDelay: butterfly.animationDelay + 's'
-            }}
-          >
-            🦋
+            <Cloud className="text-gray-500 w-6 h-6" />
           </div>
         ))}
       </div>
@@ -682,9 +731,9 @@ const Sad = () => {
       ))}
 
       <div className="container max-w-md mx-auto z-10">
-        <div className={`bg-white border-4 border-pink-400 rounded-3xl card-shadow p-8 text-center transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'} relative`}>
-          <div className="absolute -top-2 -right-2 transform rotate-12 text-pink-500" aria-hidden="true">
-            <span className="text-2xl">❤️</span>
+        <div className={`bg-white/90 backdrop-blur-sm border-2 border-gray-300 rounded-3xl card-shadow p-8 text-center transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'} relative`}>
+          <div className="absolute -top-2 -right-2 transform rotate-12 text-purple-500" aria-hidden="true">
+            <span className="text-2xl">💔</span>
           </div>
         
             <div className="mb-6 relative w-24 h-24 mx-auto">
@@ -705,17 +754,17 @@ const Sad = () => {
                 </div>
             </div>
 
-          <h2 className="text-2xl font-bold text-pink-600 mb-4">Are you sure??</h2>
-          <p className="text-xl italic text-pink-600 mb-2">
+          <h2 className="text-2xl font-bold text-gray-700 mb-4">Are you sure??</h2>
+          <p className="text-xl italic text-gray-600 mb-2">
             Don't you love me? <span className="text-2xl">💔</span>
           </p>
-          <p className="text-gray-600 mb-6">I was really looking forward to spending time with you...</p>
+          <p className="text-gray-500 mb-6">I was really looking forward to spending time with you...</p>
 
           <div className="mb-4 relative h-20">
             {runawayVisible && (
               <button
                 ref={runawayBtnRef}
-                className={`running-button bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-6 rounded-full ${slideAwayTriggered ? 'slide-away' : ''}`}
+                className={`running-button bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full ${slideAwayTriggered ? 'slide-away' : ''}`}
                 style={buttonPosition}
                 onMouseOver={handleRunawayInteraction}
                 onTouchStart={(e) => {
@@ -729,7 +778,7 @@ const Sad = () => {
 
             <button
               ref={replacementBtnRef}
-              className={`replacement-button bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-6 rounded-full ${showReplacement ? 'show' : ''}`}
+              className={`replacement-button bg-blue-500 hover:bg-blue-600 text-white font-bold py-3 px-6 rounded-full ${showReplacement ? 'show' : ''}`}
               onClick={handleYesClick}
             >
               I'll make time for you 😅😅
@@ -738,13 +787,13 @@ const Sad = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <button
-              className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-full transform transition-all duration-300 hover:scale-105 flex items-center justify-center"
+              className="cute-button text-white font-bold py-3 px-4 rounded-full transform transition-all duration-300 hover:scale-105 flex items-center justify-center"
               onClick={handleYesClick}
             >
               <span className="mr-2">❤️</span>Yes
             </button>
             <button
-              className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-4 rounded-full transform transition-all duration-300 hover:scale-105 flex items-center justify-center"
+              className="cute-button text-white font-bold py-3 px-4 rounded-full transform transition-all duration-300 hover:scale-105 flex items-center justify-center"
               onClick={handleYesClick}
             >
               <span className="mr-2">❤️</span>Of course, Yes!!
