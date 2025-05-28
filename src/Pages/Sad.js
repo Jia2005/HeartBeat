@@ -592,11 +592,11 @@ const Sad = () => {
             }
             80% {
                 opacity: 1;
-                transform: translateY(40px) scale(1);
+                transform: translateY(20px) scale(1);
             }
             100% {
                 opacity: 0;
-                transform: translateY(50px) scale(0.8);
+                transform: translateY(30px) scale(0.8);
             }
         }
 
