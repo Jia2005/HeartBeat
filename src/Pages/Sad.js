@@ -65,7 +65,6 @@ const Sad = () => {
       });
     }
 
-    // Add sad emojis floating in background
     const sadEmojiList = ['💔', '😢', '😭', '😞', '💧', '🌧️', '☁️', '😔', '💙', '🥺'];
     for (let i = 0; i < 15; i++) {
       sadEmojis.push({
@@ -640,19 +639,17 @@ const Sad = () => {
         }
 
         .cute-button {
-          background: linear-gradient(135deg, #FF6B9D, #FFB5C1, #FFC0CB);
-          border: 2px solid #FF69B4;
+          background: #ec4899; 
           box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
         }
 
         .cute-button:hover {
-          background: linear-gradient(135deg, #FF4081, #FF91A4, #FFB3BA);
+          background: #db2777; 
           box-shadow: 0 6px 20px rgba(255, 64, 129, 0.5);
           transform: scale(1.05) translateY(-2px);
         }
       `}</style>
 
-      {/* Animated raindrops */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         {raindrops.map((drop) => (
           <div
