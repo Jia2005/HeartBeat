@@ -14,7 +14,7 @@ const Sad = () => {
   const [showReplacement, setShowReplacement] = useState(false);
   const [runawayVisible, setRunawayVisible] = useState(true);
   const [buttonPosition, setButtonPosition] = useState({ left: '50%', top: '0', transform: 'translateX(-50%)' });
-  const [babyPosition, setBabyPosition] = useState({ bottom: '-150px', left: '-100px' });
+  const [babyPosition, setBabyPosition] = useState({ bottom: '150px', left: '100px' });
   const [sparkles, setSparkles] = useState([]);
   const [buttonPieces, setButtonPieces] = useState([]);
   const [decorations, setDecorations] = useState({ hearts: [], sparkleElements: [], butterflies: [], sadEmojis: [] });
@@ -173,7 +173,7 @@ const Sad = () => {
             setTimeout(() => {
               setShowReplacement(true);
               setBabyWalking(true);
-              setBabyPosition({ left: '-150px', bottom: '20px' });
+              setBabyPosition({ left: '0px', bottom: '20px' });
 
               setTimeout(() => {
                 setBabyVisible(false);
@@ -467,12 +467,12 @@ const Sad = () => {
 
         @keyframes fallLeft {
           0% { transform: translateY(0) rotate(0deg); }
-          100% { transform: translateY(600px) rotate(-45deg); opacity: 0; }
+          100% { transform: translateY(600px) rotate(-60deg); opacity: 0; }
         }
 
         @keyframes fallRight {
           0% { transform: translateY(0) rotate(0deg); }
-          100% { transform: translateY(600px) rotate(45deg); opacity: 0; }
+          100% { transform: translateY(600px) rotate(60deg); opacity: 0; }
         }
 
         .replacement-button {
