@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Heart, Cloud, Star } from 'lucide-react';
+import { Cloud } from 'lucide-react';
 import Baby from './../Images/baby.png';
 import { useNavigate } from 'react-router-dom';
 
@@ -714,18 +714,6 @@ const Sad = () => {
           </div>
         ))}
       </div>
-
-      {sparkles.map((sparkle) => (
-        <div
-          key={sparkle.id}
-          className="button-sparkle"
-          style={{
-            left: `calc(50% + ${sparkle.left}px)`,
-            top: `calc(50% + ${sparkle.top}px)`,
-            animationDelay: `${sparkle.delay}ms`
-          }}
-        />
-      ))}
 
       <div className="container max-w-md mx-auto z-10">
         <div className={`bg-white/90 backdrop-blur-sm border-2 border-gray-300 rounded-3xl card-shadow p-8 text-center transition-opacity duration-500 ${fadeIn ? 'opacity-100' : 'opacity-0'} relative`}>
