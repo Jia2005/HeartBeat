@@ -15,9 +15,7 @@ const Sad = () => {
   const [runawayVisible, setRunawayVisible] = useState(true);
   const [buttonPosition, setButtonPosition] = useState({ left: '50%', top: '0', transform: 'translateX(-50%)' });
   const [babyPosition, setBabyPosition] = useState({ bottom: '150px', left: '100px' });
-  const [sparkles, setSparkles] = useState([]);
   const [buttonPieces, setButtonPieces] = useState([]);
-  const [decorations, setDecorations] = useState({ hearts: [], sparkleElements: [], butterflies: [], sadEmojis: [] });
   const [raindrops, setRaindrops] = useState([]);
   const runawayBtnRef = useRef(null);
   const replacementBtnRef = useRef(null);
@@ -25,62 +23,8 @@ const Sad = () => {
 
   useEffect(() => {
     setTimeout(() => setFadeIn(true), 100);
-    initDecorations();
     initRaindrops();
   }, []);
-
-  const initDecorations = () => {
-    const hearts = [];
-    const sparkleElements = [];
-    const butterflies = [];
-    const sadEmojis = [];
-
-    for (let i = 0; i < 8; i++) {
-      hearts.push({
-        id: `heart-${i}`,
-        left: Math.random() * 100,
-        top: Math.random() * 100,
-        fontSize: Math.random() * 15 + 8,
-        opacity: Math.random() * 0.4 + 0.2,
-        animationDelay: -(Math.random() * 20)
-      });
-    }
-
-    for (let i = 0; i < 6; i++) {
-      sparkleElements.push({
-        id: `sparkle-${i}`,
-        left: Math.random() * 100,
-        top: Math.random() * 100,
-        animationDelay: -(Math.random() * 2)
-      });
-    }
-
-    for (let i = 0; i < 3; i++) {
-      butterflies.push({
-        id: `butterfly-${i}`,
-        left: Math.random() * 100,
-        top: Math.random() * 100,
-        fontSize: Math.random() * 15 + 12,
-        animationDelay: -(Math.random() * 30)
-      });
-    }
-
-    const sadEmojiList = ['💔', '😢', '😭', '😞', '💧', '🌧️', '☁️', '😔', '💙', '🥺'];
-    for (let i = 0; i < 15; i++) {
-      sadEmojis.push({
-        id: `sad-emoji-${i}`,
-        emoji: sadEmojiList[Math.floor(Math.random() * sadEmojiList.length)],
-        left: Math.random() * 100,
-        top: Math.random() * 100,
-        fontSize: Math.random() * 20 + 15,
-        opacity: Math.random() * 0.6 + 0.3,
-        animationDelay: -(Math.random() * 25),
-        duration: 20 + Math.random() * 15
-      });
-    }
-
-    setDecorations({ hearts, sparkleElements, butterflies, sadEmojis });
-  };
 
   const initRaindrops = () => {
     const drops = [];
