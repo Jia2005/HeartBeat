@@ -1,7 +1,10 @@
 [build]
   base = "public"
   command = "npm install && npm run build"
-  publish = "public/build"
+  publish = "build"
+  
+  [build.environment]
+    CI = "false"
 
 [[redirects]]
   from = "/*"
