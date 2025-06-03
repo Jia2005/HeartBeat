@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const LoveMeterPage = () => {
+const PreHappy = () => {
   const navigate = useNavigate();
   const [fillLevel, setFillLevel] = useState(0);
   const [currentMessage, setCurrentMessage] = useState(0);
@@ -45,7 +45,6 @@ const LoveMeterPage = () => {
         if (prev >= 100) {
           setIsComplete(true);
           setTimeout(() => setShowResult(true), 500);
-          // Navigate to /happy after 3 seconds of showing result
           setTimeout(() => navigate('/happy'), 3500);
           clearInterval(fillInterval);
           return 100;
@@ -60,7 +59,6 @@ const LoveMeterPage = () => {
       }
     }, 1500);
 
-    // Background change interval - more intense
     const bgInterval = setInterval(() => {
       setBgPhase(prev => (prev + 1) % backgroundGradients.length);
     }, 800);
@@ -74,7 +72,6 @@ const LoveMeterPage = () => {
 
   return (
     <div className={`min-h-screen bg-gradient-to-br ${backgroundGradients[bgPhase]} flex flex-col items-center justify-center p-4 overflow-hidden relative transition-all duration-700 ease-in-out`}>
-      {/* Floating Hearts Background - Gentle continuous movement */}
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(25)].map((_, i) => (
           <div
@@ -93,10 +90,7 @@ const LoveMeterPage = () => {
         ))}
       </div>
 
-      {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center space-y-8 max-w-md w-full">
-        
-        {/* Title */}
         <div className="text-center mb-4">
           <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-pink-600 to-red-600 bg-clip-text text-transparent mb-2 animate-pulse">
             Love Meter
@@ -106,16 +100,13 @@ const LoveMeterPage = () => {
           </p>
         </div>
 
-        {/* Heart Container */}
         <div className="relative">
-          {/* Outer Heart SVG */}
           <svg 
             width="220" 
             height="200" 
             viewBox="0 0 220 200" 
             className="drop-shadow-xl transform hover:scale-105 transition-transform duration-300"
           >
-            {/* Heart Shape Path */}
             <defs>
               <path
                 id="heartPath"
@@ -125,7 +116,6 @@ const LoveMeterPage = () => {
                 <use href="#heartPath" />
               </clipPath>
               
-              {/* Water Flow Pattern */}
               <pattern id="waterFlow" patternUnits="userSpaceOnUse" width="40" height="40">
                 <circle cx="5" cy="5" r="2" fill="rgba(255,255,255,0.3)" className="animate-ping">
                   <animate attributeName="cy" values="5;35;5" dur="2s" repeatCount="indefinite"/>
@@ -141,7 +131,6 @@ const LoveMeterPage = () => {
                 </circle>
               </pattern>
               
-              {/* Liquid Gradient with Flow Effect */}
               <linearGradient id="liquidGradient" x1="0%" y1="0%" x2="0%" y2="100%">
                 <stop offset="0%" stopColor="#ff1744" stopOpacity="0.9">
                   <animate attributeName="stop-color" 
@@ -163,7 +152,6 @@ const LoveMeterPage = () => {
                 </stop>
               </linearGradient>
               
-              {/* Wave Pattern */}
               <path id="wave" d="M0,10 Q10,0 20,10 T40,10" stroke="rgba(255,255,255,0.3)" strokeWidth="1" fill="none">
                 <animateTransform 
                   attributeName="transform" 
@@ -174,7 +162,6 @@ const LoveMeterPage = () => {
               </path>
             </defs>
             
-            {/* Heart Border */}
             <use 
               href="#heartPath" 
               fill="none" 
@@ -183,7 +170,6 @@ const LoveMeterPage = () => {
               className="animate-pulse"
             />
             
-            {/* Filling Liquid with Flow Effect */}
             <rect
               x="0"
               y={200 - (fillLevel * 1.7)}
@@ -194,7 +180,6 @@ const LoveMeterPage = () => {
               className="transition-all duration-200 ease-out"
             />
             
-            {/* Water Flow Bubbles */}
             <rect
               x="0"
               y={200 - (fillLevel * 1.7)}
@@ -205,7 +190,6 @@ const LoveMeterPage = () => {
               opacity="0.6"
             />
             
-            {/* Surface Wave Effect */}
             {fillLevel > 10 && (
               <g clipPath="url(#heartClip)">
                 <use 
@@ -230,14 +214,12 @@ const LoveMeterPage = () => {
             )}
           </svg>
 
-          {/* Percentage Display */}
           <div className="absolute inset-0 flex items-center justify-center">
             <span className="text-white font-bold text-xl sm:text-2xl drop-shadow-lg">
               {Math.round(fillLevel)}%
             </span>
           </div>
 
-          {/* Sparkles */}
           {isComplete && (
             <div className="absolute -inset-8">
               {[...Array(12)].map((_, i) => (
@@ -257,7 +239,6 @@ const LoveMeterPage = () => {
           )}
         </div>
 
-        {/* Messages */}
         <div className="text-center min-h-[60px] flex items-center justify-center">
           {!showResult ? (
             <p className="text-lg sm:text-xl font-medium text-gray-700 animate-fade-in px-4">
@@ -277,7 +258,6 @@ const LoveMeterPage = () => {
           )}
         </div>
 
-        {/* Progress Bar */}
         <div className="w-full max-w-xs">
           <div className="bg-pink-200 rounded-full h-3 overflow-hidden shadow-inner">
             <div 
@@ -287,7 +267,6 @@ const LoveMeterPage = () => {
           </div>
         </div>
 
-        {/* Loading Dots */}
         {!isComplete && (
           <div className="flex space-x-2">
             {[...Array(3)].map((_, i) => (
@@ -301,7 +280,6 @@ const LoveMeterPage = () => {
         )}
       </div>
 
-      {/* Custom CSS for animations */}
       <style jsx>{`
         @keyframes fade-in {
           from { opacity: 0; transform: translateY(10px); }
@@ -332,4 +310,4 @@ const LoveMeterPage = () => {
   );
 };
 
-export default LoveMeterPage;
+export default PreHappy;
