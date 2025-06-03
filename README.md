@@ -29,10 +29,10 @@ Stop overthinking it, stop rehearsing in the mirror, and definitely stop asking 
 
 1. **Take a deep breath** 😤 (seriously, you've got this!)
    
-2. **Copy this magical link**: 
-   ```
-   🔗 Coming very soon... 😉
-   ```
+2. **Copy this magical link**:
+
+   🔗 [Heartbeatt](https://heartbeatt.netlify.app/) 😉
+
 
 3. **Send it to your crush** with something like:
    - "Hey, I made something for you 💕"
