@@ -9,11 +9,11 @@ function Question() {
   const navigate = useNavigate();
 
   const handleYesClick = () => {
-    navigate('/happy');
+    navigate('/prehappy');
   };
 
   const handleMaybeClick = () => {
-    navigate('/sad');
+    navigate('/presad');
   };
 
   const toggleColorBlindMode = () => {
