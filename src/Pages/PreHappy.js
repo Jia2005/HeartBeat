@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const PreHappy = () => {
-  const navigate = useNavigate();
   const [fillLevel, setFillLevel] = useState(0);
   const [currentMessage, setCurrentMessage] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
@@ -27,13 +25,21 @@ const PreHappy = () => {
     "Love level: MAXIMUM! 🚀💘"
   ];
 
+  const floatingHearts = [...Array(25)].map((_, i) => ({
+    id: i,
+    size: Math.random() * 15 + 12,
+    left: Math.random() * 100,
+    top: Math.random() * 100,
+    delay: Math.random() * 8,
+    duration: Math.random() * 3 + 4
+  }));
+
   useEffect(() => {
     const fillInterval = setInterval(() => {
       setFillLevel(prev => {
         if (prev >= 100) {
           setIsComplete(true);
           setTimeout(() => setShowResult(true), 500);
-          setTimeout(() => navigate('/happy'), 3500);
           clearInterval(fillInterval);
           return 100;
         }
@@ -51,21 +57,21 @@ const PreHappy = () => {
       clearInterval(fillInterval);
       clearInterval(messageInterval);
     };
-  }, [isComplete, navigate]);
+  }, [isComplete]);
 
   return (
    <div className={`min-h-screen bg-gradient-to-br from-yellow-200 via-pink-200 via-orange-200 to-purple-200 flex flex-col items-center justify-center p-4 overflow-hidden relative transition-all duration-700 ease-in-out`}>
       <div className="absolute inset-0 pointer-events-none">
-        {[...Array(25)].map((_, i) => (
+        {floatingHearts.map((heart) => (
           <div
-            key={i}
+            key={heart.id}
             className="absolute text-pink-300 opacity-40 animate-float"
             style={{
-              fontSize: `${Math.random() * 15 + 12}px`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 8}s`,
-              animationDuration: `${Math.random() * 3 + 4}s`
+              fontSize: `${heart.size}px`,
+              left: `${heart.left}%`,
+              top: `${heart.top}%`,
+              animationDelay: `${heart.delay}s`,
+              animationDuration: `${heart.duration}s`
             }}
           >
             💖
@@ -99,21 +105,6 @@ const PreHappy = () => {
                 <use href="#heartPath" />
               </clipPath>
               
-              <pattern id="waterFlow" patternUnits="userSpaceOnUse" width="40" height="40">
-                <circle cx="5" cy="5" r="2" fill="rgba(255,255,255,0.3)" className="animate-ping">
-                  <animate attributeName="cy" values="5;35;5" dur="2s" repeatCount="indefinite"/>
-                </circle>
-                <circle cx="15" cy="15" r="1.5" fill="rgba(255,255,255,0.4)" className="animate-ping">
-                  <animate attributeName="cy" values="15;25;15" dur="1.5s" repeatCount="indefinite"/>
-                </circle>
-                <circle cx="25" cy="25" r="1" fill="rgba(255,255,255,0.5)" className="animate-ping">
-                  <animate attributeName="cy" values="25;35;25" dur="1.8s" repeatCount="indefinite"/>
-                </circle>
-                <circle cx="35" cy="10" r="1.5" fill="rgba(255,255,255,0.3)" className="animate-ping">
-                  <animate attributeName="cy" values="10;30;10" dur="2.2s" repeatCount="indefinite"/>
-                </circle>
-              </pattern>
-              
               <linearGradient id="liquidGradient" x1="0%" y1="0%" x2="0%" y2="100%">
                 <stop offset="0%" stopColor="#ff1744" stopOpacity="0.9">
                   <animate attributeName="stop-color" 
@@ -134,15 +125,6 @@ const PreHappy = () => {
                     repeatCount="indefinite"/>
                 </stop>
               </linearGradient>
-              
-              <path id="wave" d="M0,10 Q10,0 20,10 T40,10" stroke="rgba(255,255,255,0.3)" strokeWidth="1" fill="none">
-                <animateTransform 
-                  attributeName="transform" 
-                  type="translate" 
-                  values="0,0;20,0;0,0" 
-                  dur="2s" 
-                  repeatCount="indefinite"/>
-              </path>
             </defs>
             
             <use 
@@ -163,36 +145,36 @@ const PreHappy = () => {
               className="transition-all duration-200 ease-out"
             />
             
-            <rect
-              x="0"
-              y={200 - (fillLevel * 1.7)}
-              width="220"
-              height={fillLevel * 1.7}
-              fill="url(#waterFlow)"
-              clipPath="url(#heartClip)"
-              opacity="0.6"
-            />
-            
-            {fillLevel > 10 && (
+            {fillLevel > 5 && (
               <g clipPath="url(#heartClip)">
-                <use 
-                  href="#wave" 
-                  x="30" 
-                  y={200 - (fillLevel * 1.7)}
-                  opacity="0.8"
-                />
-                <use 
-                  href="#wave" 
-                  x="60" 
-                  y={200 - (fillLevel * 1.7) + 2}
-                  opacity="0.6"
-                />
-                <use 
-                  href="#wave" 
-                  x="90" 
-                  y={200 - (fillLevel * 1.7) - 1}
-                  opacity="0.7"
-                />
+                <path
+                  d={`M 0,${200 - (fillLevel * 1.7)} Q 15,${200 - (fillLevel * 1.7) - 8} 30,${200 - (fillLevel * 1.7)} T 60,${200 - (fillLevel * 1.7)} T 90,${200 - (fillLevel * 1.7)} T 120,${200 - (fillLevel * 1.7)} T 150,${200 - (fillLevel * 1.7)} T 180,${200 - (fillLevel * 1.7)} T 210,${200 - (fillLevel * 1.7)} T 240,${200 - (fillLevel * 1.7)}`}
+                  fill="rgba(255,255,255,0.3)"
+                  stroke="rgba(255,255,255,0.5)"
+                  strokeWidth="1"
+                >
+                  <animateTransform
+                    attributeName="transform"
+                    type="translate"
+                    values="0,0;-30,0;0,0"
+                    dur="2s"
+                    repeatCount="indefinite"
+                  />
+                </path>
+                <path
+                  d={`M 0,${200 - (fillLevel * 1.7)} Q 10,${200 - (fillLevel * 1.7) - 5} 20,${200 - (fillLevel * 1.7)} T 40,${200 - (fillLevel * 1.7)} T 60,${200 - (fillLevel * 1.7)} T 80,${200 - (fillLevel * 1.7)} T 100,${200 - (fillLevel * 1.7)} T 120,${200 - (fillLevel * 1.7)} T 140,${200 - (fillLevel * 1.7)} T 160,${200 - (fillLevel * 1.7)} T 180,${200 - (fillLevel * 1.7)} T 200,${200 - (fillLevel * 1.7)} T 220,${200 - (fillLevel * 1.7)} T 240,${200 - (fillLevel * 1.7)}`}
+                  fill="rgba(255,255,255,0.2)"
+                  stroke="rgba(255,255,255,0.4)"
+                  strokeWidth="0.5"
+                >
+                  <animateTransform
+                    attributeName="transform"
+                    type="translate"
+                    values="-15,0;15,0;-15,0"
+                    dur="1.5s"
+                    repeatCount="indefinite"
+                  />
+                </path>
               </g>
             )}
           </svg>
