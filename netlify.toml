@@ -1,10 +1,10 @@
 [build]
-  base = "src"
+  base = "."
   command = "npm install && npm run build"
   publish = "build"
   
-  [build.environment]
-    CI = "false"
+[build.environment]
+  CI = "false"
 
 [[redirects]]
   from = "/*"
