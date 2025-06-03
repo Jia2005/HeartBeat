@@ -6,7 +6,6 @@ const PreSad = () => {
   const [showDramaticEffect, setShowDramaticEffect] = useState(false);
   const [heartBroken, setHeartBroken] = useState(false);
   const [showShatteredMessage, setShowShatteredMessage] = useState(false);
-  
   const navigate = useNavigate();
 
   const sassyMessages = [
@@ -35,32 +34,26 @@ const PreSad = () => {
     id: i,
     size: Math.random() * 20 + 25,
     left: Math.random() * 100,
-    top: Math.random() * 30 + 10 // Keep clouds in upper portion
+    top: Math.random() * 30 + 10 
   }));
 
   useEffect(() => {
-    // Message cycling for first 5 seconds
     const messageInterval = setInterval(() => {
       if (!showShatteredMessage) {
         setCurrentMessage(prev => (prev + 1) % sassyMessages.length);
       }
     }, 1800);
 
-    // Dramatic effect trigger
     setTimeout(() => setShowDramaticEffect(true), 1000);
-
-    // Break heart after 5 seconds
     setTimeout(() => {
       setHeartBroken(true);
       clearInterval(messageInterval);
     }, 5000);
 
-    // Show shattered message after heart breaks
     setTimeout(() => {
       setShowShatteredMessage(true);
     }, 5000);
 
-    // Navigate to /sad after 7 seconds total (5s + 2s wait)
     setTimeout(() => {
       navigate('/sad');
     }, 7000);
@@ -72,8 +65,6 @@ const PreSad = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-purple-900 via-blue-900 to-black flex flex-col items-center justify-center p-4 overflow-hidden relative transition-all duration-1000">
-      
-      {/* Floating tears */}
       <div className="absolute inset-0 pointer-events-none">
         {floatingTears.map((tear) => (
           <div
@@ -92,7 +83,6 @@ const PreSad = () => {
         ))}
       </div>
 
-      {/* Static storm clouds */}
       <div className="absolute inset-0 pointer-events-none">
         {staticClouds.map((cloud) => (
           <div
@@ -109,14 +99,10 @@ const PreSad = () => {
         ))}
       </div>
 
-      {/* Lightning effect */}
       {showDramaticEffect && (
         <div className="absolute inset-0 bg-white opacity-10 animate-lightning pointer-events-none"></div>
       )}
-
       <div className="relative z-10 flex flex-col items-center space-y-8 max-w-md w-full">
-        
-        {/* Title */}
         <div className="text-center mb-4">
           <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-red-500 to-purple-600 bg-clip-text text-transparent mb-2 animate-dramatic-pulse">
             SO RUDE!
@@ -126,7 +112,6 @@ const PreSad = () => {
           </p>
         </div>
 
-        {/* Heart breaking animation */}
         <div className="relative">
           <svg 
             width="220" 
@@ -143,7 +128,6 @@ const PreSad = () => {
             </defs>
             
             {!heartBroken ? (
-              // Complete heart
               <path
                 d="M110,180 C110,180 30,120 30,70 C30,35 55,15 85,15 C100,15 110,25 110,45 C110,25 120,15 135,15 C165,15 190,35 190,70 C190,120 110,180 110,180 Z"
                 fill="url(#heartGradient)"
@@ -152,9 +136,7 @@ const PreSad = () => {
                 className="animate-pulse"
               />
             ) : (
-              // Broken heart - two halves
               <g>
-                {/* Left half */}
                 <path
                   d="M110,180 C110,180 30,120 30,70 C30,35 55,15 85,15 C100,15 110,25 110,45 L110,180 Z"
                   fill="url(#heartGradient)"
@@ -162,7 +144,6 @@ const PreSad = () => {
                   strokeWidth="3"
                   className="animate-heart-break-left"
                 />
-                {/* Right half */}
                 <path
                   d="M110,45 C110,25 120,15 135,15 C165,15 190,35 190,70 C190,120 110,180 110,180 L110,45 Z"
                   fill="url(#heartGradient)"
@@ -170,18 +151,10 @@ const PreSad = () => {
                   strokeWidth="3"
                   className="animate-heart-break-right"
                 />
-                {/* Crack line */}
-                <path
-                  d="M110,45 L110,180"
-                  stroke="#ef4444"
-                  strokeWidth="4"
-                  className="animate-pulse"
-                />
               </g>
             )}
           </svg>
 
-          {/* Dramatic sparks when heart breaks */}
           {heartBroken && (
             <div className="absolute -inset-8">
               {[...Array(15)].map((_, i) => (
@@ -201,7 +174,6 @@ const PreSad = () => {
           )}
         </div>
 
-        {/* Message display */}
         <div className="text-center min-h-[80px] flex items-center justify-center">
           {!showShatteredMessage ? (
             <p className="text-lg sm:text-xl font-medium text-gray-200 animate-sassy-fade px-4">
@@ -221,7 +193,6 @@ const PreSad = () => {
           )}
         </div>
 
-        {/* Loading dots - only show before shattered message */}
         {!showShatteredMessage && (
           <div className="flex space-x-2">
             {[...Array(3)].map((_, i) => (
