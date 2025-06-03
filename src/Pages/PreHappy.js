@@ -7,7 +7,6 @@ const PreHappy = () => {
   const [currentMessage, setCurrentMessage] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const [showResult, setShowResult] = useState(false);
-  const [bgPhase, setBgPhase] = useState(0);
 
   const messages = [
     "Calculating our compatibility... 💕",
@@ -21,22 +20,11 @@ const PreHappy = () => {
   ];
 
   const finalMessages = [
-    "99.9% match! 💖",
+    "It's a perfect match! 💖",
     "Love meter: OFF THE CHARTS! 📊💕",
     "Perfect compatibility detected! ✨",
     "Soulmate status: CONFIRMED! 💫",
     "Love level: MAXIMUM! 🚀💘"
-  ];
-
-  const backgroundGradients = [
-    "from-pink-100 via-purple-50 to-red-100",
-    "from-red-100 via-pink-100 to-purple-100",
-    "from-purple-100 via-red-50 to-pink-100",
-    "from-pink-200 via-red-100 to-purple-50",
-    "from-red-50 via-purple-100 to-pink-200",
-    "from-purple-50 via-pink-200 to-red-100",
-    "from-pink-50 via-red-200 to-purple-100",
-    "from-red-200 via-pink-50 to-purple-200"
   ];
 
   useEffect(() => {
@@ -59,19 +47,14 @@ const PreHappy = () => {
       }
     }, 1500);
 
-    const bgInterval = setInterval(() => {
-      setBgPhase(prev => (prev + 1) % backgroundGradients.length);
-    }, 800);
-
     return () => {
       clearInterval(fillInterval);
       clearInterval(messageInterval);
-      clearInterval(bgInterval);
     };
   }, [isComplete, navigate]);
 
   return (
-    <div className={`min-h-screen bg-gradient-to-br ${backgroundGradients[bgPhase]} flex flex-col items-center justify-center p-4 overflow-hidden relative transition-all duration-700 ease-in-out`}>
+   <div className={`min-h-screen bg-gradient-to-br from-yellow-200 via-pink-200 via-orange-200 to-purple-200 flex flex-col items-center justify-center p-4 overflow-hidden relative transition-all duration-700 ease-in-out`}>
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(25)].map((_, i) => (
           <div
