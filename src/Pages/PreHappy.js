@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const PreHappy = () => {
   const [fillLevel, setFillLevel] = useState(0);
   const [currentMessage, setCurrentMessage] = useState(0);
   const [isComplete, setIsComplete] = useState(false);
   const [showResult, setShowResult] = useState(false);
+  const navigate = useNavigate();
 
   const messages = [
     "Calculating our compatibility... 💕",
@@ -40,6 +42,7 @@ const PreHappy = () => {
         if (prev >= 100) {
           setIsComplete(true);
           setTimeout(() => setShowResult(true), 500);
+          setTimeout(() => navigate('/happy'), 3500);
           clearInterval(fillInterval);
           return 100;
         }
